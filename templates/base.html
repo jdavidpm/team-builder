@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %}{% endblock title%}</title>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+	</head>
+	<body class="indigo lighten-4">
+		<header>
+			<nav>
+				<div class="blue darken-2 nav-wrapper">
+					<a href="#" class="brand-logo"><i class="material-icons left bluec-text">people</i>Team Builder</a>
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="/" class="white-text"><i class="material-icons left bluec-text">airplay</i>Inicio</a></li>
+						<li><a href="#" class="white-text"><i class="material-icons left bluec-text">forward</i>Inicia Sesión</a></li>
+						<li><a href="#" class="white-text"><i class="material-icons left bluec-text">view_module</i>Regístrate</a></li>
+						<li><a href="#" class="white-text"><i class="material-icons left bluec-text">airport_shuttle</i>Acerca de</a></li>
+						<li><a href="FAQ" class="white-text"><i class="material-icons left bluec-text">album</i>Preguntas Frecuentes</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		{% block content %}{% endblock content %}
+		<footer></footer>
+	</body>
+
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</html>
