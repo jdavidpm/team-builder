@@ -17,30 +17,30 @@
 	</head>
 	<body>
 		<header class="site-header">
-			<nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
+			<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
 				<div class="container">
-					<span style="font-size: 2rem; padding: 0rem 0.5rem 0rem 0.5rem; color: white;"><i class="fas fa-users"></i></span>
-					<a class="navbar-brand mr-4" href="/">Team Builder</a>
+					<span style="font-size: 2.5rem; padding: 0rem 0.5rem 0rem 0.5rem; color: white;"><i class="fas fa-users"></i></span>
+					<a class="navbar-brand mr-4" href="{% url 'layout-index' %}">Team Builder</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarToggle">
 						<div class="navbar-nav mr-auto">
-							<a class="nav-item nav-link" href="/">Inicio</a>
-							<a class="nav-item nav-link" href="/about">Acerca de</a>
+							<a class="nav-item nav-link" href="{% url 'layout-index' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-home"></i></span>Inicio</a>
+							<a class="nav-item nav-link" href="{% url 'layout-about' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-info-circle"></i></span>Acerca de</a>
 						</div>
 						<!-- Navbar Right Side -->
 						<div class="navbar-nav">
-							<a class="nav-item nav-link" href="#">Preguntas Frecuentes</a>
-							<a class="nav-item nav-link" href="#">Iniciar Sesión</a>
-							<a class="nav-item nav-link" href="#">Registro</a>
+							<a class="nav-item nav-link" href="{% url 'layout-faq' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a>
+							<a class="nav-item nav-link" href="{% url 'layout-signin'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
+							<a class="nav-item nav-link" href="{% url 'layout-signup'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-plus"></i></span>Registro</a>
 						</div>
 					</div>
 				</div>
 			</nav>
 		</header>
 
-		<main role="main" class="container">
+		<main role="main" class="container" style="padding-top: 2rem;">
 			<div class="row">
 				<div class="col-md-8">
 					{% block content %}{% endblock %}
@@ -53,7 +53,7 @@
 							<li class="list-group-item list-group-item-light">Últimas Tareas</li>
 							<li class="list-group-item list-group-item-light">Nuevas Tareas</li>
 							<li class="list-group-item list-group-item-light">Calendario</li>
-							<li class="list-group-item list-group-item-light">etc</li>
+							<li class="list-group-item list-group-item-light">Proyectos</li>
 						</ul>
 						</p>
 					</div>

@@ -1,16 +1,19 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-    {% for task in tasks %}
-        <article class="media content-section">
-            <div class="media-body">
-                <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ task.author }}</a>
-                    <small class="text-muted">{{ task.date }}</small>
+    <div class="container content-section">
+        <h3>Tareas Recientes</h3><br>
+        {% for task in tasks %}
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">{{ task.author }}</a>
+                        <small class="text-muted">{{ task.date }}</small>
+                    </div>
+                    <h2><a class="article-title" href="#">{{ task.title }}</a></h2>
+                    <p class="article-content">Asignado a: <a class="article-title" href="#">{{ task.delegate }}</a> para el: {{task.deadline}}</p>
                 </div>
-                <h2><a class="article-title" href="#">{{ task.title }}</a></h2>
-                <p class="article-content">Para: {{ task.deadline }}</p>
-            </div>
-        </article>
-    {% endfor %}
+            </article>
+        {% endfor %}
+    </div>
 {% endblock content %}

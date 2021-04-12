@@ -1,4 +1,22 @@
 {% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Iniciar Sesión</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Inicia</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                ¿No tienes cuenta? <a class="ml-2" href="{% url 'layout-signup' %}">Registrate Ahora</a>
+            </small>
+        </div>
+    </div>
 {% endblock content %}
