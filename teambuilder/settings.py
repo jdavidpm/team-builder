@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com']
 
 INSTALLED_APPS = [
     'layout.apps.LayoutConfig',
+    'users.apps.UsersConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,3 +128,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

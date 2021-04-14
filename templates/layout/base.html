@@ -32,8 +32,8 @@
 						<!-- Navbar Right Side -->
 						<div class="navbar-nav">
 							<a class="nav-item nav-link" href="{% url 'layout-faq' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a>
-							<a class="nav-item nav-link" href="{% url 'layout-signin'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
-							<a class="nav-item nav-link" href="{% url 'layout-signup'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-plus"></i></span>Registro</a>
+							<a class="nav-item nav-link" href="{% url 'users-signin'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
+							<a class="nav-item nav-link" href="{% url 'users-signup'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-plus"></i></span>Registro</a>
 						</div>
 					</div>
 				</div>
@@ -43,6 +43,11 @@
 		<main role="main" class="container" style="padding-top: 2rem;">
 			<div class="row">
 				<div class="col-md-8">
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-{{ message.tags }}">{{message}}</div>
+						{% endfor %}
+					{% endif %}
 					{% block content %}{% endblock %}
 				</div>
 				<div class="col-md-4">

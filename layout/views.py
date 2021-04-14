@@ -28,9 +28,3 @@ def faq(request):
 
 def about(request):
     return render(request, 'layout/about.html', {'title': 'Acerca de'})
-
-def signin(request):
-    return render(request, 'signin.html', {'title': 'Inicio de Sesión'})
-
-def signup(request):
-    return render(request, 'signup.html', {'title': 'Registro'})
