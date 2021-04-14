@@ -32,8 +32,13 @@
 						<!-- Navbar Right Side -->
 						<div class="navbar-nav">
 							<a class="nav-item nav-link" href="{% url 'layout-faq' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a>
-							<a class="nav-item nav-link" href="{% url 'users-signin'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
-							<a class="nav-item nav-link" href="{% url 'users-signup'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-plus"></i></span>Registro</a>
+							{% if user.is_authenticated %}
+								<a class="nav-item nav-link" href="{% url 'users-profile'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-circle"></i></span>Perfil</a>
+								<a class="nav-item nav-link" href="{% url 'users-signout'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a>
+							{% else %}
+								<a class="nav-item nav-link" href="{% url 'users-signin'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
+								<a class="nav-item nav-link" href="{% url 'users-signup'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-plus"></i></span>Registro</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>

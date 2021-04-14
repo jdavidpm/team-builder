@@ -1,0 +1,10 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+    <h2> Tu cuenta ha sido cerrada con éxito </h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'users-signin' %}">Iniciar Sesión</a>
+        </small>
+    </div>
+{% endblock content %}
