@@ -10,6 +10,16 @@
                 <p class="text-secondary">{{ user.email }}</p>
             </div>
         </div>
-        <a class="btn btn-info" href="{% url 'users-update-profile'%}">Editar</a>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Actualizar perfil</legend>
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Guardar</button>
+            </div>
+        </form>
     </div>
 {% endblock content %}

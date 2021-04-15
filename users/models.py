@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from PIL import Image
 import datetime
 
 
@@ -8,21 +9,17 @@ import datetime
 class Field(models.Model):
     name = models.CharField(max_length=128, null=False, blank=False, unique=True)
 
-
 # Lenguajes de programación
 class Language(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
-
 
 # Frameworks de programación
 class Framework(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
 
-
 # Herramientas de trabajo
 class Tool(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
-
 
 # Distribuciones de sistemas operativos
 class Distribution(models.Model):
@@ -84,6 +81,15 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
+    def save(self):
+        super().save()
+
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
 # Crea tabla para el campo multivaluado: Trabajos Previos Destacados
 class FeaturedWork(models.Model):
