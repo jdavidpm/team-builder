@@ -4,20 +4,35 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
 class UserSignUpForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(label=u'Correo Electrónico')
 
     class Meta:
         model = User
-        fields = ['username','email', 'password1', 'password2']
+        fields = ['username','email', 'password1', 'password2']        
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username','email']
+        fields = ['username','first_name', 'last_name', 'email']
+        labels = {
+            'first_name': ('Nombre(s)'),
+            'last_name': ('Apellidos'),
+        }
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['school_register', 'experience', 'interests', 'languages', 'frameworks', 'image']
+        labels = {
+            'school_register': ('Matrícula'),
+            'experience': ('Experiencia'),
+            'interests': ('Intereses'),
+            'languages': ('Lenguajes de Programación'),
+            'frameworks': ('Frameworks'),
+            'image': ('Foto de Perfil')
+        }
+        help_texts = {
+            'school_register': ('Número de boleta o equivalente.'),
+        }

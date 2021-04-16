@@ -28,7 +28,7 @@ class Distribution(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    school_register = models.CharField(max_length=10, null=True, default='0', blank=False, unique=True)
+    school_register = models.CharField(max_length=10, null=True, default='0', blank=True, unique=True) #Is really necessary the default=0?
 
     # Cocientes de dimensiones de personalidad, con 2 dígitos para decimales y 3 dígitos en total
     personality_h = models.DecimalField(
@@ -69,20 +69,21 @@ class Profile(models.Model):
     )
 
     # Crea tablas en la BD para las relaciones M a N entre Usuario y Rama
-    experience = models.ManyToManyField(Field, related_name='experience')
-    interests = models.ManyToManyField(Field, related_name='interests')
-    languajes = models.ManyToManyField(Language)
-    frameworks = models.ManyToManyField(Framework)
-    sw_tools = models.ManyToManyField(Tool, related_name='sw_tools')
-    hw_tools = models.ManyToManyField(Tool, related_name='hw_tools')
-    distributions = models.ManyToManyField(Distribution)
+    #Every field below now has blank to True
+    experience = models.ManyToManyField(Field, related_name='experience', blank=True)
+    interests = models.ManyToManyField(Field, related_name='interests', blank=True)
+    languages = models.ManyToManyField(Language, blank=True)
+    frameworks = models.ManyToManyField(Framework, blank=True)
+    sw_tools = models.ManyToManyField(Tool, related_name='sw_tools', blank=True)
+    hw_tools = models.ManyToManyField(Tool, related_name='hw_tools', blank=True)
+    distributions = models.ManyToManyField(Distribution, blank=True)
 
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
 
         img = Image.open(self.image.path)
 
