@@ -82,3 +82,13 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+.custom-select2-widget {
+  width: 100%;
+}
+.free-space {
+    margin-top: 50px;
+  }
+
+.toggle-handle {
+    background: #fff;
+  }

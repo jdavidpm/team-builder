@@ -8,22 +8,32 @@ import datetime
 # Ramas de conocimiento
 class Field(models.Model):
     name = models.CharField(max_length=128, null=False, blank=False, unique=True)
+    def __str__(self):
+        return f'{self.name}'
 
 # Lenguajes de programación
 class Language(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
+    def __str__(self):
+        return f'{self.name}'
 
 # Frameworks de programación
 class Framework(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
+    def __str__(self):
+        return f'{self.name}'
 
 # Herramientas de trabajo
 class Tool(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
+    def __str__(self):
+        return f'{self.name}'
 
 # Distribuciones de sistemas operativos
 class Distribution(models.Model):
     name = models.CharField(max_length=45, null=False, blank=False, unique=True)
+    def __str__(self):
+        return f'{self.name}'
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -104,6 +114,8 @@ class FeaturedWork(models.Model):
 
 class Career(models.Model):
     name = models.CharField(max_length=64, null=False, blank=False, unique=True)
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Student(models.Model):

@@ -1,15 +1,29 @@
-{% extends 'layout/base.html' %}
+{% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="content-section">
+        <a href="{% url 'users-update-profile'%}">
+            <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit"></i></span>
+        </a>
         <div class="media">
-            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"/>
-            <div class="media-body">
-                <h2 class="account-heading">{{ user.username }}</h2>
-                <p class="text-secondary">{{ user.email }}</p>
+            <div class="media-body text-center">
+                <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"/>
+                <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+                <p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
+                <div class="text-left">
+                    <h3>Frameworks</h3>
+                    {% for framework in user.profile.frameworks.all %}
+                        <p>{{ framework.name }}</p>
+                    {% endfor %}
+                </div>
+                <div class="text-left">
+                    <h3>Lenguajes de Programación</h3>
+                    {% for language in user.profile.languages.all %}
+                        <p>{{ language.name }}</p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-        <a class="btn btn-info" href="{% url 'users-update-profile'%}">Editar</a>
     </div>
 {% endblock content %}
