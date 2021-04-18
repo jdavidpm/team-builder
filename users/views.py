@@ -35,9 +35,13 @@ def signup(request):
 @login_required
 def profile(request):
     fields = []
+    names = {'experience': ('Experiencia', 'fas fa-briefcase'), 'interests': ('Intereses', 'fas fa-heart'),
+            'languages': ('Lenguajes de Programación', 'fas fa-laptop-code'), 'frameworks': ('Frameworks', 'fas fa-stream'),
+            'sw_tools': ('Herramientas de Software', 'fas fa-cubes'), 'hw_tools': ('Herramientas de Hardware', 'fas fa-microchip'),
+            'distributions': ('Distribuciones', 'fab fa-linux')}
     for field in request.user.profile._meta.many_to_many:
         if bool(getattr(request.user.profile, field.name).all()):
-            fields.append({'name': field.name.capitalize(), 'values': getattr(request.user.profile, field.name).all()})
+            fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
     context = {
         'title': 'Perfil',
         'fields': fields

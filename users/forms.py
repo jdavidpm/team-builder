@@ -26,17 +26,19 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         image = forms.ImageField()
-        fields = ['school_register', 'experience', 'interests', 'languages', 'frameworks', 'distributions', 'image']
+        fields = ['school_register', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'image']
         widgets = {
             'image': forms.widgets.FileInput
         }
         labels = {
             'school_register': ('Matrícula'),
+            'distributions': ('Distros'),
+            'sw_tools': ('Herramientas de Software'),
+            'hw_tools': ('Herramientas de Hardware'),
             'experience': ('Experiencia'),
             'interests': ('Intereses'),
             'languages': ('Lenguajes de Programación'),
             'frameworks': ('Frameworks'),
-            'distributions': ('Distros'),
             'image': ('Foto de Perfil')
         }
         help_texts = {
@@ -45,8 +47,6 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class JustAnotherForm(forms.Form): #Toggle Widget in use example
     working = forms.BooleanField(
-        # required must be false, otherwise you will get error when the toggle is off
-        # at least in chrome
         required=False,
         widget=ToggleWidget(
             options={
