@@ -60,13 +60,11 @@ def updateProfile(request):
             messages.success(request, f'¡Tu cuenta fue actualizada con éxito!')
             return redirect('users-profile')
     else:
-        o_form = JustAnotherForm()
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
     context = {
         'u_form': u_form,
         'p_form': p_form,
-        'o_form': o_form,
         'title': 'Actualizar Perfil'
     }
     return render(request, 'users/update-profile.html', context)

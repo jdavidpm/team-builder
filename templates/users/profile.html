@@ -3,12 +3,12 @@
 
 {% block content %}
     <div class="content-section">
-        <a href="{% url 'users-update-profile'%}">
-            <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit"></i></span>
-        </a>
+        <div class="text-right"><a href="{% url 'users-update-profile'%}">
+            <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
+        </a></div>
         <div class="media">
             <div class="media-body text-center">
-                <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"/>
+                <img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
                 <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
                 <p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
             </div>
@@ -17,7 +17,7 @@
     {% for field in fields %}
     <div class="content-section">
         <div class="text-left">
-            <h3><i class="{{ field.icon }}"></i>{{ field.name }}</h3>
+            <h3><i class="{{ field.icon }} pr-2"></i>{{ field.name }}</h3>
             {% for value in field.values %}
                 <p>{{ value.name }}</p>
             {% endfor %}

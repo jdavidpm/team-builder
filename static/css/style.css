@@ -93,3 +93,8 @@ a.article-title:hover {
 .toggle-handle {
   background: #fff;
 }
+
+.thumbnail{
+  width: 5rem;
+  height: auto;
+}

@@ -45,10 +45,56 @@
 			</nav>
 		</header>
 
-		<main role="main" class="container" style="padding-top: 2rem;">
-			<div class="row text-right">
-				<div class="col-md-1"></div>
-				<div class="col-md-10">
+		<main role="main" class="container pt-5">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="content-section">
+						<h3>Menú Principal</h3>
+						<p class='text-muted'> Usados recientemente
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-light">Últimas Tareas</li>
+							<li class="list-group-item list-group-item-light">Nuevas Tareas</li>
+							<li class="list-group-item list-group-item-light">Calendario</li>
+							<li class="list-group-item list-group-item-light">Proyectos</li>
+						</ul>
+						</p>
+					</div>
+					<div class="content-section">
+						<h3>Perfiles Similares</h3>
+						<p class='text-muted'> Basados en tus intereses
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-light mb-2"><div class="row">
+								<div class="col-md-3">
+									<img class="rounded-circle thumbnail" src="{{ user.profile.image.url }}"/>
+								</div>
+								<div class="col-md-9 text-left">
+									<p class="text-muted"> {{ user.first_name }} - {{user.username }}</p>
+									<p class="text-muted"> {{ user.email }}</p>
+								</div>
+							</div></li>
+							<li class="list-group-item list-group-item-light mb-2"><div class="row">
+								<div class="col-md-3">
+									<img class="rounded-circle thumbnail" src="{{ user.profile.image.url }}"/>
+								</div>
+								<div class="col-md-9 text-left">
+									<p class="text-muted"> {{ user.first_name }} - {{user.username }}</p>
+									<p class="text-muted"> {{ user.email }}</p>
+								</div>
+							</div></li>
+							<li class="list-group-item list-group-item-light mb-2"><div class="row">
+								<div class="col-md-3">
+									<img class="rounded-circle thumbnail" src="{{ user.profile.image.url }}"/>
+								</div>
+								<div class="col-md-9 text-left">
+									<p class="text-muted"> {{ user.first_name }} - {{user.username }}</p>
+									<p class="text-muted"> {{ user.email }}</p>
+								</div>
+							</div></li>
+						</ul>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-8">
 					{% if messages %}
 						{% for message in messages %}
 							<div class="alert alert-{{ message.tags }}">{{message}}</div>
@@ -56,7 +102,6 @@
 					{% endif %}
 					{% block content %}{% endblock %}
 				</div>
-				<div class="col-md-1"></div>
 			</div>
 		</main>
 		<!-- Optional JavaScript -->
