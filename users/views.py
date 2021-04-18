@@ -34,7 +34,15 @@ def signup(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html', {'title': 'Perfil'})
+    fields = []
+    for field in request.user.profile._meta.many_to_many:
+        if bool(getattr(request.user.profile, field.name).all()):
+            fields.append({'name': field.name.capitalize(), 'values': getattr(request.user.profile, field.name).all()})
+    context = {
+        'title': 'Perfil',
+        'fields': fields
+    }
+    return render(request, 'users/profile.html', context)
 
 @login_required
 def updateProfile(request):

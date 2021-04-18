@@ -11,19 +11,17 @@
                 <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"/>
                 <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
                 <p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
-                <div class="text-left">
-                    <h3>Frameworks</h3>
-                    {% for framework in user.profile.frameworks.all %}
-                        <p>{{ framework.name }}</p>
-                    {% endfor %}
-                </div>
-                <div class="text-left">
-                    <h3>Lenguajes de Programación</h3>
-                    {% for language in user.profile.languages.all %}
-                        <p>{{ language.name }}</p>
-                    {% endfor %}
-                </div>
             </div>
         </div>
     </div>
+    {% for field in fields %}
+    <div class="content-section">
+        <div class="text-left">
+            <h3>{{ field.name }}</h3>
+            {% for value in field.values %}
+                <p>{{ value.name }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
 {% endblock content %}
