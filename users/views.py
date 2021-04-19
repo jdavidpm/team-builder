@@ -5,7 +5,6 @@ from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, JustAnothe
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth import get_user_model
 from .utils import *
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):

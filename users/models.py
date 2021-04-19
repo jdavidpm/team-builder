@@ -152,6 +152,8 @@ class Subject(models.Model):
 
     # Crea tabla para relaciones M a N entre Unidades de Aprendizaje y Ramas
     fields = models.ManyToManyField(Field)
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Project(models.Model):
@@ -185,7 +187,8 @@ class Project(models.Model):
         max_digits = 4,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(10.0)],
-        null=True
+        null=True, 
+        blank = True
     )
 
     # Crea tabla para registro de actividad en el proyecto
@@ -199,6 +202,9 @@ class Project(models.Model):
 
     class Meta:
         unique_together = ('author', 'name')
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Team(models.Model):
@@ -281,6 +287,8 @@ class Team(models.Model):
 
     class Meta:
         unique_together = ('founder', 'name')
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Membership(models.Model):
@@ -322,6 +330,8 @@ class ProjectActivity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True, null=False)
     description = models.CharField(max_length=256, null=False)
+    def __str__(self):
+        return f'{self.project}'
 
 
 class Task(models.Model):
@@ -355,6 +365,8 @@ class Task(models.Model):
         through = 'TaskActivity',
         through_fields= ('task', 'user')
     )
+    def __str__(self):
+        return f'{self.name}'
 
 
 class TaskActivity(models.Model):
@@ -362,6 +374,8 @@ class TaskActivity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True, null=False)
     description = models.CharField(max_length=256, null=False)
+    def __str__(self):
+        return f'{self.task}'
 
 
 class Association(models.Model):

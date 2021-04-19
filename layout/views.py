@@ -2,18 +2,22 @@ from django.shortcuts import render
 
 tasks = [
     {
+        'project': 'Project 1', 
         'author': 'David',
-        'title': 'Task 1', 
-        'date': 'August 1, 2021',
-        'deadline': 'August 13, 2021',
-        'delegate': 'Aldo'
+        'name': 'Task 1', 
+        'description': 'Task 1 oh', 
+        'due_date': 'August 1, 2021',
+        'status': 'Planteado',
+        'assigned_members': ('Un', 'Dos')
     },
     {
+        'project': 'Project 2', 
         'author': 'Aldo',
-        'title': 'Task 2', 
-        'date': 'August 1, 2021',
-        'deadline': 'August 18, 2021',
-        'delegate': 'David'
+        'name': 'Task 2', 
+        'description': 'Task 2 oh', 
+        'due_date': 'August 31, 2021',
+        'status': 'Planteado',
+        'assigned_members': ('Un', 'Dos')
     }
 ]
 
