@@ -1,25 +1,29 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/sidebar.html' %}
 
 {% block content %}
-    <div class="container content-section">
-        <h3>Tareas Recientes</h3><br>
-        {% for task in tasks %}
-            <article class="media content-section row mx-2">
-                <div class="col-md-2 text-center">
-                    <img class="img-thumbnail rounded-circle" src="{{ user.profile.image.url }}"/>
-                    <a href="#">{{ task.author }}</a>
-                </div>
-                <div class="media-body col-md-10">
-                    <div class="article-metadata">
-                        <small class="text-muted">Vencimiento: {{ task.due_date }}</small>
+    {% if user.is_authenticated %}
+        <div class="container content-section">
+            <h3>Tareas Recientes</h3><br>
+            {% for task in tasks %}
+                <article class="media content-section row mx-2">
+                    <div class="col-md-2 text-center">
+                        <img class="img-thumbnail rounded-circle" src="{{ user.profile.image.url }}"/>
+                        <a href="#">{{ task.author }}</a>
                     </div>
-                    <h4><a class="article-title" href="#">{{ task.name }}</a></h4>
-                    <p class="article-content">{{ task.description }}</p>
-                    {% for am in task.assigned_members %}
-                        <p class="article-content">{{ am }}</p>
-                    {% endfor %}
-                </div>
-            </article>
-        {% endfor %}
-    </div>
+                    <div class="media-body col-md-10">
+                        <div class="article-metadata">
+                            <small class="text-muted">Vencimiento: {{ task.due_date }}</small>
+                        </div>
+                        <h4><a class="article-title" href="#">{{ task.name }}</a></h4>
+                        <p class="article-content">{{ task.description }}</p>
+                        {% for am in task.assigned_members %}
+                            <p class="article-content">{{ am }}</p>
+                        {% endfor %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        hola
+    {% endif %}
 {% endblock content %}

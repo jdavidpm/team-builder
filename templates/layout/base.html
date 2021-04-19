@@ -44,28 +44,18 @@
 				</div>
 			</nav>
 		</header>
-
 		<main role="main" class="container" style="padding-top: 2rem;">
+			{% if messages %}
+				{% for message in messages %}
+					<div class="alert alert-{{ message.tags }}">{{message}}</div>
+				{% endfor %}
+			{% endif %}
 			<div class="row">
 				<div class="col-md-8">
-					{% if messages %}
-						{% for message in messages %}
-							<div class="alert alert-{{ message.tags }}">{{message}}</div>
-						{% endfor %}
-					{% endif %}
 					{% block content %}{% endblock %}
 				</div>
 				<div class="col-md-4">
-					<div class="content-section">
-						<h3>Menú Principal</h3>
-						<p class='text-muted'> Usados recientemente
-						<ul class="list-group">
-							<li class="list-group-item list-group-item-light">Últimas Tareas</li>
-							<li class="list-group-item list-group-item-light">Nuevas Tareas</li>
-							<li class="list-group-item list-group-item-light">Proyectos</li>
-						</ul>
-						</p>
-					</div>
+					{% block sidebar %}{% endblock %}
 				</div>
 			</div>
 		</main>
