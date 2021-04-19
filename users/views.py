@@ -16,6 +16,13 @@ def logout_required(function=None, logout_url=settings.LOGOUT_URL):
         return actual_decorator(function)
     return actual_decorator
 
+def tasks(request):
+    context = {
+        'tasks': tasks_list,
+        'title': 'Tareas'
+    }
+    return render(request, 'users/tasks.html', context)
+
 @logout_required
 def signup(request):
     if request.method == 'POST':

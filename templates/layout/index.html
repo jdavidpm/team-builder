@@ -16,14 +16,17 @@
                         </div>
                         <h4><a class="article-title" href="#">{{ task.name }}</a></h4>
                         <p class="article-content">{{ task.description }}</p>
-                        {% for am in task.assigned_members %}
-                            <p class="article-content">{{ am }}</p>
+                        {% for member in task.assigned_members %}
+                            <p class="article-content">{{ member }}</p>
                         {% endfor %}
                     </div>
                 </article>
             {% endfor %}
         </div>
     {% else %}
-        hola
+        <div class="text-center">
+            <span style="font-size: 10rem; padding: 0rem 0.5rem 0rem 0.5rem; color: blue;"><i class="fas fa-users text-primary"></i></span>
+            <h1><a class="navbar-brand" style="font-size: 5rem;" href="{% url 'layout-index' %}">Team Builder</a></h1>
+        </div>
     {% endif %}
 {% endblock content %}

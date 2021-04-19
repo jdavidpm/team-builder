@@ -1,0 +1,37 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+    <div class="container content-section">
+        <h3>Tareas Recientes</h3><br>
+        {% for task in tasks %}
+            <article class="media content-section row mx-2">
+                <div class="col-md-2 text-center">
+                    <img class="img-thumbnail rounded-circle" src="{{ user.profile.image.url }}"/>
+                    <a href="#">{{ task.author }}</a>
+                </div>
+                <div class="media-body col-md-10">
+                    <div class="article-metadata">
+                        <small class="text-muted">Vencimiento: {{ task.due_date }}</small>
+                    </div> 
+                    <h4><a class="article-title" href="#">{{ task.name }}</a></h4>
+                    <p class="article-content">{{ task.description }}</p>
+                    {% for member in task.assigned_members %}
+                        <p class="article-content">{{ member }}</p>
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% endblock content %}
+{% block sidebar %}
+    <div class="content-section">
+        <h3>Proyectos</h3>
+        <p class='text-muted'> Tus últimos proyectos
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-light"><i class="fas fa-graduation-cap mr-2"></i>Moodle</li>
+                <li class="list-group-item list-group-item-light"><i class="fab fa-google mr-2"></i>Google Classrom</li>
+                <li class="list-group-item list-group-item-light"><i class="fab fa-microsoft mr-2"></i>Teams</li>
+            </ul>
+        </p>
+    </div>
+{% endblock sidebar %}
