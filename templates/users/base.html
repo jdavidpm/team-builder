@@ -63,33 +63,17 @@
 						<h3>Perfiles Similares</h3>
 						<p class='text-muted'> Basados en tus intereses
 						<ul class="list-group">
-							<li class="list-group-item list-group-item-light mb-2"><div class="row">
-								<div class="col-md-3">
-									<img class="rounded-circle thumbnail" src="{{ user.profile.image.url }}"/>
-								</div>
-								<div class="col-md-9 text-left">
-									<p class="text-muted"> {{ user.first_name }} - {{user.username }}</p>
-									<p class="text-muted"> {{ user.email }}</p>
-								</div>
-							</div></li>
-							<li class="list-group-item list-group-item-light mb-2"><div class="row">
-								<div class="col-md-3">
-									<img class="rounded-circle thumbnail" src="{{ user.profile.image.url }}"/>
-								</div>
-								<div class="col-md-9 text-left">
-									<p class="text-muted"> {{ user.first_name }} - {{user.username }}</p>
-									<p class="text-muted"> {{ user.email }}</p>
-								</div>
-							</div></li>
-							<li class="list-group-item list-group-item-light mb-2"><div class="row">
-								<div class="col-md-3">
-									<img class="rounded-circle thumbnail" src="{{ user.profile.image.url }}"/>
-								</div>
-								<div class="col-md-9 text-left">
-									<p class="text-muted"> {{ user.first_name }} - {{user.username }}</p>
-									<p class="text-muted"> {{ user.email }}</p>
-								</div>
-							</div></li>
+							{% for u in users %}
+								<li class="list-group-item list-group-item-light mb-2"><div class="row">
+									<div class="col-md-3">
+										<img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
+									</div>
+									<div class="col-md-9 text-left">
+										<p class="text-muted"> {{ u.first_name }} - {{u.username }}</p>
+										<p class="text-muted"> {{ u.email }}</p>
+									</div>
+								</div></li>
+							{% endfor %}
 						</ul>
 						</p>
 					</div>

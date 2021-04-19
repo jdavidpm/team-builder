@@ -5,6 +5,8 @@ from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, JustAnothe
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth import get_user_model
+from .utils import *
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):
     actual_decorator = user_passes_test(
@@ -35,16 +37,14 @@ def signup(request):
 @login_required
 def profile(request):
     fields = []
-    names = {'experience': ('Experiencia', 'fas fa-briefcase'), 'interests': ('Intereses', 'fas fa-heart'),
-            'languages': ('Lenguajes de Programación', 'fas fa-laptop-code'), 'frameworks': ('Frameworks', 'fas fa-stream'),
-            'sw_tools': ('Herramientas de Software', 'fas fa-cubes'), 'hw_tools': ('Herramientas de Hardware', 'fas fa-microchip'),
-            'distributions': ('Distribuciones', 'fab fa-linux')}
+    users = User.objects.all().exclude(username='ssiet').exclude(username=request.user.username)
     for field in request.user.profile._meta.many_to_many:
         if bool(getattr(request.user.profile, field.name).all()):
             fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
     context = {
         'title': 'Perfil',
-        'fields': fields
+        'fields': fields,
+        'users': users
     }
     return render(request, 'users/profile.html', context)
 

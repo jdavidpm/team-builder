@@ -38,7 +38,7 @@ class Distribution(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    school_register = models.CharField(max_length=10, null=True, default='0', blank=True, unique=True) #Is really necessary the default=0?
+    school_register = models.CharField(max_length=10, null=True, blank=True, unique=True) #Is really necessary the default=0?
 
     # Cocientes de dimensiones de personalidad, con 2 dígitos para decimales y 3 dígitos en total
     personality_h = models.DecimalField(
