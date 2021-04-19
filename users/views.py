@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from .utils import *
+from .models import Task
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):
     actual_decorator = user_passes_test(
@@ -17,6 +18,7 @@ def logout_required(function=None, logout_url=settings.LOGOUT_URL):
     return actual_decorator
 
 def tasks(request):
+    tasks_list = Task.objects.all()
     context = {
         'tasks': tasks_list,
         'title': 'Tareas'

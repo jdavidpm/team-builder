@@ -2,11 +2,11 @@
 
 {% block content %}
     <div class="container content-section">
-        <h3>Tareas Recientes</h3><br>
+        <h3>Tareas</h3><br>
         {% for task in tasks %}
             <article class="media content-section row mx-2">
                 <div class="col-md-2 text-center">
-                    <img class="img-thumbnail rounded-circle" src="{{ user.profile.image.url }}"/>
+                    <img class="img-thumbnail rounded-circle" src="{{ task.author.profile.image.url }}"/>
                     <a href="#">{{ task.author }}</a>
                 </div>
                 <div class="media-body col-md-10">
@@ -15,9 +15,12 @@
                     </div> 
                     <h4><a class="article-title" href="#">{{ task.name }}</a></h4>
                     <p class="article-content">{{ task.description }}</p>
-                    {% for member in task.assigned_members %}
-                        <p class="article-content">{{ member }}</p>
-                    {% endfor %}
+                    <p class="article-content">Asignado a: </p>
+                    <ul>
+                        {% for member in task.assigned_members.all %}
+                            <li class="article-content">{{ member }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </article>
         {% endfor %}
@@ -28,9 +31,9 @@
         <h3>Proyectos</h3>
         <p class='text-muted'> Tus últimos proyectos
             <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><i class="fas fa-graduation-cap mr-2"></i>Moodle</li>
-                <li class="list-group-item list-group-item-light"><i class="fab fa-google mr-2"></i>Google Classrom</li>
-                <li class="list-group-item list-group-item-light"><i class="fab fa-microsoft mr-2"></i>Teams</li>
+                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="#">Proyecto 1</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="#">Proyecto 2</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="#">Proyecto 3</a></li>
             </ul>
         </p>
     </div>

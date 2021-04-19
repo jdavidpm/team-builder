@@ -50,14 +50,13 @@
 				<div class="col-md-4">
 					<div class="content-section">
 						<h3>Menú Principal</h3>
-						<p class='text-muted'> Usados recientemente
-						<ul class="list-group">
-							<li class="list-group-item list-group-item-light">Últimas Tareas</li>
-							<li class="list-group-item list-group-item-light">Nuevas Tareas</li>
-							<li class="list-group-item list-group-item-light">Proyectos</li>
-						</ul>
-						</p>
-					</div>
+						<p class="text-muted"> Plataformas que podrian interesarte</p>
+            			<ul class="list-group">
+                			<li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'users-tasks' %}">Últimas Tareas</a></li>
+                			<li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'users-tasks' %}">Nuevas Tareas</a></li>
+                			<li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'users-tasks' %}">Proyectos</a></li>
+            			</ul>
+        			</div>
 					<div class="content-section">
 						<h3>Perfiles Similares</h3>
 						<p class='text-muted'> Basados en tus intereses
