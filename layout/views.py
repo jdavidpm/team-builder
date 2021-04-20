@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from users.utils import *
+from users.models import Task
 
 def index(request):
+    tasks_list = Task.objects.all()
     context = {
         'tasks': tasks_list
     }
