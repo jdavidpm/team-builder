@@ -43,7 +43,7 @@ def signup(request):
     return render(request, 'users/signup.html', context)
 
 @login_required
-def profile(request):
+def profile(request, username):
     fields = []
     users = User.objects.all().exclude(username='ssiet').exclude(username=request.user.username)
     for field in request.user.profile._meta.many_to_many:
@@ -57,7 +57,7 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 @login_required
-def updateProfile(request):
+def updateProfile(request, username):
     if request.method == 'POST':
         o_form = JustAnotherForm()
         u_form = UserUpdateForm(request.POST, instance=request.user)

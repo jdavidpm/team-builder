@@ -2,34 +2,58 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-    <div class="masthead d-flex justify-content-center">
-        <div class="content-section">
-            <div class="text-right"><a href="{% url 'users-update-profile'%}">
-                <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
-            </a></div>
-            <div class="media">
-                <div class="media-body text-center">
-                    <img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
-                    <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
-                    <p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
+    <div class="masthead row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3>Perfiles Similares</h3>
+                <p class='text-muted'> Basados en tus intereses
+                <ul class="list-group">
+                    {% for u in users %}
+                        <li class="list-group-item list-group-item-light mb-2"><div class="row">
+                            <div class="col-md-3">
+                                <img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
+                            </div>
+                            <div class="col-md-9 text-left">
+                                <p class="text-muted"> {{ u.first_name }} - {{u.username }}</p>
+                                <p class="text-muted"> {{ u.email }}</p>
+                            </div>
+                        </div></li>
+                    {% endfor %}
+                </ul>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="content-section">
+                <div class="text-right"><a href="{% url 'users-update-profile' user.username %}">
+                    <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
+                </a></div>
+                <div class="media">
+                    <div class="media-body text-center">
+                        <img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
+                        <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+                        <p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-1"></div>
     </div>
 {% endblock header %}
 {% block content %}
-    <div class="d-flex justify-content-center mx-5">
-        {% for field in fields %}
-            <div class="content-section mx-2">
-                <div class="text-left">
-                    <h3><i class="{{ field.icon }} pr-2"></i>{{ field.name }}</h3>
-                    {% for value in field.values %}
-                        <p>{{ value.name }}</p>
-                    {% endfor %}
+    <div class="d-flex justify-content-center">
+        <div class="content-section col-md-10 d-flex flex-wrap">
+            {% for field in fields %}
+                <div class="content-section col-md-4">
+                    <div class="text-left">
+                        <h3><i class="{{ field.icon }} pr-2"></i>{{ field.name }}</h3>
+                        {% for value in field.values %}
+                            <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>  
+            {% endfor %}
+        </div> 
+    </div> 
 {% endblock content %}
-{% block sidebar %}
-{% endblock sidebar %}
