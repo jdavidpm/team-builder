@@ -3,8 +3,8 @@
 {% block header %}
 <header class="masthead bg-primary text-white text-center">
     {% if user.is_authenticated %}
-        <div class="row ">
-            <div class="col-md-2">
+        <div class="d-flex align-content-center row">
+            <div class="col-md-4">
                 <!-- Masthead Avatar Image-->
                 <span style="font-size: 6rem;"><i class="fas fa-users masthead-avatar text-secondary"></i></span>
                 <!-- Masthead Heading-->
@@ -12,7 +12,7 @@
                 <!-- Masthead Subheading-->
                 <p class="masthead-liheading font-weight-light mb-0">¡Bienvenido, {{user.first_name}}!</p>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <!-- Masthead Avatar Image-->
                 <span style="font-size: 6rem;"><i class="fas fa-users masthead-avatar text-secondary"></i></span>
                 <!-- Masthead Heading-->
