@@ -15,7 +15,7 @@
                                 <img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
                             </div>
                             <div class="col-md-9 text-left">
-                                <p class="text-muted"> {{ u.first_name }} - {{u.username }}</p>
+                                <p class="text-muted"> <a href="{% url 'users-profile' u.username  %}">{{ u.first_name }} - {{u.username }}</a></p>
                                 <p class="text-muted"> {{ u.email }}</p>
                             </div>
                         </div></li>
@@ -37,23 +37,23 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-center">
+                <div class="content-section d-flex flex-wrap justify-content-center">
+                    {% for field in fields %}
+                        <div class="content-section col-md-4 my-2 mx-4">
+                            <div class="text-left">
+                                <h4><i class="{{ field.icon }} pr-2"></i>{{ field.name }}</h4>
+                                {% for value in field.values %}
+                                    <p>{{ value.name }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div> 
+            </div> 
         </div>
         <div class="col-md-1"></div>
     </div>
 {% endblock header %}
 {% block content %}
-    <div class="d-flex justify-content-center">
-        <div class="content-section col-md-10 d-flex flex-wrap">
-            {% for field in fields %}
-                <div class="content-section col-md-4">
-                    <div class="text-left">
-                        <h3><i class="{{ field.icon }} pr-2"></i>{{ field.name }}</h3>
-                        {% for value in field.values %}
-                            <p>{{ value.name }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div> 
-    </div> 
 {% endblock content %}

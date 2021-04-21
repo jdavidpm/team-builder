@@ -44,17 +44,20 @@ def signup(request):
 
 @login_required
 def profile(request, username):
-    fields = []
-    users = User.objects.all().exclude(username='ssiet').exclude(username=request.user.username)
-    for field in request.user.profile._meta.many_to_many:
-        if bool(getattr(request.user.profile, field.name).all()):
-            fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
-    context = {
-        'title': 'Perfil',
-        'fields': fields,
-        'users': users
-    }
-    return render(request, 'users/profile.html', context)
+    fields, users = [], []
+    if username == request.user.username:
+        users = User.objects.all().exclude(username='ssiet').exclude(username=request.user.username)
+        for field in request.user.profile._meta.many_to_many:
+            if bool(getattr(request.user.profile, field.name).all()):
+                fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
+        return render(request, 'users/profile.html', {'title': 'Perfil', 'fields': fields, 'users': users})
+    else:
+        users = User.objects.all().exclude(username='ssiet').exclude(username=username)
+        foreign_user = User.objects.filter(username=username).first()
+        for field in foreign_user.profile._meta.many_to_many:
+            if bool(getattr(foreign_user.profile, field.name).all()):
+                fields.append({'name': names[field.name][0], 'values': getattr(foreign_user.profile, field.name).all(), 'icon': names[field.name][1]})
+        return render(request, 'users/foreign_profile.html', {'title': 'Perfil', 'foreign_user': foreign_user, 'fields': fields, 'users': users})
 
 @login_required
 def updateProfile(request, username):
