@@ -26,6 +26,7 @@
         </div>
         <div class="col-md-6">
             <div class="content-section">
+                {% block messages %}{% include "layout/messages.html" %}{% endblock %}
                 <div class="text-right"><a href="{% url 'users-update-profile' user.username %}">
                     <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
                 </a></div>

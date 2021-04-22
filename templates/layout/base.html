@@ -24,7 +24,7 @@
 		<!-- Core theme CSS (includes Bootstrap)-->
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 
-		<link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}"/>
+		<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}"/>
 	</head>
 	<body id="page-top">
 		<!-- Navigation-->
@@ -53,11 +53,6 @@
 			</div>
 		</nav>
 		<main role="main">
-			{% if messages %}
-				{% for message in messages %}
-					<div class="alert alert-{{ message.tags }}">{{message}}</div>
-				{% endfor %}
-			{% endif %}
 			{% block header %}{% endblock %}
 			{% block content %}{% endblock %}
 			{% block sidebar %}{% endblock %}
