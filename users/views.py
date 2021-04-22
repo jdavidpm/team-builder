@@ -83,3 +83,7 @@ def updateProfile(request, username):
     else:
         messages.warning(request, f'No tienes permiso para entrar a esta página')
         return redirect('layout-index')
+
+@login_required
+def projects(request):
+    return render(request, 'projects/projects.html', {'title': 'Proyectos'})
