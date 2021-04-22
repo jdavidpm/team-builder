@@ -80,12 +80,12 @@ class Profile(models.Model):
 
     # Crea tablas en la BD para las relaciones M a N entre Usuario y Rama
     #Every field below now has blank to True
-    experience = models.ManyToManyField(Field, related_name='experience', blank=True)
-    interests = models.ManyToManyField(Field, related_name='interests', blank=True)
+    experience = models.ManyToManyField(Field, related_name='experienced_profiles', blank=True)
+    interests = models.ManyToManyField(Field, related_name='interested_profiles', blank=True)
     languages = models.ManyToManyField(Language, blank=True)
     frameworks = models.ManyToManyField(Framework, blank=True)
-    sw_tools = models.ManyToManyField(Tool, related_name='sw_tools', blank=True)
-    hw_tools = models.ManyToManyField(Tool, related_name='hw_tools', blank=True)
+    sw_tools = models.ManyToManyField(Tool, related_name='sw_profiles', blank=True)
+    hw_tools = models.ManyToManyField(Tool, related_name='hw_profiles', blank=True)
     distributions = models.ManyToManyField(Distribution, blank=True)
 
 
@@ -164,7 +164,7 @@ class Project(models.Model):
         ('finalizado', 'Finalizado')
     ]
 
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='project_author')
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='created_projects')
 
     # fecha y hora de creación del proyecto
     creation_date = models.DateTimeField(auto_now=True, null=False)
@@ -221,7 +221,7 @@ class Team(models.Model):
         User,
         through = 'Membership',
         through_fields = ('team', 'user'),
-        related_name = 'membership'
+        related_name = 'membership_teams'
     )
 
     # solicitudes de usuarios para integrarse al equipo
@@ -229,7 +229,7 @@ class Team(models.Model):
         User,
         through = 'JoinRequest',
         through_fields = ('team', 'user'),
-        related_name = 'join_requests'
+        related_name = 'join_requested_teams'
     )
 
     # Proyectos en los que el equipo trabaja
@@ -293,12 +293,12 @@ class Team(models.Model):
 
 class Membership(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='member')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='team_memberships')
     creation_date = models.DateTimeField(auto_now=True, null=False)
     invited_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="invited_by",
+        related_name="invited_by_memberships",
         null=True
     )
 
@@ -310,8 +310,8 @@ class JoinRequest(models.Model):
 
 
 class JoinInvitation(models.Model):
-    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='to_user')
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='from_user')
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
     
     team = models.ForeignKey(
         Team,
@@ -344,13 +344,13 @@ class Task(models.Model):
     ]
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='task_author')
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='created_tasks')
     creation_date = models.DateTimeField(auto_now=True, null=False)
     name = models.CharField(max_length=64, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     due_date = models.DateTimeField(null=False, blank=False)
 
-    stauts = models.CharField(
+    status = models.CharField(
         choices = STATUS_CHOICES,
         max_length = 13,
         default = 'pendiente',
@@ -358,7 +358,7 @@ class Task(models.Model):
         null = False
     )
     
-    assigned_members = models.ManyToManyField(User, related_name='assigned_members')
+    assigned_members = models.ManyToManyField(User, related_name='assigned_tasks')
 
     activity = models.ManyToManyField(
         User,
