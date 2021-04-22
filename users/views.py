@@ -18,7 +18,7 @@ def logout_required(function=None, logout_url=settings.LOGOUT_URL):
     return actual_decorator
 
 def tasks(request):
-    tasks_list = Task.objects.all()
+    tasks_list = request.user.assigned_tasks.all()
     context = {
         'tasks': tasks_list,
         'title': 'Tareas'
