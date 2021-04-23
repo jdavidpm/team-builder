@@ -13,7 +13,10 @@
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Inicia</button>
+                    <button class="btn btn-outline-info" type="submit">Iniciar</button>
+                    <small class="text-muted">
+                        <a class="ml-2" href="{% url 'users-signup' %}">¿Olvidaste tu contraseña?</a>
+                    </small>
                 </div>
             </form>
             <div class="border-top pt-3">
