@@ -1,1 +1,22 @@
 {% extends 'layout/base.html'%}
+
+{% block header %}
+	<div class="masthead row">
+		<div class="col-md-4"></div>
+		<div class="col-md-7">
+			{% for project in request.user.created_projects.all %}
+			<div class="content-section d-flex flex-column align-items-center">
+				<h2 class="text-uppercase">{{ project.name }}</h2>
+				<p class="masthead-subheading text-muted">{{ project.author.first_name }} {{ project.author.last_name }}</p>
+				<p class="masthead-subheading">{{ project.description }}</p>
+				<p class="masthead-subheading">{{ project.status }}</p>
+				<p class="masthead-subheading">{{ project.private }}</p>
+				{% for field in project.fields.all %}
+					<p class="masthead-subheading">{{field}}</p>
+				{% endfor %}
+			</div>
+			{% endfor %}
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+{% endblock header %}

@@ -36,15 +36,15 @@
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<div class="navbar-nav mr-auto"> 
 						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-home"></i></span>Inicio</a></li>
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
 					</div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav">
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>
 						{% if user.is_authenticated %}
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-circle"></i></span>Perfil</a></li>
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a></li>
 						{% else %}
+						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
+							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signup/' %}active{% endif %}" href="{% url 'users-signup'%}"><span style="font-size: 1rem; padding: 0rem 0.5rem 0rem 0.5rem;"><i class="fas fa-user-plus"></i></span>Registro</a></li>
 						{% endif %}
@@ -82,11 +82,15 @@
                     </div>
                     <!-- Footer About Text-->
                     <div class="col-lg-4">
-                        <h4 class="text-uppercase mb-4">Sobre Nosotros</h4>
-                        <p class="lead mb-0">
-                            Un equipo de desarrollares web
-                            .
-                        </p>
+                        <h4 class="text-uppercase mb-4">Más información</h4>
+						<div class="d-flex flex-nowrap align-items-center justify-content-center">
+							<a class="btn btn-outline-light btn-social mx-2" href="{% url 'layout-about' %}"><i class="fas fa-info"></i></a>
+							<p class="lead mb-0 mr-4">Acerca de</p>
+							<a class="btn btn-outline-light btn-social mx-2" href="{% url 'layout-faq' %}"><i class="fas fa-question"></i></a>
+							<p class="lead mb-0">Preguntas Frecuentes</p>
+						</div>
+						<div class="d-flex flex-nowrap align-items-center justify-content-center">							
+						</div>
                     </div>
                 </div>
             </div>

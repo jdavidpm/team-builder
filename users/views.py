@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from .utils import *
-from .models import Task
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):
     actual_decorator = user_passes_test(
@@ -86,4 +85,5 @@ def updateProfile(request, username):
 
 @login_required
 def projects(request):
-    return render(request, 'projects/projects.html', {'title': 'Proyectos'})
+    projects_list = request.user.created_projects.all()
+    return render(request, 'projects/projects.html', {'title': 'Proyectos', 'projects_list': projects_list})
