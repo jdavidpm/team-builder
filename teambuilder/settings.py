@@ -25,7 +25,7 @@ SECRET_KEY = 'f^t*z+!kkueah07n7zs&4y$eap+z$*$=c=p$jan+w5qt2x1+nq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com']
+ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -80,9 +80,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ssiet',
-        'USER': 'ssiet',
+        'USER': 'postgres',
 	    'PASSWORD': 'ssiet',
 	    'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 
