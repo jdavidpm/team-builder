@@ -4,7 +4,7 @@
 {% block header %}
     <div class="masthead d-flex justify-content-center row">
         <div class="col-md-3"></div>
-        <div class="content-section col-md-6">
+        <div class="content-section col-md-6 col-sm-8">
             {% block messages %}{% include "layout/messages.html" %}{% endblock %}
             <form method="POST">
                 {% csrf_token %}
