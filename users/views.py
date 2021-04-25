@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, JustAnotherForm
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
 from .utils import *
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):
@@ -15,14 +14,6 @@ def logout_required(function=None, logout_url=settings.LOGOUT_URL):
     if function:
         return actual_decorator(function)
     return actual_decorator
-
-def tasks(request):
-    tasks_list = request.user.assigned_tasks.all()
-    context = {
-        'tasks': tasks_list,
-        'title': 'Tareas'
-    }
-    return render(request, 'users/tasks.html', context)
 
 @logout_required
 def signup(request):
@@ -82,8 +73,3 @@ def updateProfile(request, username):
     else:
         messages.warning(request, f'No tienes permiso para entrar a esta página')
         return redirect('layout-index')
-
-@login_required
-def projects(request):
-    projects_list = request.user.created_projects.all()
-    return render(request, 'projects/projects.html', {'title': 'Proyectos', 'projects_list': projects_list})

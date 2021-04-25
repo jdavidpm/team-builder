@@ -9,9 +9,7 @@ urlpatterns = [
     path('signup/', views.signup, name='users-signup'),
     path('signin/', authViews.LoginView.as_view(template_name='users/signin.html'), name='users-signin'),
     path('signout/', authViews.LogoutView.as_view(template_name='users/signout.html'), name='users-signout'),
-    path('profile/<str:username>/update/', views.updateProfile, name='users-update-profile'),
-    path('projects/', views.projects, name='users-projects'),
-    path('tasks/', views.tasks, name='users-tasks')
+    path('profile/<str:username>/update/', views.updateProfile, name='users-update-profile')
 ]
 
 if settings.DEBUG:

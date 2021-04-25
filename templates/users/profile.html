@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-6 col-sm-10">
             <div class="content-section">
-                {% block messages %}{% include "layout/messages.html" %}{% endblock %}
+                {% block messages %}{% include "components/messages.html" %}{% endblock %}
                 <div class="text-right"><a href="{{user.profile.get_absolute_url|add:'update/'}}">
                     <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
                 </a></div>

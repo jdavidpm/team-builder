@@ -2,7 +2,7 @@
 
 {% block header %}
 <header class="masthead bg-primary text-white text-center">
-    {% block messages %}{% include "layout/messages.html" %}{% endblock %}
+    {% block messages %}{% include "components/messages.html" %}{% endblock %}
     {% if user.is_authenticated %}
         <div class="d-flex align-content-center row">
             <div class="col-md-4">
