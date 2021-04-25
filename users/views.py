@@ -78,7 +78,7 @@ def updateProfile(request, username):
             'p_form': p_form,
             'title': 'Actualizar Perfil'
         }
-        return render(request, 'users/update-profile.html', context)
+        return render(request, 'users/update_profile.html', context)
     else:
         messages.warning(request, f'No tienes permiso para entrar a esta página')
         return redirect('layout-index')

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from PIL import Image
+from django.urls import reverse
 import datetime
 
 
@@ -101,6 +102,8 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+    def get_absolute_url(self):
+        return reverse('users-profile', kwargs={'username':self.user.username})
 
 # Crea tabla para el campo multivaluado: Trabajos Previos Destacados
 class FeaturedWork(models.Model):

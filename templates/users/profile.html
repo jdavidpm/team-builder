@@ -15,7 +15,7 @@
                                 <img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
                             </div>
                             <div class="col-md-9 col-sm-6 text-left">
-                                <p class="text-muted"> <a href="{% url 'users-profile' u.username  %}">{{ u.first_name }} - {{u.username }}</a></p>
+                                <p class="text-muted"> <a href="{{u.profile.get_absolute_url}}">{{ u.first_name }} - {{u.username }}</a></p>
                                 <p class="text-muted"> {{ u.email }}</p>
                             </div>
                         </div></li>
@@ -27,7 +27,7 @@
         <div class="col-md-6 col-sm-10">
             <div class="content-section">
                 {% block messages %}{% include "layout/messages.html" %}{% endblock %}
-                <div class="text-right"><a href="{% url 'users-update-profile' user.username %}">
+                <div class="text-right"><a href="{{user.profile.get_absolute_url|add:'update/'}}">
                     <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
                 </a></div>
                 <div class="media">
