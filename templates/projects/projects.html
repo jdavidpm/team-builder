@@ -1,22 +1,46 @@
 {% extends 'layout/base.html'%}
 
 {% block header %}
-	<div class="masthead row">
-		<div class="col-md-4"></div>
-		<div class="col-md-7">
-			{% for project in request.user.created_projects.all %}
-			<div class="content-section d-flex flex-column align-items-center">
-				<h2 class="text-uppercase">{{ project.name }}</h2>
-				<p class="masthead-subheading text-muted">{{ project.author.first_name }} {{ project.author.last_name }}</p>
-				<p class="masthead-subheading">{{ project.description }}</p>
-				<p class="masthead-subheading">{{ project.status }}</p>
-				<p class="masthead-subheading">{{ project.private }}</p>
-				{% for field in project.fields.all %}
-					<p class="masthead-subheading">{{field}}</p>
-				{% endfor %}
-			</div>
-			{% endfor %}
+	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline">	
+		<div class="content-section col-md-10 col-sm-10">
+			<h1>Proyectos</h1>
 		</div>
-		<div class="col-md-1"></div>
 	</div>
 {% endblock header %}
+{% block content %}
+	<div id="accordion" class="masthead row mt-4 pt-4 d-flex justify-content-center">
+		<div class="col-md-1"></div>
+		<div class="col-md-7 col-sm-10">
+			{% for project in request.user.created_projects.all %}
+				<div class="mb-5">
+					<div class="card col-md-12 px-0">
+						<div class="card-header" id="card_{{ project.id }}">
+							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
+								<h2 class="text-uppercase">
+									{{forloop.counter}} - {{ project.name }}
+									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+								</h2>
+							</button></span>
+						</div>
+						
+						<div id="collapse_{{ project.id }}" class="collapse" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
+							<div class="card-body">
+								<p class="masthead-subheading text-muted">{{ project.author.first_name }} {{ project.author.last_name }}</p>
+								<p class="masthead-subheading">{{ project.description }}</p>
+								<p class="masthead-subheading">{{ project.status }}</p>
+								<p class="masthead-subheading">{{ project.private }}</p>
+								{% for field in project.fields.all %}
+									<p class="masthead-subheading">{{field}}</p>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="col-md-3 col-sm-10">
+			{% block sidebar %}{% include 'components/sidebar.html'%} {% endblock %}
+		</div>
+		<div class="col-md-1"></div>
+{% endblock content %}

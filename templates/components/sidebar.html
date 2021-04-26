@@ -1,14 +1,12 @@
-{% extends 'layout/base.html' %}
-
-{% block sidebar %}
+<div id="sidebar">
     {% if user.is_authenticated %}
         <div class="content-section">
             <h3>Menú Principal</h3>
             <p class="text-muted"> Plataformas que podrian interesarte</p>
             <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'users-tasks' %}">Últimas Tareas</a></li>
-                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'users-tasks' %}">Nuevas Tareas</a></li>
-                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'users-tasks' %}">Proyectos</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Últimas Tareas</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Nuevas Tareas</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Proyectos</a></li>
             </ul>
         </div>
     {% else %}
@@ -22,4 +20,4 @@
             </ul>
         </div>
     {% endif %}
-{% endblock sidebar %}
+</div>
