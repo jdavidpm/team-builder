@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from json import load
+
+#Read Key, Email and Password
+with open('/etc/teambuilder_config.json') as config_file:
+    config = load(config_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f^t*z+!kkueah07n7zs&4y$eap+z$*$=c=p$jan+w5qt2x1+nq'
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', '65.52.125.181']
 
 
 # Application definition
@@ -80,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ssiet',
-        'USER': 'postgres',
+        'USER': 'ssiet',
 	    'PASSWORD': 'ssiet',
 	    'HOST': 'localhost',
         'PORT': 5432
