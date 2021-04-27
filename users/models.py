@@ -243,49 +243,56 @@ class Team(models.Model):
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     evaluation_p2 = models.DecimalField(
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     evaluation_p3 = models.DecimalField(
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     evaluation_p4 = models.DecimalField(
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     evaluation_p5 = models.DecimalField(
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     evaluation_p6 = models.DecimalField(
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     evaluation_p7 = models.DecimalField(
         max_digits = 3,
         decimal_places = 2,
         validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
-        null = True
+        null = True,
+        blank=True
     )
 
     class Meta:
@@ -302,8 +309,12 @@ class Membership(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="invited_by_memberships",
-        null=True
+        null=True,
+        blank=True
     )
+
+    def __str__(self):
+        return f'{self.team}: {self.user}'
 
 
 class JoinRequest(models.Model):
