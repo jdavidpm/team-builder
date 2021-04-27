@@ -10363,3 +10363,53 @@ button[aria-expanded=true] .text-collapsed {
 .nounderline {
   text-decoration: none !important
 }
+
+.fs-20{
+  font-size: 20rem;
+}
+.fs-18{
+  font-size: 18rem;
+}
+.fs-16{
+  font-size: 16rem;
+}
+.fs-14{
+  font-size: 14rem;
+}
+.fs-12{
+  font-size: 12rem;
+}
+.fs-10{
+  font-size: 10rem;
+}
+.fs-8{
+  font-size: 8rem;
+}
+.fs-6{
+  font-size: 6rem;
+}
+.fs-4{
+  font-size: 4rem;
+}
+.fs-2{
+  font-size: 2rem;
+}
+.fs-1{
+  font-size: 1rem;
+}
+.fs-05{
+  font-size: 0.5rem;
+}
+a.reverse-hover{
+  color: #2C3E50;
+}
+a.reverse-hover:hover{
+  color: #2c3e509a;/*#1ABC9C;*/
+}
+.zoom {
+  transition: transform .2s;
+}
+
+.zoom:hover {
+  transform: scale(1.5);
+}

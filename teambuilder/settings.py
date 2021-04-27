@@ -30,7 +30,7 @@ SECRET_KEY = config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', '65.52.125.181']
+ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', 'localhost']
 
 
 # Application definition
