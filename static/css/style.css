@@ -10413,3 +10413,10 @@ a.reverse-hover:hover{
 .zoom:hover {
   transform: scale(1.5);
 }
+
+.block-a {
+    text-decoration: none;
+    background:red;
+    border: 0;
+    display: block;
+}

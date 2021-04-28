@@ -2,57 +2,68 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-    <div class="masthead row justify-content-center">
-        <div class="col-md-1 col-sm-10"></div>
-        <div class="col-md-4 col-sm-10">
-            <div class="content-section">
-                <h3>Perfiles Similares</h3>
-                <p class='text-muted'> Basados en tus intereses
-                <ul class="list-group">
-                    {% for u in users %}
-                        <li class="list-group-item list-group-item-light mb-2"><div class="row">
-                            <div class="col-md-3 col-sm-6">
-                                <img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
-                            </div>
-                            <div class="col-md-9 col-sm-6 text-left">
-                                <p class="text-muted"> <a href="{{u.profile.get_absolute_url}}">{{ u.first_name }} - {{u.username }}</a></p>
-                                <p class="text-muted"> {{ u.email }}</p>
-                            </div>
-                        </div></li>
-                    {% endfor %}
-                </ul>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-10">
-            <div class="content-section">
-                {% block messages %}{% include "components/messages.html" %}{% endblock %}
-                <div class="text-right"><a href="{{user.profile.get_absolute_url|add:'update/'}}">
-                    <span style="font-size: 2rem; padding: 0.5rem;"><i class="fas fa-user-edit text-dark"></i></span>
-                </a></div>
-                <div class="media">
-                    <div class="media-body text-center">
-                        <img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
-                        <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
-                        <p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <div class="content-section d-flex flex-wrap justify-content-center">
-                    {% for field in fields %}
-                        <div class="content-section col-md-4 my-2 mx-4">
-                            <div class="text-left">
-                                <h4><i class="{{ field.icon }} pr-2"></i>{{ field.name }}</h4>
-                                {% for value in field.values %}
-                                    <p>{{ value.name }}</p>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div> 
-            </div> 
-        </div>
-        <div class="col-md-1"></div>
-    </div>
+	<div class="masthead row d-flex justify-content-center">
+		<div class="col-md-1 col-sm-10"></div>
+		<div class="col-md-3 col-sm-10">
+			<div class="content-section">
+				<h3>Perfiles Similares</h3>
+				<p class='text-muted'>
+					Basados en tus intereses
+					<ul class="list-group">
+						{% for u in users %}
+							<li class="list-group-item list-group-item-light">
+								<div class="row">
+									<a class="d-flex flex-row nounderline" href="{{u.profile.get_absolute_url}}">
+										<div class="col-md-3 mr-2">
+											<img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
+										</div>
+										<div class="col-md-9 text-left">
+											<p class="text-muted"> {{ u.first_name }} - {{u.username }}</p>
+											<p class="text-muted"> {{ u.email }}</p>
+										</div>
+									</a>
+								</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</p>
+			</div>
+		</div>
+		<div class="col-md-7 col-sm-10">
+			<div class="content-section">
+				{% block messages %}{% include "components/messages.html" %}{% endblock %}
+				<div class="text-right"><a href="{{user.profile.get_absolute_url|add:'update/'}}">
+					<span class="fs-2 m-1"><i class="fas fa-user-edit text-dark"></i></span>
+				</a></div>
+				<div class="media">
+					<div class="media-body text-center">
+						<img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
+						<h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+						<p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-center">
+				<div class="content-section d-flex flex-wrap justify-content-center ">
+					{% for field in fields %}
+						<div class="col-md-8 my-2 d-flex text-center flex-column px-0 card">
+							<div class="card-header" id="card_{{ forloop.counter }}">
+								<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse_{{ forloop.counter }}">
+									<i class="{{ field.icon }} fs-4"></i><h4>{{ field.name }}</h4>
+								</button></span>
+							</div>
+							<div id="collapse_{{ forloop.counter }}" class="collapse" aria-labelledby="card_{{ forloop.counter }}" data-parent="#accordion">
+								<div class="masthead-subheading fs-05 card-body">
+									{% for value in field.values %}
+										<p class="text-left">{{ value.name }}</p>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div> 
+			</div> 
+		</div>
+		<div class="col-md-1"></div>
+	</div>
 {% endblock header %}
