@@ -9,21 +9,13 @@
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
-					<legend class="border-bottom mb-4">Iniciar Sesión</legend>
+					<legend class="border-bottom mb-4">Reiniciar Contraseña</legend>
 					{{ form|crispy }}
 				</fieldset>
 				<div class="form-group">
-					<button class="btn btn-outline-info" type="submit">Iniciar</button>
-					<small class="text-muted">
-						<a class="ml-2" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
-					</small>
+					<button class="btn btn-outline-info" type="submit">Reiniciar</button>
 				</div>
 			</form>
-			<div class="border-top pt-3">
-				<small class="text-muted">
-					¿No tienes cuenta? <a class="ml-2" href="{% url 'users-signup' %}">Registrate Ahora</a>
-				</small>
-			</div>
 		</div>
 		<div class="col-md-3"></div>
 	</div>
