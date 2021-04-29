@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from users.models import Task
 
-
 @login_required
 def projects(request):
     projects_list = request.user.created_projects.all()
@@ -10,15 +9,15 @@ def projects(request):
 
 
 @login_required
-def schedule(request):
-    return project_filtered_schedule(request)
+def tasks(request):
+    return project_tasks(request)
 
 @login_required
-def project_filtered_schedule(request, project=""):
-    if not project:
+def project_tasks(request, project_id=""):
+    if not project_id:
         tasks_list = request.user.assigned_tasks.all().order_by('due_date')
     else:
-        tasks_list = request.user.assigned_tasks.filter(project__name=project).order_by('due_date')
+        tasks_list = request.user.assigned_tasks.filter(project__id=project_id).order_by('due_date')
     
     teams_list = request.user.membership_teams.all()
     status_list = Task.STATUS_CHOICES
