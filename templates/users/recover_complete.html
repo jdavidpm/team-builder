@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+
+{% block header %}  
+	<div class="masthead d-flex justify-content-center flex-column mx-4">
+
+		<div class="alert alert-success">
+			Tu contraseña acaba de ser reiniciada.
+		</div>
+		<a class="ml-2" href="{% url 'users-signin' %}">Inicia Sesión</a>
+	</div>
+{% endblock header %}
