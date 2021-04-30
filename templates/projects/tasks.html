@@ -5,40 +5,68 @@
     <div class="col-md-3 col-sm-10">
         <div class="content-section">
             <p> Filtrar por: </p>
-            <ul class="list-group">
-
-                <button class="btn btn-dark mt-2" data-toggle="collapse" data-target="#projects-list">Proyectos</button>
-                <div id="projects-list" class="collapse show">
-                    <li class="list-group-item">
-                        <a class="text-dark " href="{% url 'projects-tasks' %}"> Todos los proyectos </a>
-                    </li>
-                    {% for project in projects %}
-                    <li class="list-group-item">
-                        <a class="text-dark" href="{% url 'projects-tasks-project' project.id %}"> {{ project }} </a>
-                    </li>
-                    {% endfor %}
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header bg-dark" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne">
+                                Proyecto
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse collapsed" aria-labelledby="headingOne"
+                        data-parent="#accordion">
+                        <li class="list-group-item">
+                            <a class="text-dark " href="{% url 'projects-tasks' %}"> Todos los proyectos </a>
+                        </li>
+                        {% for project in projects %}
+                        <li class="list-group-item">
+                            <a class="text-dark" href="{% url 'projects-filteredtasks' 'project' project.id %}">
+                                {{ project }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </div>
                 </div>
-
-                <button class="btn btn-dark mt-2" data-toggle="collapse" data-target="#teams-list">Equipos</button>
-                <div id="teams-list" class="collapse show">
-                    {% for team in teams %}
-                    <li class="list-group-item">
-                        <a href="#"> {{ team }} </a>
-                    </li>
-                    {% endfor %}
+                <div class="card">
+                    <div class="card-header bg-dark" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-light" data-toggle="collapse" data-target="#collapseTwo"
+                                aria-expanded="false" aria-controls="collapseTwo">
+                                Equipo
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <li class="list-group-item">
+                            <a class="text-dark " href="{% url 'projects-tasks' %}"> Todos los equipos </a>
+                        </li>
+                        {% for team in teams %}
+                        <li class="list-group-item">
+                            <a href="{% url 'projects-filteredtasks' 'team' team.id %}"> {{ team }} </a>
+                        </li>
+                        {% endfor %}
+                    </div>
                 </div>
-
-                <button class="btn btn-dark mt-2" data-toggle="collapse" data-target="#status-list">Estado</button>
-                <div id="status-list" class="collapse show">
-                    {% for status in statuses %}
-                    <li class="list-group-item">
-                        <a href="#"> {{ status.1 }} </a>
-                    </li>
-                    {% endfor %}
+                <div class="card">
+                    <div class="card-header bg-dark" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-light" data-toggle="collapse" data-target="#collapseThree"
+                                aria-expanded="false" aria-controls="collapseThree">
+                                Estado
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        {% for status in statuses %}
+                        <li class="list-group-item">
+                            <a href="#"> {{ status.1 }} </a>
+                        </li>
+                        {% endfor %}
+                    </div>
                 </div>
-
-            </ul>
-
+            </div>
         </div>
     </div>
     <div class="col-md-7 col-sm-10">
@@ -51,10 +79,9 @@
                         <small>{{ task.get_status_display }} </small><br>
                         <small class="text-muted">Vence: {{ task.due_date }}</small>
                     </div>
+                    <h5 class="mb-0"><a class="article-title" href="#">{{ task.name }}</a></h5>
                     <small> Proyecto: <a href="#">{{ task.project }}</a></small>
-                    <h5><a class="article-title" href="#">{{ task.name }}</a></h5>
                 </div>
-
             </article>
             {% endfor %}
         </div>
