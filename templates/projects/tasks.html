@@ -8,16 +8,19 @@
             <ul class="list-group">
 
                 <button class="btn btn-dark mt-2" data-toggle="collapse" data-target="#projects-list">Proyectos</button>
-                <div id="projects-list" class="collapse">
+                <div id="projects-list" class="collapse show">
+                    <li class="list-group-item">
+                        <a class="text-dark " href="{% url 'projects-tasks' %}"> Todos los proyectos </a>
+                    </li>
                     {% for project in projects %}
                     <li class="list-group-item">
-                        <a href="#"> {{ project }} </a>
+                        <a class="text-dark" href="{% url 'projects-tasks-project' project.id %}"> {{ project }} </a>
                     </li>
                     {% endfor %}
                 </div>
 
                 <button class="btn btn-dark mt-2" data-toggle="collapse" data-target="#teams-list">Equipos</button>
-                <div id="teams-list" class="collapse">
+                <div id="teams-list" class="collapse show">
                     {% for team in teams %}
                     <li class="list-group-item">
                         <a href="#"> {{ team }} </a>
@@ -26,7 +29,7 @@
                 </div>
 
                 <button class="btn btn-dark mt-2" data-toggle="collapse" data-target="#status-list">Estado</button>
-                <div id="status-list" class="collapse">
+                <div id="status-list" class="collapse show">
                     {% for status in statuses %}
                     <li class="list-group-item">
                         <a href="#"> {{ status.1 }} </a>
