@@ -1,13 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from users.models import Task, Team
 
 @login_required
-def projects(request):
-    projects_list = request.user.created_projects.all()
-    return render(request, 'projects/projects.html', {'title': 'Proyectos', 'projects_list': projects_list})
+def projects_list(request):
+    return render(request, 'projects/projects.html', {'title': 'Proyectos'})
 
+@login_required
+def project_item(request, id):
+    project = request.user.created_projects.all().filter(id=id)
+    if len(project):
+        project = project[0]
+        return render(request, 'projects/project.html', {'title': 'Proyecto - ' + str(project.name), 'project': project})
+    else:
+        return redirect('projects-list')
 
+def project_update(request, id):
+    project = request.user.created_projects.all().filter(id=id)
+    if len(project):
+        project = project[0]
+        return render(request, 'projects/project_update.html', {'title': 'Proyecto - ' + str(project.name), 'project': project})
+    else:
+        return redirect('projects-list')
 @login_required
 def tasks(request):
     return filtered_tasks(request)

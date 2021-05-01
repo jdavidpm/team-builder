@@ -17,14 +17,13 @@
 				<ul class="list-group">
 					{% for u in users %}
 						<li class="list-group-item list-group-item-light">
-							<div class="row">
-								<a class="d-flex flex-row nounderline" href="{{u.profile.get_absolute_url}}">
-									<div class="col-md-3 mr-2">
+							<div>
+								<a class="row nounderline" href="{{u.profile.get_absolute_url}}">
+									<div class="col-md-3 col-sm-3">
 										<img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
 									</div>
-									<div class="col-md-9 text-left">
-										<p class="text-muted"> {{ u.first_name }} - {{u.username }}</p>
-										<p class="text-muted"> {{ u.email }}</p>
+									<div class="col-md-9 col-sm-9 text-left fs-1 d-flex align-items-center pl-5">
+										<p class="font-weight-bold text-secondary"> {{ u.first_name }}</p>
 									</div>
 								</a>
 							</div>

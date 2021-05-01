@@ -3,21 +3,20 @@
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline">	
 		<div class="col-md-10 col-sm-10">
-			<h1>Proyectos</h1>
+			<h1>{{ project.name }}</h1>
 		</div>
 	</div>
 {% endblock header %}
 {% block content %}
 	<div id="accordion" class="masthead row mt-4 pt-4 d-flex justify-content-center">
 		<div class="col-md-1"></div>
-		<div class="col-md-7 col-sm-10">
-			{% for project in request.user.created_projects.all %}
+		<div class="col-md-10 col-sm-10">
 				<div class="mb-5">
 					<div class="card col-md-12 px-0">
 						<div class="card-header d-flex" id="card_{{ project.id }}">
 							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
-								<h2 class="text-uppercase text-secondary">
-									{{forloop.counter}} - {{ project.name }}
+								<h2 class="text-secondary">
+									Detalles
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 								</h2>
@@ -43,10 +42,6 @@
 						</div>
 					</div>
 				</div>
-			{% endfor %}
-		</div>
-		<div class="col-md-3 col-sm-10">
-			{% block sidebar %}{% include 'components/sidebar.html'%} {% endblock %}
 		</div>
 		<div class="col-md-1"></div>
 {% endblock content %}
