@@ -1,23 +1,47 @@
 <div id="sidebar">
-    {% if user.is_authenticated %}
-        <div class="content-section">
-            <h3>Menú Principal</h3>
-            <p class="text-muted"> Plataformas que podrian interesarte</p>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Últimas Tareas</a></li>
-                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Nuevas Tareas</a></li>
-                <li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Proyectos</a></li>
-            </ul>
-        </div>
-    {% else %}
-        <div class="content-section">
-            <h3>Relacionado</h3>
-            <p class="text-muted"> Plataformas que podrian interesarte</p>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><a class="nav-link" href="https://moodle.org/"><i class="fas fa-graduation-cap mr-2"></i>Moodle</a></li>
-                <li class="list-group-item list-group-item-light"><a class="nav-link"href="https://classroom.google.com/"><i class="fab fa-google mr-2"></i>Google Classrom</a></li>
-                <li class="list-group-item list-group-item-light"><a class="nav-link"href="https://www.microsoft.com/microsoft-teams/"><i class="fab fa-microsoft mr-2"></i>Microsoft Teams</a></li>
-            </ul>
-        </div>
-    {% endif %}
+	{% if request.path == '/' %}
+		<div class="content-section">
+			<h3>Menú Principal</h3>
+			<p class="text-muted"> Plataformas que podrian interesarte</p>
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Últimas Tareas</a></li>
+				<li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Nuevas Tareas</a></li>
+				<li class="list-group-item list-group-item-light"><a class="nav-link text-muted" href="{% url 'projects-tasks' %}">Proyectos</a></li>
+			</ul>
+		</div>
+	{% elif request.path == '/profile/'|add:user.username|add:'/' %}
+		<div class="content-section">
+			<h3>Perfiles Similares</h3>
+			<p class='text-muted'>
+				Basados en tus intereses
+				<ul class="list-group">
+					{% for u in users %}
+						<li class="list-group-item list-group-item-light">
+							<div class="row">
+								<a class="d-flex flex-row nounderline" href="{{u.profile.get_absolute_url}}">
+									<div class="col-md-3 mr-2">
+										<img class="rounded-circle thumbnail" src="{{ u.profile.image.url }}"/>	
+									</div>
+									<div class="col-md-9 text-left">
+										<p class="text-muted"> {{ u.first_name }} - {{u.username }}</p>
+										<p class="text-muted"> {{ u.email }}</p>
+									</div>
+								</a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</p>
+		</div>
+	{% else %}
+		<div class="content-section">
+			<h3>Relacionado</h3>
+			<p class="text-muted"> Plataformas que podrian interesarte</p>
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-light"><a class="nav-link" href="https://moodle.org/"><i class="fas fa-graduation-cap mr-2"></i>Moodle</a></li>
+				<li class="list-group-item list-group-item-light"><a class="nav-link"href="https://classroom.google.com/"><i class="fab fa-google mr-2"></i>Google Classrom</a></li>
+				<li class="list-group-item list-group-item-light"><a class="nav-link"href="https://www.microsoft.com/microsoft-teams/"><i class="fab fa-microsoft mr-2"></i>Microsoft Teams</a></li>
+			</ul>
+		</div>
+	{% endif %}
 </div>
