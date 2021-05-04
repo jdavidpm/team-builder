@@ -1,47 +1,25 @@
-{% extends 'layout/base.html'%}
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
 
-{% block header %}
-	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline">	
-		<div class="col-md-10 col-sm-10">
-			<h1>{{ project.name }}</h1>
-		</div>
-	</div>
-{% endblock header %}
 {% block content %}
-	<div id="accordion" class="masthead row mt-4 pt-4 d-flex justify-content-center">
-		<div class="col-md-1"></div>
-		<div class="col-md-10 col-sm-10">
-				<div class="mb-5">
-					<div class="card col-md-12 px-0">
-						<div class="card-header d-flex" id="card_{{ project.id }}">
-							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
-								<h2 class="text-secondary">
-									Detalles
-									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
-									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
-								</h2>
-							</button></span>
-							<a class="ml-2 fs-2 ml-auto pr-2 pt-2" href="{{ project.get_absolute_url|add:'update/' }}">
-								<i class="fas fa-cogs text-secondary"></i>
-							</a>
-							
-						</div>
-						
-						<div id="collapse_{{ project.id }}" class="collapse" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
-							<div class="card-body">
-								<h3 class="masthead-subheading"><span class="text-muted">Autor: </span>{{ project.author.first_name }} {{ project.author.last_name }}</h3>
-								<h4 class="text-muted mt-4">Descripción: </h4>
-								<h3 class="masthead-subheading">{{ project.description }}</h3>
-								<h3 class="masthead-subheading text-capitalize mt-4"><span class="text-muted">Estado: </span>{{ project.status }}</h3>
-								<h3 class="masthead-subheading mt-4"><span class="text-muted">Privado: </span>{% if project.private %}Sí {% else %} No {% endif %}</h3>
-								<h4 class="text-muted mt-4">Campos: </h4>
-								{% for field in project.fields.all %}
-									<h3 class="masthead-subheading">{{field}}</h3>
-								{% endfor %}
-							</div>
-						</div>
-					</div>
+	<div class="masthead row justify-content-center">
+		<div class="col-md-3"></div>
+		<div class="content-section col-md-6 col-sm-10">
+			<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<fieldset class="form-group">
+					<legend class="border-bottom mb-4">Actualizar Projecto</legend>
+					{{ u_form|crispy }}
+					<span class="text-center">{{ t_form|crispy }}</span>
+				</fieldset>
+				<div class="form-group">
+					<button class="btn btn-outline-info" type="submit">Guardar</button>
 				</div>
+			</form>
 		</div>
-		<div class="col-md-1"></div>
+		<div class="col-md-3"></div>
+	</div>
 {% endblock content %}
+{% block script %}
+	{{ u_form.media }}
+{% endblock script %}

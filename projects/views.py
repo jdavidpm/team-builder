@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from users.models import Task, Team
+from .forms import ProjectUpdateForm
 
 @login_required
 def projects_list(request):
@@ -15,11 +17,25 @@ def project_item(request, id):
     else:
         return redirect('projects-list')
 
+@login_required
 def project_update(request, id):
     project = request.user.created_projects.all().filter(id=id)
     if len(project):
         project = project[0]
-        return render(request, 'projects/project_update.html', {'title': 'Proyecto - ' + str(project.name), 'project': project})
+        if request.method == 'POST':
+            u_form = ProjectUpdateForm(request.POST, instance=project)
+            
+            if u_form.is_valid():
+                u_form.save()
+                messages.success(request, f'¡El proyecto fue actualizada con éxito!')
+                return redirect('projects-item', id=project.id)
+        else:
+            u_form = ProjectUpdateForm(instance=project)
+        context = {
+			'u_form': u_form,
+			'title': 'Proyecto - ' + str(project.name)
+		}
+        return render(request, 'projects/project_update.html', context)
     else:
         return redirect('projects-list')
 @login_required

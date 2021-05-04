@@ -5,8 +5,6 @@ from django.conf import settings
 
 class ToggleWidget(forms.widgets.CheckboxInput):
     class Media:
-        css = {'all': (
-            "https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css", )}
         js = ("https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js",)
 
     def __init__(self, attrs=None, *args, **kwargs):
