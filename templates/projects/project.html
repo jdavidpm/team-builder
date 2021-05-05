@@ -2,12 +2,12 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline">	
-		<div class="col-md-1"></div>
-		<div class="col-md-10 col-sm-10">
-			<h1>{{ project.name }}</h1>
+		<div class="col-md-2"></div>
+		<div class="col-md-8 col-sm-10 jumbotron">
+			<h1 class="fs-4">{{ project.name }}</h1>
 		</div>
-		<div class="col-md-1">
-		<a class="ml-2 fs-3 ml-auto pr-2 pt-2 rounded" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
+		<div class="col-md-2">
+			<a class="ml-2 fs-3 ml-auto pr-2 pt-2 rounded" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
 				<i class="fas fa-arrow-left text-secondary"></i>
 			</a>
 		</div>
@@ -15,8 +15,8 @@
 {% endblock header %}
 {% block content %}
 	<div id="accordion" class="masthead row mt-4 pt-4 d-flex justify-content-center">
-		<div class="col-md-1"></div>
-		<div class="col-md-10 col-sm-10">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 col-sm-10">
 				<div class="mb-5">
 					<div class="card col-md-12 px-0">
 						<div class="card-header d-flex" id="card_{{ project.id }}">
@@ -34,20 +34,32 @@
 						</div>
 						
 						<div id="collapse_{{ project.id }}" class="collapse" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
-							<div class="card-body">
-								<h3 class="masthead-subheading"><span class="text-muted">Autor: </span>{{ project.author.first_name }} {{ project.author.last_name }}</h3>
-								<h4 class="text-muted mt-4">Descripción: </h4>
-								<h3 class="masthead-subheading">{{ project.description }}</h3>
-								<h3 class="masthead-subheading text-capitalize mt-4"><span class="text-muted">Estado: </span>{{ project.status }}</h3>
-								<h3 class="masthead-subheading mt-4"><span class="text-muted">Privado: </span>{% if project.private %}Sí {% else %} No {% endif %}</h3>
-								<h4 class="text-muted mt-4">Campos: </h4>
-								{% for field in project.fields.all %}
-									<h3 class="masthead-subheading">{{field}}</h3>
-								{% endfor %}
-							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<h3 class="masthead-subheading mt-2"><span class="text-muted">Autor: </span>{{ project.author.first_name }} {{ project.author.last_name }}</h3>
+								</li>
+								<li class="list-group-item">
+									<h3 class="masthead-subheading text-muted mt-2">Descripción: </h3>
+									<h3 class="masthead-subheading ml-5">{{ project.description }}</h3>
+								</li>
+								<li class="list-group-item">
+									<h3 class="masthead-subheading text-capitalize mt-2"><span class="text-muted">Estado: </span>{{ project.status }}</h3>
+								</li>
+								<li class="list-group-item">
+									<h3 class="masthead-subheading mt-2"><span class="text-muted">Privado: </span>{% if project.private %}Sí {% else %} No {% endif %}</h3>
+								</li>
+								<li class="list-group-item">
+									<h3 class=" masthead-subheading text-muted mt-2">Campos: </h3>
+									<ul>
+										{% for field in project.fields.all %}
+											<li class="ml-5"><h3 class="masthead-subheading">{{field}}</h3></li>
+										{% endfor %}
+									</ul>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 		</div>
-		<div class="col-md-1"></div>
+		<div class="col-md-2"></div>
 {% endblock content %}

@@ -8,7 +8,7 @@
 			{% block sidebar %}{% include "components/sidebar.html" %}{% endblock sidebar %}
 		</div>
 		<div class="col-md-7 col-sm-10">
-			<div class="content-section">
+			<div class="jumbotron">
 				{% block messages %}{% include "components/messages.html" %}{% endblock %}
 				<div class="text-right"><a href="{{user.profile.get_absolute_url|add:'update/'}}">
 					<span class="fs-2 m-1"><i class="fas fa-user-edit text-dark"></i></span>
@@ -21,7 +21,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="content-section">
+			<div class="jumbotron">
 				<div class="tab-content">
 					{% for field in fields %}
 					<div id="card_{{ forloop.counter }}" class="container tab-pane fade">
