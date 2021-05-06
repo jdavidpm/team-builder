@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from users.models import Task, Team
+from users.models import Task, Team, Project
+from django.utils import timezone
 from .forms import ProjectUpdateForm
 
 @login_required
@@ -45,28 +46,38 @@ def tasks(request):
 
 @login_required
 def filtered_tasks(request, filter_by="", object_id=""):
-	if not filter_by:
-		tasks_list = request.user.assigned_tasks.all().order_by('due_date')
-	elif filter_by == "project":
-		tasks_list = request.user.assigned_tasks.filter(project__id=object_id).order_by('due_date')
-	elif filter_by == "team":
-		team = Team.objects.get(pk=object_id)
-		tasks_list = []
-		for project in team.projects.all():
-			tasks_list += [task for task in project.task_set.all() if request.user in task.assigned_members.all()]
-			tasks_list.sort(key=lambda x: x.due_date)
-	
-	teams_list = request.user.membership_teams.all()
-	status_list = Task.STATUS_CHOICES
+    if not filter_by:
+        tasks_list = request.user.assigned_tasks.all().order_by('due_date')
+        filter_string = ""
+    elif filter_by == "project":
+        tasks_list = request.user.assigned_tasks.filter(project__id=object_id).order_by('due_date')
+        filter_string = Project.objects.get(pk=object_id).name
+    elif filter_by == "team":
+        team = Team.objects.get(pk=object_id)
+        tasks_list = []
+        for project in team.projects.all():
+            tasks_list += [task for task in project.task_set.all() if request.user in task.assigned_members.all()]
+            tasks_list.sort(key=lambda x: x.due_date)
+        filter_string = team.name
+    elif filter_by == "status":
+        status_string = Task.STATUS_CHOICES[object_id][0]
+        tasks_list = request.user.assigned_tasks.filter(status=status_string).order_by('due_date')
+        filter_string = status_string
 
-	projects_list = []
-	for team in teams_list:
-		projects_list += team.projects.all()
+    teams_list = request.user.membership_teams.all()
+    projects_list = []
+    for team in teams_list:
+        projects_list += team.projects.all()
 
-	context = {
-		'tasks': tasks_list,
-		'projects': projects_list,
-		'teams': teams_list,
-		'statuses': status_list,
-	}
-	return render(request, 'projects/tasks.html', context)
+    context = {
+        'pending_tasks': [task for task in tasks_list if task.status == 'pendiente'],
+        'in_dev_tasks': [task for task in tasks_list if task.status == 'en desarrollo'],
+        'in_review_tasks': [task for task in tasks_list if task.status == 'en revision'],
+        'completed_tasks': [task for task in tasks_list if task.status == 'completada'],
+        'projects': projects_list,
+        'teams': request.user.membership_teams.all(),
+        'statuses': Task.STATUS_CHOICES,
+        'filter': filter_string,
+        'timezone_now': timezone.now()
+    }
+    return render(request, 'projects/tasks.html', context)
