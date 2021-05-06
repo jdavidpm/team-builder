@@ -13,7 +13,15 @@ admin.site.register(Student)
 admin.site.register(Academy)
 admin.site.register(Subject)
 admin.site.register(Project)
-admin.site.register(Team)
+
+class MembersInlineAdmin(admin.TabularInline):
+    model = Team.members.through
+
+class TeamAdmin(admin.ModelAdmin):
+    fields = ['founder', 'name', 'projects',]
+    inlines = [MembersInlineAdmin, ]
+
+admin.site.register(Team, TeamAdmin)
 admin.site.register(Membership)
 admin.site.register(JoinRequest)
 admin.site.register(JoinInvitation)

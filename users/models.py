@@ -102,6 +102,7 @@ class Profile(models.Model):
 			output_size = (300, 300)
 			img.thumbnail(output_size)
 			img.save(self.image.path)
+
 	def get_absolute_url(self):
 		return reverse('users-profile', kwargs={'username':self.user.username})
 
@@ -133,12 +134,12 @@ class Student(models.Model):
 	
 	# Fields
 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-	income_year = models.IntegerField(
+	entry_year = models.IntegerField(
 		choices=YEAR_CHOICES,
 		null=False,
 		blank=False,
 	)
-	income_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=False, blank=False)
+	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=False, blank=False)
 	career = models.ForeignKey(Career, on_delete=models.PROTECT)
 
 
@@ -300,8 +301,12 @@ class Team(models.Model):
 
 	class Meta:
 		unique_together = ('founder', 'name')
+
 	def __str__(self):
 		return f'{self.name}'
+
+	def get_absolute_url(self):
+		return reverse('teams-item', kwargs={'id':self.id})
 
 
 class Membership(models.Model):
