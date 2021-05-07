@@ -13,13 +13,15 @@
 						{% if user.is_authenticated %}
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><span class="px-2"><i class="fas fa-user-circle"></i></span>Perfil</a></li>
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="px-2"><i class="fas fa-tools"></i></span>Herramientas</a>
+								<a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="px-2"><i class="fas fa-tools"></i></span>Herramientas</a>
 								<div class="dropdown-menu text-capitalize" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item {% if request.path == '/teams/' %}active{% endif %}" href="{% url 'teams-list' %}">Equipos</a>
 									<a class="dropdown-item {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects-list'%}">Proyectos</a>
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="#">HEXACO</a>
 									<a class="dropdown-item" href="{% url 'projects-tasks'%}">Tareas</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item {% if request.path == '/tools/' %}active{% endif %}" href="{% url 'layout-tools'%}">Todas</a>
 								</div>
 							</li>
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><span class="px-2"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a></li>
