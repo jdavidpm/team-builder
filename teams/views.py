@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import TeamUpdateForm
+from .forms import TeamUpdateForm, TeamCreateForm
 
 def teams(request):
 	return render(request, 'teams/teams.html')
@@ -33,3 +34,19 @@ def team_update(request, id):
 		return render(request, 'teams/team_update.html', context)
 	else:
 		return redirect('teams-list')
+
+@login_required
+def team_create(request): 
+	if request.method == 'POST':
+		c_form = TeamCreateForm(request.POST, initial={'founder': request.user, 'members': request.user})
+		if c_form.is_valid():
+			c_form.save()
+			messages.success(request, f'¡El equipo fue creado con éxito!')
+			return redirect('teams-list')
+	else:
+		c_form = TeamCreateForm(initial={'founder': request.user, 'members': request.user})
+	context = {
+		'c_form': c_form,
+		'title': 'Crear equipo'
+	}
+	return render(request, 'teams/team_create.html', context)
