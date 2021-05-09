@@ -1,0 +1,40 @@
+<div class="list-group mb-2">
+    <a class="list-group-item list-group-item-action bg-light"
+        data-toggle="collapse" href="#{{ tasks_type }}{{ view }}">
+        {% if tasks_type == 'Pendientes' %}
+        <span class="badge badge-pill badge-danger">
+        {% elif tasks_type == 'En desarrollo' %}
+        <span class="badge badge-pill badge-info">
+        {% elif tasks_type == 'Listas para revisión' %}
+        <span class="badge badge-pill badge-warning">
+        {% elif tasks_type == 'Completadas' %}
+        <span class="badge badge-pill badge-success">
+        {% endif %}
+            {{ tasks_type }}: {{ tasks_list|length }}
+        </span>
+    </a>
+    <div class="collapse show tasksList" id="{{ tasks_type }}{{ view }}">
+    {% for task in tasks_list %}
+        <div class="taskdiv content-section mx-2 border mt-2 border-dark rounded taskbox">
+            <a class="tasklink" href="{% url 'projects-list' %}"></a>
+            <div>
+                <p class="h6 mb-0">{{ task.name }}</p> 
+                {% if tasks_type == 'Completadas' %}
+                <span class="badge badge-pill badge-dark">Vencimiento:
+                {% elif task.due_date < timezone_now %}
+                <span class="badge badge-pill badge-danger">Venció:
+                {% else %}
+                <span class="badge badge-pill badge-dark">Vence:
+                {% endif %}
+                {% if task.due_date|date:"j" == timezone_now|date:"j" %}
+                    Hoy a las {{ task.due_date|date:"H:i" }}
+                {% else %}
+                    {{ task.due_date|date:"l" }} {{ task.due_date }}
+                {% endif %}
+                </span>
+                <small>| Proyecto: {{ task.project }}</small>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="col-md-3 col-sm-10">
+    <div class="content-section">
+        <div class="list-group mb-2">
+            {% if request.resolver_match.kwargs.filter_by %}
+            <a href="{% url 'projects-tasks' %}" class="list-group-item list-group-item-action border-dark h6">
+            {% else %}
+            <a href="{% url 'projects-tasks' %}" class="list-group-item list-group-item-action border-dark active h6">
+            {% endif %}
+                Tareas de todos mis equipos y proyectos
+            </a>
+        </div>
+        <div class="list-group mb-2">
+            <a class="list-group-item list-group-item-action text-center bg-secondary text-white"
+                data-toggle="collapse" href="#projectsList">
+                Proyectos
+            </a>
+            <div class="collapse show" id="projectsList">
+                {% for project in projects %}
+                    {% if request.resolver_match.kwargs.filter_by != 'project' or request.resolver_match.kwargs.object_id != project.id %}
+                <a href="{% url 'projects-filteredtasks' 'project' project.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem pt-1 pb-1">{{ project }}</a>
+                    {% else %}
+                <a href="{% url 'projects-filteredtasks' 'project' project.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem active pt-1 pb-1">{{ project }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action text-center bg-secondary text-white"
+                data-toggle="collapse" href="#teamsList">
+                Equipos
+            </a>
+            <div class="collapse show" id="teamsList">
+                {% for team in teams %}
+                    {% if request.resolver_match.kwargs.filter_by != 'team' or request.resolver_match.kwargs.object_id != team.id %}
+                <a href="{% url 'projects-filteredtasks' 'team' team.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem pt-1 pb-1">{{ team }}</a>
+                    {% else %}
+                <a href="{% url 'projects-filteredtasks' 'team' team.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem active pt-1 pb-1">{{ team }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
