@@ -1,186 +1,56 @@
 {% extends 'layout/base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="masthead row justify-content-center">
-    <div class="col-md-3 col-sm-10">
-        <div class="content-section">
-            <div class="content-section">
-                <a class="text-dark " href="{% url 'projects-tasks' %}"> Todas mis tareas </a>
+    {% include "components/tasks_sidebar.html" %}
+    <div class="col-md-7 col-sm-10" id="tasksContent">
+        <h4 class="text-secondary">Tareas 
+            {% if request.resolver_match.kwargs.filter_by == 'project' %}
+            > Proyectos > {{ filter_object }}
+            {% elif request.resolver_match.kwargs.filter_by == 'team' %}
+            > Equipos > {{ filter_object }}
+            {% endif %}
+        </h4>
+        <ul class="nav nav-pills mb-2">
+            <li class="nav-item">
+              <a class="nav-link h6 active" id="showUserTasks" href="#">Asignadas a mí</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link h6" id="showAllTasks" href="#">Todas</a>
+            </li>
+        </ul>
+        <div id="userTasks" style="display: block">
+        {% if pending_tasks.user %}
+            {% include "components/tasks-card.html" with tasks_type='Pendientes' view='U' tasks_list=pending_tasks.user %}
+        {% endif %}
+        {% if in_dev_tasks.user %}
+            {% include "components/tasks-card.html" with tasks_type='En desarrollo' view='U' tasks_list=in_dev_tasks.user %}
+        {% endif %}
+        {% if in_review_tasks.user %}
+            {% include "components/tasks-card.html" with tasks_type='Listas para revisión' view='U' tasks_list=in_review_tasks.user %}
+        {% endif %}
+        {% if completed_tasks.user %}
+            {% include "components/tasks-card.html" with tasks_type='Completadas' view='U' tasks_list=completed_tasks.user %}
+        {% endif %}
+        </div>
+        <div id="allTasks" style="display: none">
+        {% if pending_tasks.everyoneOnTeam %}
+            {% include "components/tasks-card.html" with tasks_type='Pendientes' view='A' tasks_list=pending_tasks.everyoneOnTeam %}
+        {% endif %}
+        {% if in_dev_tasks.everyoneOnTeam %}
+            {% include "components/tasks-card.html" with tasks_type='En desarrollo' view='A' tasks_list=in_dev_tasks.everyoneOnTeam %}
+        {% endif %}
+        {% if in_review_tasks.everyoneOnTeam %}
+            {% include "components/tasks-card.html" with tasks_type='Listas para revisión' view='A' tasks_list=in_review_tasks.everyoneOnTeam %}
+        {% endif %}
+        {% if completed_tasks.everyoneOnTeam %}
+            {% include "components/tasks-card.html" with tasks_type='Completadas' view='A' tasks_list=completed_tasks.everyoneOnTeam %}
+        {% endif %}
             </div>
-            <p> Filtrar por: </p>
-            <div id="accordion">
-                <div class="card">
-                    <div class="card-header bg-dark" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
-                                Proyecto
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseOne" class="collapse collapsed" aria-labelledby="headingOne"
-                        data-parent="#accordion">
-                        {% for project in projects %}
-                        <li class="list-group-item">
-                            <a class="text-dark" href="{% url 'projects-filteredtasks' 'project' project.id %}">
-                                {{ project }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header bg-dark" id="headingTwo">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed text-light" data-toggle="collapse"
-                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Equipo
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        {% for team in teams %}
-                        <li class="list-group-item">
-                            <a class="text-dark" href="{% url 'projects-filteredtasks' 'team' team.id %}"> {{ team }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header bg-dark" id="headingThree">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed text-light" data-toggle="collapse"
-                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Estado
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                        {% for status in statuses %}
-                        <li class="list-group-item">
-                            <a class="text-dark" href="{% url 'projects-filteredtasks' 'status' forloop.counter0 %}">
-                                {{ status.1 }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-7 col-sm-10">
-        <h3 class="text-secondary">Tareas asignadas a mí
-            {% if filter %}({{filter}}){% endif %}:
-        </h3>
-        {% if pending_tasks %}
-        <div class="container content-section bg-light">
-            <p class="text-dark">Pendientes</p>
-            {% for task in pending_tasks %}
-            {% if task.due_date < timezone_now %}
-            <article class="media content-section row mx-2 border border-danger rounded">
-            {% else %}
-            <article class="media content-section row mx-2 border border-dark rounded">
-            {% endif %}
-                <div class="media-body col-md-10">
-                    <div class="article-metadata">
-                        <small>{{ task.get_status_display }}</small><br>
-                        <small class="text-muted">
-                            {% if task.due_date < timezone_now %}
-                                Venció: 
-                            {% else %}
-                                Vence: 
-                            {% endif %}
-                            {{ task.due_date }}
-                        </small>
-                    </div>
-                    <h5 class="mb-0"><a class="article-title" href="#">{{ task.name }}</a></h5>
-                    <small> Proyecto: <a href="#">{{ task.project }}</a></small>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% if in_dev_tasks %}
-        <div class="container content-section bg-light">
-            <p class="text-dark">En desarrollo</p>
-            {% for task in in_dev_tasks %}
-            {% if task.due_date < timezone_now %}
-            <article class="media content-section row mx-2 border border-danger rounded">
-            {% else %}
-            <article class="media content-section row mx-2 border border-dark rounded">
-            {% endif %}
-                <div class="media-body col-md-10">
-                    <div class="article-metadata">
-                        <small>{{ task.get_status_display }}</small><br>
-                        <small class="text-muted">
-                            {% if task.due_date < timezone_now %}
-                                Venció: 
-                            {% else %}
-                                Vence: 
-                            {% endif %}
-                            {{ task.due_date }}
-                        </small>
-                    </div>
-                    <h5 class="mb-0"><a class="article-title" href="#">{{ task.name }}</a></h5>
-                    <small> Proyecto: <a href="#">{{ task.project }}</a></small>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% if in_review_tasks %}
-        <div class="container content-section bg-light">
-            <p class="text-dark">Listas para revisión</p>
-            {% for task in in_review_tasks %}
-            {% if task.due_date < timezone_now %}
-            <article class="media content-section row mx-2 border border-danger rounded">
-            {% else %}
-            <article class="media content-section row mx-2 border border-dark rounded">
-            {% endif %}
-                <div class="media-body col-md-10">
-                    <div class="article-metadata">
-                        <small>{{ task.get_status_display }}</small><br>
-                        <small class="text-muted">
-                            {% if task.due_date < timezone_now %}
-                                Venció: 
-                            {% else %}
-                                Vence: 
-                            {% endif %}
-                            {{ task.due_date }}
-                        </small>
-                    </div>
-                    <h5 class="mb-0"><a class="article-title" href="#">{{ task.name }}</a></h5>
-                    <small> Proyecto: <a href="#">{{ task.project }}</a></small>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% if completed_tasks %}
-        <div class="container content-section bg-light">
-            <p class="text-dark">Completadas</p>
-            {% for task in completed_tasks %}
-            <article class="media content-section row mx-2 border border-info rounded">
-                <div class="media-body col-md-10">
-                    <div class="article-metadata">
-                        <small>{{ task.get_status_display }}</small><br>
-                        <small class="text-muted">
-                            {% if task.due_date < timezone_now %}
-                                Venció: 
-                            {% else %}
-                                Vence: 
-                            {% endif %}
-                            {{ task.due_date }}
-                        </small>
-                    </div>
-                    <h5 class="mb-0"><a class="article-title" href="#">{{ task.name }}</a></h5>
-                    <small> Proyecto: <a href="#">{{ task.project }}</a></small>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-        {% endif %}
     </div>
 </div>
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/switchTasksView.js' %}"></script>
+{% endblock script%}
