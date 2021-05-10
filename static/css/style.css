@@ -1,0 +1,36 @@
+/* tasks style */
+.taskbox:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
+} 
+
+div.taskdiv {
+  position: relative;
+}
+
+div.taskdiv a.tasklink {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-decoration: none; /* No underlines on the link */
+  z-index: 10; /* Places the link above everything else in the div */
+  background-color: #FFF; /* Fix to make div clickable in IE */
+  opacity: 0; /* Fix to make div clickable in IE */
+  filter: alpha(opacity=1); /* Fix to make div clickable in IE */
+}
+
+.navbarTaskItem:hover {
+  color: white;
+  background-color: var(--primary);
+}
+
+.tasksList {
+  border-style: solid;
+  border-color: lightgray;
+}
+

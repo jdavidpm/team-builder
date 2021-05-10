@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from users.models import Task, Team, Project
 from django.utils import timezone
 from .forms import ProjectUpdateForm, ProjectCreateForm
+from django.http import HttpResponseNotFound
 
 @login_required
 def projects_list(request):
@@ -63,38 +64,55 @@ def tasks(request):
 
 @login_required
 def filtered_tasks(request, filter_by="", object_id=""):
-	if not filter_by:
-		tasks_list = request.user.assigned_tasks.all().order_by('due_date')
-		filter_string = ""
-	elif filter_by == "project":
-		tasks_list = request.user.assigned_tasks.filter(project__id=object_id).order_by('due_date')
-		filter_string = Project.objects.get(pk=object_id).name
-	elif filter_by == "team":
-		team = Team.objects.get(pk=object_id)
-		tasks_list = []
-		for project in team.projects.all():
-			tasks_list += [task for task in project.task_set.all() if request.user in task.assigned_members.all()]
-			tasks_list.sort(key=lambda x: x.due_date)
-		filter_string = team.name
-	elif filter_by == "status":
-		status_string = Task.STATUS_CHOICES[object_id][0]
-		tasks_list = request.user.assigned_tasks.filter(status=status_string).order_by('due_date')
-		filter_string = status_string
-
-	teams_list = request.user.membership_teams.all()
-	projects_list = []
-	for team in teams_list:
-		projects_list += team.projects.all()
-
-	context = {
-		'pending_tasks': [task for task in tasks_list if task.status == 'pendiente'],
-		'in_dev_tasks': [task for task in tasks_list if task.status == 'en desarrollo'],
-		'in_review_tasks': [task for task in tasks_list if task.status == 'en revision'],
-		'completed_tasks': [task for task in tasks_list if task.status == 'completada'],
-		'projects': projects_list,
-		'teams': request.user.membership_teams.all(),
-		'statuses': Task.STATUS_CHOICES,
-		'filter': filter_string,
-		'timezone_now': timezone.now()
-	}
-	return render(request, 'projects/tasks.html', context)
+    user_teams = request.user.membership_teams.all()
+    user_projects = []
+    filter_object = None
+    for team in user_teams:
+        user_projects += team.projects.all()
+    if not filter_by:
+        tasks_list = []
+        for project in user_projects:
+            tasks_list += list(project.task_set.all()) # += list(project.task_set.all()) ?
+    elif filter_by == "project":
+        filter_object = get_object_or_404(Project, pk=object_id)
+        if filter_object not in user_projects:
+            return HttpResponseNotFound()
+        tasks_list = list(filter_object.task_set.all()) # = list(filter_object.task_set.all()) ?
+    elif filter_by == "team":
+        filter_object = get_object_or_404(Team, pk=object_id)
+        if filter_object not in user_teams:
+            return HttpResponseNotFound()
+        tasks_list = []
+        for project in filter_object.projects.all():
+            tasks_list += list(project.task_set.all()) # += list(project.task_set.all()) ?
+    
+    tasks_list.sort(key=lambda x: x.due_date)
+    pending_tasks = [task for task in tasks_list if task.status == 'pendiente']
+    in_dev_tasks = [task for task in tasks_list if task.status == 'en desarrollo']
+    in_review_tasks = [task for task in tasks_list if task.status == 'en revision']
+    completed_tasks = [task for task in tasks_list if task.status == 'completada']
+    
+    context = {
+        'pending_tasks': {
+            "everyoneOnTeam": pending_tasks,
+            "user": [task for task in pending_tasks if request.user in task.assigned_members.all()]
+        },
+        'in_dev_tasks': {
+            "everyoneOnTeam": in_dev_tasks,
+            "user": [task for task in in_dev_tasks if request.user in task.assigned_members.all()]
+        },
+        'in_review_tasks': {
+            "everyoneOnTeam": in_review_tasks,
+            "user": [task for task in in_review_tasks if request.user in task.assigned_members.all()]
+        },
+        'completed_tasks': {
+            "everyoneOnTeam": completed_tasks,
+            "user": [task for task in completed_tasks if request.user in task.assigned_members.all()]
+        },
+        'projects': user_projects,
+        'teams': user_teams,
+        'statuses': Task.STATUS_CHOICES,
+        'filter_object': filter_object,
+        'timezone_now': timezone.now(),
+    }
+    return render(request, 'projects/tasks.html', context)
