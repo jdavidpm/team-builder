@@ -7,9 +7,9 @@
 			<h1 class="fs-4">{{ team.name }}</h1>
 		</div>
 		<div class="col-md-2">
-			<a class="ml-2 fs-3 ml-auto pr-2 pt-2 rounded" href="{% url 'teams-list' %}" data-toggle="tooltip" title="Regresar a todos">
+			<!--<a class="ml-2 fs-3 ml-auto pr-2 pt-2 rounded" href="{% url 'teams-list' %}" data-toggle="tooltip" title="Regresar a todos">
 				<i class="fas fa-arrow-left text-secondary"></i>
-			</a>
+			</a>-->
 		</div>
 	</div>
 {% endblock header %}
@@ -17,50 +17,62 @@
 	<div id="accordion" class="masthead row mt-4 pt-4 d-flex justify-content-center">
 		<div class="col-md-2"></div>
 		<div class="col-md-8 col-sm-10">
-				<div class="mb-5">
-					<div class="card col-md-12 px-0">
-						<div class="card-header d-flex" id="card_{{ team.id }}">
-							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
-								<h2 class="text-secondary">
-									Detalles
-									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
-									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
-								</h2>
-							</button></span>
-							<a class="ml-2 fs-2 ml-auto pr-2 pt-2" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
-								<i class="fas fa-edit text-secondary"></i>
-							</a>
-							
-						</div>
+			<div class="mb-5">
+				<div class="card col-md-12 px-0">
+					<div class="card-header d-flex" id="card_{{ team.id }}">
+						<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
+							<h3 class="text-secondary">
+								Detalles
+								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+								<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+							</h3>
+						</button></span>
+						<div class="ml-2 fs-2 ml-auto pr-2 pt-2">
 						
-						<div id="collapse_{{ team.id }}" class="collapse" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">
-									<h3 class="masthead-subheading mt-2"><span class="text-muted">Autor: </span>{{ team.founder.first_name }} {{ team.founder.last_name }}</h3>
-								</li>
-								<li class="list-group-item">
-									<h3 class="masthead-subheading mt-2"><span class="text-muted">Creado el: </span>{{team.creation_date|date}}</h3>
-								</li>
-								<li class="list-group-item">
-									<h3 class=" masthead-subheading text-muted mt-2">Miembros: </h3>
-									<ul>
-										{% for member in team.members.all %}
-											<li class="ml-5"><h3 class="masthead-subheading">{{ member.first_name }}</h3></li>
-										{% endfor %}
-									</ul>
-								</li>
-								<li class="list-group-item">
-									<h3 class=" masthead-subheading text-muted mt-2">Proyectos: </h3>
-									<ul>
-										{% for project in team.projects.all %}
-											<li class="ml-5"><h3 class="masthead-subheading">{{ project }}</h3></li>
-										{% endfor %}
-									</ul>
-								</li>
-							</ul>
+						<a class="nounderline" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Proyecto">
+							<i class="fas fa-window-restore text-secondary"></i>
+						</a>
+						
+						<a class="nounderline" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+							<i class="fas fa-edit text-secondary ml-3"></i>
+						</a>
+
+						<a class="nounderline" href="{% url 'teams-list' %}" data-toggle="tooltip" title="Regresar a todos">
+							<i class="fas fa-arrow-left text-secondary ml-2"></i>
+						</a>
 						</div>
 					</div>
+					
+					<div id="collapse_{{ team.id }}" class="collapse" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Autor</h5>
+								<h5 class="ml-5">{{ team.founder.first_name }} {{ team.founder.last_name }}</h5>
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Fecha de creación </h5>
+								<h5 class="ml-5">{{team.creation_date|date}}</h5>
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Miembros </h5>
+								{% for member in team.members.all %}
+									<a class="nounderline" href="{{member.profile.get_absolute_url}}">
+										<h5 class="ml-5">{{ member.first_name }}</h5>
+									</a>
+								{% endfor %}
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Proyectos</h5>
+									{% for project in team.projects.all %}
+										<a class="nounderline" href="{{project.get_absolute_url}}">
+											<h5 class="ml-5">{{ project }}</h5>
+										</a>
+									{% endfor %}
+							</li>
+						</ul>
+					</div>
 				</div>
+			</div>
 		</div>
 		<div class="col-md-2"></div>
 {% endblock content %}

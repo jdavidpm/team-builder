@@ -32,6 +32,16 @@
 				</ul>
 			</p>
 		</div>
+	{% elif request.path == '/teams/' %}
+		<div class="jumbotron p-4">
+			<h3>Menu</h3>
+			<p class="text-muted"> Plataformas que podrian interesarte</p>
+			<ul class="list-group">
+				<li class="list-group-item list-group-item"><a class="nav-link text-muted" target="_blank" href="https://moodle.org/"><i class="fas fa-graduation-cap mr-2"></i>Moodle</a></li>
+				<li class="list-group-item list-group-item"><a class="nav-link text-muted" target="_blank" href="https://classroom.google.com/"><i class="fab fa-google mr-2"></i>Google Classrom</a></li>
+				<li class="list-group-item list-group-item"><a class="nav-link text-muted" target="_blank" href="https://www.microsoft.com/microsoft-teams/"><i class="fab fa-microsoft mr-2"></i>Microsoft Teams</a></li>
+			</ul>
+		</div>
 	{% else %}
 		<div class="content-section">
 			<h3>Relacionado</h3>
