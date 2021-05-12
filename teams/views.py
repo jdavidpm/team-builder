@@ -4,7 +4,7 @@ from django.contrib import messages
 from .forms import TeamUpdateForm, TeamCreateForm
 
 def teams(request):
-	return render(request, 'teams/teams.html')
+	return render(request, 'teams/teams.html', {'title': 'Equipos'})
 
 def teams_item(request, id):
 	team = request.user.membership_teams.all().filter(id=id)
@@ -29,7 +29,7 @@ def team_update(request, id):
 			u_form = TeamUpdateForm(instance=team)
 		context = {
 			'u_form': u_form,
-			'title': 'Proyecto - ' + str(team.name)
+			'title': 'Actualizar Equipo - ' + str(team.name)
 		}
 		return render(request, 'teams/team_update.html', context)
 	else:

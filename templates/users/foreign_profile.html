@@ -1,11 +1,25 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-	<div class="masthead row justify-content-center">
-		<div class="col-md-2"></div>
+	<div class="masthead row d-flex justify-content-center">
+		<div class="col-md-2 col-sm-10"></div>
 		<div class="col-md-8 col-sm-10">
-			<div class="jumbotron">
+			<div class="jumbotron pt-0 pb-2">
 				{% block messages %}{% include "components/messages.html" %}{% endblock %}
+				<div class="pt-2 d-flex justify-content-between">
+					<div class="dropright">
+						<a class="nounderline dropdown-toggle" href="#" title="Menu" role="button" id="menuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="fs-2 m-1"><i class="fas fa-bars text-dark"></i></span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="menuProfile">
+							<div class="d-flex">
+								<a class="dropdown-item" target="_blank" href="{% url 'projects-list' %}"><i class="fas fa-lightbulb mr-2"></i>Projectos</a>
+								<a class="dropdown-item" target="_blank" href="{% url 'teams-list' %}"><i class="fas fa-users mr-2"></i>Equipos</a>
+								<a class="dropdown-item" target="_blank" href="{% url 'projects-tasks' %}"><i class="fas fa-tasks mr-2"></i>Tareas</a>
+							</div>
+						</div>
+					</div>
+				</div>				
 				<div class="media">
 					<div class="media-body text-center">
 						<img class="rounded-circle account-img img-thumbnail" src="{{ foreign_user.profile.image.url }}"/>
@@ -13,24 +27,24 @@
 						<p class="text-secondary">{{ foreign_user.username }} - {{ foreign_user.email }}</p>
 					</div>
 				</div>
-			</div>
-			<div class="d-flex justify-content-center jumbotron">
-				<div class="tab-content d-flex align-items-center">
+				<div class="media">
+					<ul class="nav nav-pills nav-justified mb-3" role="tablist">
+						{% for field in fields %}
+							<li class="nav-item px-4 py-4 d-flex justify-content-center align-items-center">
+								<a class="nav-link" data-toggle="tab" href="#card_{{ forloop.counter }}" role="tab"><i class="{{ field.icon }} mr-2 mb-1"></i><span class="text-secondary font-weight-bold">{{ field.name }}</span></a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="tab-content">
 					{% for field in fields %}
-					<div id="card_{{ forloop.counter }}" class="container tab-pane fade mr-5 ml-3">
+					<div id="card_{{ forloop.counter }}" class="container tab-pane fade">
 						{% for value in field.values %}
-							<h3 class="text-center masthead-subheading text-nowrap">{{ value.name }}</h3>
+							<h6 class="text-center">{{ value.name }}</h6>
 						{% endfor %}
 					</div>
 					{% endfor %}
 				</div>
-				<ul class="nav nav-pills nav-justified" role="tablist">
-					{% for field in fields %}
-						<li class="nav-item px-4 py-4 d-flex justify-content-center align-items-center">
-							<a class="nav-link fs-2" data-toggle="tab" href="#card_{{ forloop.counter }}" role="tab"><i class="{{ field.icon }} mr-2 mb-1"></i><span class="text-secondary font-weight-bold">{{ field.name }}</span></a>
-						</li>
-					{% endfor %}
-				</ul>
 			</div>
 		</div>
 		<div class="col-md-2"></div>
