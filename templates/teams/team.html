@@ -6,11 +6,7 @@
 		<div class="col-md-8 col-sm-10 jumbotron">
 			<h1 class="fs-4">{{ team.name }}</h1>
 		</div>
-		<div class="col-md-2">
-			<!--<a class="ml-2 fs-3 ml-auto pr-2 pt-2 rounded" href="{% url 'teams-list' %}" data-toggle="tooltip" title="Regresar a todos">
-				<i class="fas fa-arrow-left text-secondary"></i>
-			</a>-->
-		</div>
+		<div class="col-md-2"></div>
 	</div>
 {% endblock header %}
 {% block content %}
@@ -28,18 +24,17 @@
 							</h3>
 						</button></span>
 						<div class="ml-2 fs-2 ml-auto pr-2 pt-2">
-						
-						<a class="nounderline" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Proyecto">
-							<i class="fas fa-window-restore text-secondary"></i>
-						</a>
-						
-						<a class="nounderline" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
-							<i class="fas fa-edit text-secondary ml-3"></i>
-						</a>
+							<a class="nounderline" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Proyecto">
+								<i class="fas fa-window-restore text-secondary"></i>
+							</a>
+							
+							<a class="nounderline" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+								<i class="fas fa-edit text-secondary ml-3"></i>
+							</a>
 
-						<a class="nounderline" href="{% url 'teams-list' %}" data-toggle="tooltip" title="Regresar a todos">
-							<i class="fas fa-arrow-left text-secondary ml-2"></i>
-						</a>
+							<a class="nounderline" href="{% url 'teams-list' %}" data-toggle="tooltip" title="Regresar a todos">
+								<i class="fas fa-arrow-left text-secondary ml-2"></i>
+							</a>
 						</div>
 					</div>
 					

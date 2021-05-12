@@ -13,9 +13,9 @@
 	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
 		<div class="col-md-2"></div>
 		<div class="col-md-4 col-sm-10">
-			{% for team in request.user.membership_teams.all %}
-				<div class="mb-5">
-					<div class="card col-md-12 px-0">
+			<div id="accordion">
+				{% for team in request.user.membership_teams.all %}
+					<div class="card col-md-12 px-0 mb-5">
 						<div class="card-header d-flex" id="card_{{ team.id }}">
 							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
 								<h3 class="text-secondary">
@@ -65,8 +65,8 @@
 							</ul>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			</div>
 		</div>
 		<div class="col-md-1"></div>
 		<div class="col-md-3 col-sm-10">

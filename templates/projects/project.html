@@ -6,60 +6,68 @@
 		<div class="col-md-8 col-sm-10 jumbotron">
 			<h1 class="fs-4">{{ project.name }}</h1>
 		</div>
-		<div class="col-md-2">
-			<a class="ml-2 fs-3 ml-auto pr-2 pt-2 rounded" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
-				<i class="fas fa-arrow-left text-secondary"></i>
-			</a>
-		</div>
+		<div class="col-md-2"></div>
 	</div>
 {% endblock header %}
 {% block content %}
-	<div id="accordion" class="masthead row mt-4 pt-4 d-flex justify-content-center">
+	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
 		<div class="col-md-2"></div>
 		<div class="col-md-8 col-sm-10">
-				<div class="mb-5">
-					<div class="card col-md-12 px-0">
-						<div class="card-header d-flex" id="card_{{ project.id }}">
-							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
-								<h2 class="text-secondary">
-									Detalles
-									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
-									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
-								</h2>
-							</button></span>
-							<a class="ml-2 fs-2 ml-auto pr-2 pt-2" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
-								<i class="fas fa-edit text-secondary"></i>
+			<div id="accordion">
+				<div class="card col-md-12 px-0 mb-5">
+					<div class="card-header d-flex" id="card_{{ project.id }}">
+						<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
+							<h3 class="text-secondary">
+								Detalles
+								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+								<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+							</h3>
+						</button></span>
+						<div class="ml-2 fs-2 ml-auto pr-2 pt-2">
+						
+							<a class="nounderline" href="{{ project.get_absolute_url }}" data-toggle="tooltip" title="Proyecto">
+								<i class="fas fa-window-restore text-secondary"></i>
+							</a>
+							
+							<a class="nounderline" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+								<i class="fas fa-edit text-secondary ml-3"></i>
+							</a>
+
+							<a class="nounderline" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
+								<i class="fas fa-arrow-left text-secondary ml-2"></i>
 							</a>
 							
 						</div>
-						
-						<div id="collapse_{{ project.id }}" class="collapse" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">
-									<h3 class="masthead-subheading mt-2"><span class="text-muted">Autor: </span>{{ project.author.first_name }} {{ project.author.last_name }}</h3>
-								</li>
-								<li class="list-group-item">
-									<h3 class="masthead-subheading text-muted mt-2">Descripción: </h3>
-									<h3 class="masthead-subheading ml-5">{{ project.description }}</h3>
-								</li>
-								<li class="list-group-item">
-									<h3 class="masthead-subheading text-capitalize mt-2"><span class="text-muted">Estado: </span>{{ project.status }}</h3>
-								</li>
-								<li class="list-group-item">
-									<h3 class="masthead-subheading mt-2"><span class="text-muted">Privado: </span>{% if project.private %}Sí {% else %} No {% endif %}</h3>
-								</li>
-								<li class="list-group-item">
-									<h3 class=" masthead-subheading text-muted mt-2">Campos: </h3>
-									<ul>
-										{% for field in project.fields.all %}
-											<li class="ml-5"><h3 class="masthead-subheading">{{field}}</h3></li>
-										{% endfor %}
-									</ul>
-								</li>
-							</ul>
-						</div>
+					</div>
+					
+					<div id="collapse_{{ project.id }}" class="collapse" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Autor</h5>
+								<h5 class="ml-5">{{ project.author.first_name }} {{ project.author.last_name }}</h5>
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Descripción </h5>
+								<h5 class="ml-5">{{ project.description }}</h5>
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Estado</h5>
+								<h5 class="text-capitalize ml-5">{{ project.status }}</h5>
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Privado</h5>
+								<h5 class="ml-5">{% if project.private %}Sí {% else %} No {% endif %}</h5>
+							</li>
+							<li class="list-group-item mt-2">
+								<h5 class="text-muted ml-5">Campos</h5>
+								{% for field in project.fields.all %}
+									<h5 class="ml-5">{{field}}</h5>
+								{% endfor %}
+							</li>
+						</ul>
 					</div>
 				</div>
+			</div>
 		</div>
 		<div class="col-md-2"></div>
 {% endblock content %}
