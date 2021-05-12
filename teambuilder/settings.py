@@ -28,10 +28,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', 'localhost']
 
+CSV_DIRECTORY = Path("csv") # Define the directory where csv are exported
+TEX_DIRECTORY = Path("tex") # Define the directory where tex files and pdf are exporte
 
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrapform',
+    'survey',
     'layout.apps.LayoutConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
