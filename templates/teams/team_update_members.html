@@ -8,12 +8,11 @@
 			<form method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<fieldset class="form-group">
-					<legend class="border-bottom mb-4">Actualizar Equipo</legend>
-					{{ u_form|crispy }}
+					<legend class="border-bottom mb-4">Agregar Integrantes</legend>
+					{{ m_form|crispy }}
 				</fieldset>
 				<div class="form-group d-flex justify-content-between">
 					<button class="btn btn-outline-info" type="submit">Guardar</button>
-					<a class="btn btn-outline-info" href="{{ team.get_absolute_url|add:'members/' }}">Agregar integrantes</a>
 				</div>
 			</form>
 		</div>

@@ -18,4 +18,4 @@ def tools(request):
     return render(request, 'layout/tools.html', {'title': 'Herramientas'})
 
 def hexaco_test(request):
-    return render(request, 'layout/hexaco_test.html')
+    return render(request, 'layout/hexaco_test.html', {'title': 'Test de Personalidad'})

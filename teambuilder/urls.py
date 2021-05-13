@@ -27,5 +27,5 @@ urlpatterns = [
 
 if 'survey' in settings.INSTALLED_APPS:
     urlpatterns += [
-        path('survey/', include('survey.urls'))
+        path('test/', include('survey.urls'))
     ]
