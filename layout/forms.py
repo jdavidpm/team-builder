@@ -1,6 +1,5 @@
 from django import forms
 from json import load
-import inspect
 
 data = None
 with open("static/json/hexaco_items.json", "r", encoding='utf-8') as read_file:

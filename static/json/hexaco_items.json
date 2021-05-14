@@ -1,242 +1,302 @@
 [
 	{
 		"statement_id": "1",
-		"statement_text": "Me aburriría bastante visitar una galería de arte."
+		"statement_text": "Me aburriría bastante visitar una galería de arte.",
+		"statement_facet": "O, Appreciation, R"
 	},
 	{
 		"statement_id": "2",
-		"statement_text": "Planifico y organizo las cosas con antelación para evitar apuros de última hora."
+		"statement_text": "Planifico y organizo las cosas con antelación para evitar apuros de última hora.",
+		"statement_facet": "C, Organization, N"
 	},
 	{
 		"statement_id": "3",
-		"statement_text": "Casi nunca soy rencoroso/a, incluso con personas que me han hecho mucho daño."
+		"statement_text": "Casi nunca soy rencoroso/a, incluso con personas que me han hecho mucho daño.",
+		"statement_facet": "A, Forgiveness, N"
 	},
 	{
 		"statement_id": "4",
-		"statement_text": "En general, me siento bastante satisfecho/a conmigo mismo/a."
+		"statement_text": "En general, me siento bastante satisfecho/a conmigo mismo/a.",
+		"statement_facet": "X, Self-Esteem, N"
 	},
 	{
 		"statement_id": "5",
-		"statement_text": "Sentiría miedo si tuviera que viajar en malas condiciones climatológicas."
+		"statement_text": "Sentiría miedo si tuviera que viajar en malas condiciones climatológicas.",
+		"statement_facet": "E, Fearfulness, N"
 	},
 	{
 		"statement_id": "6",
-		"statement_text": "No usaría halagos para obtener un ascenso o promoción en el trabajo, aunque pensara que con ello podría conseguirlo. "
+		"statement_text": "No usaría halagos para obtener un ascenso o promoción en el trabajo, aunque pensara que con ello podría conseguirlo.",
+		"statement_facet": "H, Sincerity, N"
 	},
 	{
 		"statement_id": "7",
-		"statement_text": "Me interesa conocer la historia y la política de otros países."
+		"statement_text": "Me interesa conocer la historia y la política de otros países.",
+		"statement_facet": "O, Inquisitiveness, N"
 	},
 	{
 		"statement_id": "8",
-		"statement_text": "A menudo me exijo mucho a mi mismo/a cuando pretendo conseguir un objetivo."
+		"statement_text": "A menudo me exijo mucho a mi mismo/a cuando pretendo conseguir un objetivo.",
+		"statement_facet": "C, Diligence, N"
 	},
 	{
 		"statement_id": "9",
-		"statement_text": "La gente me dice a veces que soy muy crítico con los demás."
+		"statement_text": "La gente me dice a veces que soy muy crítico con los demás.",
+		"statement_facet": "A, Gentleness, R"
 	},
 	{
 		"statement_id": "10",
-		"statement_text": "Casi nunca expreso mis opiniones en reuniones sociales."
+		"statement_text": "Casi nunca expreso mis opiniones en reuniones sociales.",
+		"statement_facet": "X, Boldness, R"
 	},
 	{
 		"statement_id": "11",
-		"statement_text": "A veces no puedo evitar preocuparme por cosas insignificantes."
+		"statement_text": "A veces no puedo evitar preocuparme por cosas insignificantes.",
+		"statement_facet": "E, Anxiety, N"
 	},
 	{
 		"statement_id": "12",
-		"statement_text": "Si supiera que nunca sería descubierto, estaría dispuesto a robar un millón de euros."
+		"statement_text": "Si supiera que nunca sería descubierto, estaría dispuesto a robar un millón de euros.",
+		"statement_facet": "H, Fairness, R"
 	},
 	{
 		"statement_id": "13",
-		"statement_text": "Me gustaría crear una obra de arte, como una novela, una canción, o una pintura."
+		"statement_text": "Me gustaría crear una obra de arte, como una novela, una canción, o una pintura.",
+		"statement_facet": "O, Creativity, N"
 	},
 	{
 		"statement_id": "14",
-		"statement_text": "Cuando estoy trabajando en algo, no presto demasiada atención a los pequeños detalles."
+		"statement_text": "Cuando estoy trabajando en algo, no presto demasiada atención a los pequeños detalles.",
+		"statement_facet": "C, Perfectionism, R"
 	},
 	{
 		"statement_id": "15",
-		"statement_text": "A veces la gente me dice que soy muy testarudo/a."
+		"statement_text": "A veces la gente me dice que soy muy testarudo/a.",
+		"statement_facet": "A, Flexibility, R"
 	},
 	{
 		"statement_id": "16",
-		"statement_text": "Prefiero trabajos que implican interactuar activamente con otras personas a otros que implican trabajar solo."
+		"statement_text": "Prefiero trabajos que implican interactuar activamente con otras personas a otros que implican trabajar solo.",
+		"statement_facet": "X, Sociability, N"
 	},
 	{
 		"statement_id": "17",
-		"statement_text": "Cuando me ocurre algo doloroso, necesito alguien que me reconforte."
+		"statement_text": "Cuando me ocurre algo doloroso, necesito alguien que me reconforte.",
+		"statement_facet": "E, Dependence, N"
 	},
 	{
 		"statement_id": "18",
-		"statement_text": "Tener mucho dinero no es especialmente importante para mí."
+		"statement_text": "Tener mucho dinero no es especialmente importante para mí.",
+		"statement_facet": "H, Greed, N"
 	},
 	{
 		"statement_id": "19",
-		"statement_text": "Considero que prestar atención a ideas extremas es una pérdida de tiempo."
+		"statement_text": "Considero que prestar atención a ideas extremas es una pérdida de tiempo.",
+		"statement_facet": "O, Unconventionality, R"
 	},
 	{
 		"statement_id": "20",
-		"statement_text": "Tomo decisiones basándome en las sensaciones del momento, más que en una reflexión cuidadosa."
+		"statement_text": "Tomo decisiones basándome en las sensaciones del momento, más que en una reflexión cuidadosa.",
+		"statement_facet": "C, Prudence, R"
 	},
 	{
 		"statement_id": "21",
-		"statement_text": "La gente piensa que tengo mal genio. "
+		"statement_text": "La gente piensa que tengo mal genio. ",
+		"statement_facet": "A, Patience, R"
 	},
 	{
 		"statement_id": "22",
-		"statement_text": "La mayoría de los días, me siento feliz y optimista."
+		"statement_text": "La mayoría de los días, me siento feliz y optimista.",
+		"statement_facet": "X, Liveliness, N"
 	},
 	{
 		"statement_id": "23",
-		"statement_text": "Siento ganas de llorar cuando veo llorar a otras personas."
+		"statement_text": "Siento ganas de llorar cuando veo llorar a otras personas.",
+		"statement_facet": "E, Sentimentality, N"
 	},
 	{
 		"statement_id": "24",
-		"statement_text": "Creo que merezco mayor respeto que la mayoría de la gente."
+		"statement_text": "Creo que merezco mayor respeto que la mayoría de la gente.",
+		"statement_facet": "H, Modesty, R"
 	},
 	{
 		"statement_id": "25",
-		"statement_text": "Si pudiera, me gustaría ir a un concierto de música clásica."
+		"statement_text": "Si pudiera, me gustaría ir a un concierto de música clásica.",
+		"statement_facet": "O, Appreciation, N"
 	},
 	{
 		"statement_id": "26",
-		"statement_text": "Cuando estoy trabajando, a veces tengo dificultades porque soy desorganizado/a."
+		"statement_text": "Cuando estoy trabajando, a veces tengo dificultades porque soy desorganizado/a.",
+		"statement_facet": "C, Organization, R"
 	},
 	{
 		"statement_id": "27",
-		"statement_text": "Mi actitud hacia la gente que me ha tratado mal es la de “perdonar y olvidar”."
+		"statement_text": "Mi actitud hacia la gente que me ha tratado mal es la de “perdonar y olvidar”.",
+		"statement_facet": "A, Forgiveness, N"
 	},
 	{
 		"statement_id": "28",
-		"statement_text": "Me parece que soy una persona impopular."
+		"statement_text": "Me parece que soy una persona impopular.",
+		"statement_facet": "X, Self-Esteem, R"
 	},
 	{
 		"statement_id": "29",
-		"statement_text": "Cuando hay algún peligro físico, soy muy miedoso/a."
+		"statement_text": "Cuando hay algún peligro físico, soy muy miedoso/a.",
+		"statement_facet": "E, Fearfulness, N"
 	},
 	{
 		"statement_id": "30",
-		"statement_text": "Si quiero algo de alguien, me reiré de sus chistes aunque no tengan gracia."
+		"statement_text": "Si quiero algo de alguien, me reiré de sus chistes aunque no tengan gracia.",
+		"statement_facet": "H, Sincerity, R"
 	},
 	{
 		"statement_id": "31",
-		"statement_text": "Realmente nunca he disfrutado consultando una enciclopedia."
+		"statement_text": "Realmente nunca he disfrutado consultando una enciclopedia.",
+		"statement_facet": "O, Inquisitiveness, R"
 	},
 	{
 		"statement_id": "32",
-		"statement_text": "Trabajo sólo lo justo y necesario. "
+		"statement_text": "Trabajo sólo lo justo y necesario. ",
+		"statement_facet": "C, Diligence, R"
 	},
 	{
 		"statement_id": "33",
-		"statement_text": "Tiendo a ser indulgente al juzgar a otras personas."
+		"statement_text": "Tiendo a ser indulgente al juzgar a otras personas.",
+		"statement_facet": "A, Gentleness, N"
 	},
 	{
 		"statement_id": "34",
-		"statement_text": "En situaciones sociales, normalmente soy el primero en dar el primer paso."
+		"statement_text": "En situaciones sociales, normalmente soy el primero en dar el primer paso.",
+		"statement_facet": "X, Boldness, N"
 	},
 	{
 		"statement_id": "35",
-		"statement_text": "Me preocupo mucho menos que la mayoría de la gente."
+		"statement_text": "Me preocupo mucho menos que la mayoría de la gente.",
+		"statement_facet": "E, Anxiety, R"
 	},
 	{
 		"statement_id": "36",
-		"statement_text": "Nunca aceptaría un soborno, aunque fuera muy cuantioso."
+		"statement_text": "Nunca aceptaría un soborno, aunque fuera muy cuantioso.",
+		"statement_facet": "H, Fairness, N"
 	},
 	{
 		"statement_id": "37",
-		"statement_text": "La gente suele decirme que tengo mucha imaginación."
+		"statement_text": "La gente suele decirme que tengo mucha imaginación.",
+		"statement_facet": "O, Creativity, N"
 	},
 	{
 		"statement_id": "38",
-		"statement_text": "Siempre intento no cometer errores en mi trabajo, aunque me cueste tiempo."
+		"statement_text": "Siempre intento no cometer errores en mi trabajo, aunque me cueste tiempo.",
+		"statement_facet": "C, Perfectionism, N"
 	},
 	{
 		"statement_id": "39",
-		"statement_text": "Normalmente soy bastante flexible en mis opiniones cuando la gente está en desacuerdo conmigo."
+		"statement_text": "Normalmente soy bastante flexible en mis opiniones cuando la gente está en desacuerdo conmigo.",
+		"statement_facet": "A, Flexibility, N"
 	},
 	{
 		"statement_id": "40",
-		"statement_text": "Lo primero que hago siempre que llego a un sitio nuevo es hacer amigos."
+		"statement_text": "Lo primero que hago siempre que llego a un sitio nuevo es hacer amigos.",
+		"statement_facet": "X, Sociability, N"
 	},
 	{
 		"statement_id": "41",
-		"statement_text": "Puedo manejar situaciones difíciles sin necesitar apoyo emocional de nadie."
+		"statement_text": "Puedo manejar situaciones difíciles sin necesitar apoyo emocional de nadie.",
+		"statement_facet": "E, Dependence, R"
 	},
 	{
 		"statement_id": "42",
-		"statement_text": "Disfrutaría muchísimo si fuera propietario/a de bienes lujosos."
+		"statement_text": "Disfrutaría muchísimo si fuera propietario/a de bienes lujosos.",
+		"statement_facet": "H, Greed, R"
 	},
 	{
 		"statement_id": "43",
-		"statement_text": "Me gusta la gente que tiene opiniones poco convencionales."
+		"statement_text": "Me gusta la gente que tiene opiniones poco convencionales.",
+		"statement_facet": "O, Unconventionality, N"
 	},
 	{
 		"statement_id": "44",
-		"statement_text": "Cometo muchos errores porque no pienso antes de actuar."
+		"statement_text": "Cometo muchos errores porque no pienso antes de actuar.",
+		"statement_facet": "C, Prudence, R"
 	},
 	{
 		"statement_id": "45",
-		"statement_text": "La mayoría de la gente suele enfadarse más rápidamente que yo."
+		"statement_text": "La mayoría de la gente suele enfadarse más rápidamente que yo.",
+		"statement_facet": "A, Patience, N"
 	},
 	{
 		"statement_id": "46",
-		"statement_text": "La mayoría de la gente es más optimista y dinámica de lo que suelo ser yo."
+		"statement_text": "La mayoría de la gente es más optimista y dinámica de lo que suelo ser yo.",
+		"statement_facet": "X, Liveliness, R"
 	},
 	{
 		"statement_id": "47",
-		"statement_text": "Siento emociones muy fuertes cuando alguien muy cercano a mí se marcha por una larga temporada."
+		"statement_text": "Siento emociones muy fuertes cuando alguien muy cercano a mí se marcha por una larga temporada.",
+		"statement_facet": "E, Sentimentality, N"
 	},
 	{
 		"statement_id": "48",
-		"statement_text": "Quiero que la gente sepa que soy una persona importante, de alto estatus."
+		"statement_text": "Quiero que la gente sepa que soy una persona importante, de alto estatus.",
+		"statement_facet": "H, Modesty, R"
 	},
 	{
 		"statement_id": "49",
-		"statement_text": "No me considero una persona artística o creativa."
+		"statement_text": "No me considero una persona artística o creativa.",
+		"statement_facet": "O, Creativity, R"
 	},
 	{
 		"statement_id": "50",
-		"statement_text": "La gente me dice muchas veces que soy perfeccionista."
+		"statement_text": "La gente me dice muchas veces que soy perfeccionista.",
+		"statement_facet": "C, Perfectionism, N"
 	},
 	{
 		"statement_id": "51",
-		"statement_text": "Aunque la gente cometa muchos errores, casi nunca les digo algo negativo."
+		"statement_text": "Aunque la gente cometa muchos errores, casi nunca les digo algo negativo.",
+		"statement_facet": "A, Gentleness, N"
 	},
 	{
 		"statement_id": "52",
-		"statement_text": "A veces siento que soy una persona despreciable."
+		"statement_text": "A veces siento que soy una persona despreciable.",
+		"statement_facet": "X, Self-Esteem, R"
 	},
 	{
 		"statement_id": "53",
-		"statement_text": "Aunque estuviera en una situación de emergencia, no entraría en pánico."
+		"statement_text": "Aunque estuviera en una situación de emergencia, no entraría en pánico.",
+		"statement_facet": "E, Fearfulness, R"
 	},
 	{
 		"statement_id": "54",
-		"statement_text": "No intentaría agradar a alguien por el simple hecho de conseguir sus favores."
+		"statement_text": "No intentaría agradar a alguien por el simple hecho de conseguir sus favores.",
+		"statement_facet": "H, Sincerity, N"
 	},
 	{
 		"statement_id": "55",
-		"statement_text": "Me parece aburrido hablar sobre filosofía."
+		"statement_text": "Me parece aburrido hablar sobre filosofía.",
+		"statement_facet": "O, Unconventionality, R"
 	},
 	{
 		"statement_id": "56",
-		"statement_text": "Prefiero hacer lo primero que se me ocurra, que ceñirme a un plan."
+		"statement_text": "Prefiero hacer lo primero que se me ocurra, que ceñirme a un plan.",
+		"statement_facet": "C, Prudence, R"
 	},
 	{
 		"statement_id": "57",
-		"statement_text": "Cuando la gente me dice que estoy equivocado/a, mi primera reacción es discutir con ellos."
+		"statement_text": "Cuando la gente me dice que estoy equivocado/a, mi primera reacción es discutir con ellos.",
+		"statement_facet": "A, Flexibility, R"
 	},
 	{
 		"statement_id": "58",
-		"statement_text": "Cuando estoy con un grupo de gente, suelo ser quien habla en nombre del grupo."
+		"statement_text": "Cuando estoy con un grupo de gente, suelo ser quien habla en nombre del grupo.",
+		"statement_facet": "X, Boldness, N"
 	},
 	{
 		"statement_id": "59",
-		"statement_text": "No me emociono incluso en situaciones donde la mayoría de las personas se ponen muy sentimentales."
+		"statement_text": "No me emociono incluso en situaciones donde la mayoría de las personas se ponen muy sentimentales.",
+		"statement_facet": "E, Sentimentality, R"
 	},
 	{
 		"statement_id": "60",
-		"statement_text": "Me sentiría tentado/a utilizar dinero falso, si estuviera seguro/a de que no me van a descubrir."
+		"statement_text": "Me sentiría tentado/a utilizar dinero falso, si estuviera seguro/a de que no me van a descubrir.",
+		"statement_facet": "H, Fairness, R"
 	}
 ]
