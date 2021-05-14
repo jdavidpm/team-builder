@@ -9,7 +9,7 @@ class UserSignUpForm(UserCreationForm):
 
 	class Meta:
 		model = User
-		fields = ['username','email', 'first_name', 'last_name', 'password1', 'password2']
+		fields = ['first_name', 'last_name', 'email', 'username','password1', 'password2']
 		labels = {
 			'first_name': ('Nombre(s)'),
 			'last_name': ('Apellidos'),
@@ -36,6 +36,13 @@ class ProfileUpdateForm(forms.ModelForm):
 		image = forms.ImageField()
 		fields = ['school_register', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'image']
 		widgets = {
+			#'distributions' : forms.CheckboxSelectMultiple,
+			#'experience' : forms.CheckboxSelectMultiple,
+			#'interests' : forms.CheckboxSelectMultiple,
+			#'languages' : forms.CheckboxSelectMultiple,
+			#'frameworks' : forms.CheckboxSelectMultiple,
+			#'sw_tools' : forms.CheckboxSelectMultiple,
+			#'hw_tools' : forms.CheckboxSelectMultiple,
 			'image': forms.widgets.FileInput
 		}
 		labels = {
