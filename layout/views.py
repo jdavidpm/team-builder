@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from users.models import Task
+from .forms import NameForm
 
 def index(request):
     tasks_list = Task.objects.all()
@@ -18,4 +19,13 @@ def tools(request):
     return render(request, 'layout/tools.html', {'title': 'Herramientas'})
 
 def hexaco_test(request):
-    return render(request, 'layout/hexaco_test.html', {'title': 'Test de Personalidad'})
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            return redirect('layout-index')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NameForm()
+    return render(request, 'layout/hexaco_test.html', {'title': 'Test de Personalidad', 'form': form})

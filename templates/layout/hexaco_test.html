@@ -12,4 +12,19 @@
 	</div>
 {% endblock header %}
 {% block content %}
+	<div class="masthead d-flex justify-content-center row pt-0">
+		<div class="content-section col-md-7 col-sm-8">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<form method="POST">
+				{% csrf_token %}
+				<fieldset class="form-group">
+					<legend class="border-bottom mb-4">Contesta</legend>
+					{{ form|crispy }}
+				</fieldset>
+				<div class="form-group text-right">
+					<button class="btn btn-outline-info" type="submit">Generar resultados</button>
+				</div>
+			</form>
+		</div>
+	</div>
 {% endblock content %}
