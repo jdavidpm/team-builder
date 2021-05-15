@@ -17,4 +17,4 @@ class PersonalityTestForm(forms.Form):
 					)
 		super(PersonalityTestForm, self).__init__(*args, **kwargs)
 		for d in data:
-			self.fields['statement_%s' % d['statement_id']] = forms.ChoiceField(label= d['statement_id'] + ' - ' + d['statement_text'], choices=CHOICES_STATEMENT, widget=forms.RadioSelect)
+			self.fields['statement_%s' % d['statement_id']] = forms.ChoiceField(label= d['statement_text'], choices=CHOICES_STATEMENT, widget=forms.RadioSelect)
