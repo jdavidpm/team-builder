@@ -1,9 +1,10 @@
 from django import forms
-from json import load
+from json import loads
+from urllib import request
 
 data = None
-with open("static/json/hexaco_items.json", "r", encoding='utf-8') as read_file:
-	data = load(read_file)
+with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/hexaco_items.json") as url:
+	data = loads(url.read().decode(encoding='utf-8'))
 
 
 class PersonalityTestForm(forms.Form):

@@ -1,11 +1,12 @@
 from django.shortcuts import redirect, render
 from users.models import Task
 from .forms import PersonalityTestForm
-from json import load
+from json import loads
+from urllib import request
 
 data = None
-with open("static/json/hexaco_items.json", "r", encoding='utf-8') as read_file:
-	data = load(read_file)
+with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/hexaco_items.json") as url:
+	data = loads(url.read().decode(encoding='utf-8'))
 
 def index(request):
 	tasks_list = Task.objects.all()
