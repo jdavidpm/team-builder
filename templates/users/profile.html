@@ -2,7 +2,6 @@
 
 {% block header %}
 	<div class="masthead row d-flex justify-content-center">
-		
 		<div class="col-md-9 col-sm-10">
 			<div class="jumbotron pt-0 pb-2">
 				{% block messages %}{% include "components/messages.html" %}{% endblock %}
@@ -43,7 +42,7 @@
 						{% endfor %}
 					</ul>
 				</div>
-				<div class="tab-content">
+				<div class="tab-content mb-2">
 					{% for field in fields %}
 						<div id="card_{{ forloop.counter }}" class="container tab-pane fade col-md-4">
 							{% for value in field.values %}
@@ -54,7 +53,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 {% endblock header %}
 

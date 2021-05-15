@@ -27,7 +27,7 @@
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><span class="px-2"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a></li>
 						{% else %}
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
-							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>
+							<!--<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span class="px-2"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signup/' %}active{% endif %}" href="{% url 'users-signup'%}"><span class="px-2"><i class="fas fa-user-plus"></i></span>Registro</a></li>
 						{% endif %}
