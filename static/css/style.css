@@ -29,6 +29,11 @@ div.taskdiv a.tasklink {
   background-color: var(--primary);
 }
 
+#allTasksLink:hover {
+  color: white;
+  background-color: var(--primary);
+}
+
 .tasksList {
   border-style: solid;
   border-color: lightgray;

@@ -1,0 +1,52 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="masthead row justify-content-center">
+    {% include "components/tasks_sidebar.html" %}
+    <div class="col-md-8 ml-2 mr-2 pt-3 pb-3 border border-secondary rounded" id="taskDetails">
+        {% block messages %}{% include "components/messages.html" %}{% endblock %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col">
+                    {{task_form.name}}
+                </div>
+                <div class="col-md-3 my-auto">
+                    {{task_form.status}}
+                </div>
+            </div>
+            <div class="form-row mt-1">
+                <span class="ml-3">Proyecto: &nbsp</span> <a href="#">{{task_project}}</a>
+            </div>
+            <div class="form-row mt-3">
+                <div class="col-md-7">
+                    {{task_form.description}}
+                </div>
+                <div class="col-md-5">
+                    <textarea disabled id="activity_log" class="form-control">Actividad</textarea>
+                </div>
+            </div>
+            <div class="form-row mt-1">
+                <div class="col">{{task_form.assigned_members.label}}:{{task_form.assigned_members}}</div>
+                <div class="col-md-5">
+                    {{task_form.due_date.label}}:&nbsp{{task_form.due_date}}
+                    <input type="submit" class="btn btn-primary mt-3  float-right" name="update task" value="Crear tarea">
+                </div>
+                
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    var name_box = document.getElementById("id_name");
+    name_box.classList.add("form-control","form-control-lg");
+    name_box.placeholder = "Nombre de la tarea";
+    document.getElementById("id_status").classList.add("form-control");
+    var desc_box = document.getElementById("id_description");
+    desc_box.classList.add("form-control");
+    desc_box.placeholder = "Descripción";
+    document.getElementById("id_due_date").classList.add("form-control");
+</script>
+{% endblock script %}
