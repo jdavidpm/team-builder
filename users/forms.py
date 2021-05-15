@@ -9,7 +9,7 @@ class UserSignUpForm(UserCreationForm):
 
 	class Meta:
 		model = User
-		fields = ['first_name', 'last_name', 'email', 'username','password1', 'password2']
+		fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 		labels = {
 			'first_name': ('Nombre(s)'),
 			'last_name': ('Apellidos'),
@@ -24,11 +24,15 @@ class UserUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ['username','first_name', 'last_name', 'email']
+		fields = ['first_name', 'last_name', 'username', 'email']
 		labels = {
 			'first_name': ('Nombre(s)'),
 			'last_name': ('Apellidos'),
 		}
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields['first_name'].required = True
+		self.fields['last_name'].required = True
 
 class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
