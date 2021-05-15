@@ -3,7 +3,8 @@
 {% block content %}
 <div class="masthead row justify-content-center">
     {% include "components/tasks_sidebar.html" %}
-    <div class="col-md-7 col-sm-10" id="tasksContent">
+    <div class="col-md-8" id="tasksContent">
+        {% block messages %}{% include "components/messages.html" %}{% endblock %}
         <h4 class="text-secondary">Tareas 
             {% if request.resolver_match.kwargs.filter_by == 'project' %}
             > Proyectos > {{ filter_object }}
@@ -11,15 +12,29 @@
             > Equipos > {{ filter_object }}
             {% endif %}
         </h4>
-        <ul class="nav nav-pills mb-2">
-            <li class="nav-item">
-              <a class="nav-link h6 active" id="showUserTasks" href="#">Asignadas a mí</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link h6" id="showAllTasks" href="#">Todas</a>
-            </li>
-        </ul>
+        <div class="row ml-1 mb-2">
+            <ul class="col nav nav-pills">
+                <li class="nav-item">
+                  <a class="nav-link h6 active" id="showUserTasks" href="#">Asignadas a mí</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link h6" id="showAllTasks" href="#">Todas</a>
+                </li>
+            </ul>
+            {% if request.resolver_match.kwargs.filter_by == 'project' %}
+            <a class="btn btn-primary mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
+                <i class="fas fa-plus text-white"></i>
+            </a>
+            {% else %}
+            <span class="text-muted my-auto">Selecciona un proyecto para agregar una tarea &nbsp&nbsp</span>
+            <a class="btn btn-primary mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
+                data-toggle="tooltip">
+                <i class="fas fa-plus text-white"></i>
+            </a>
+            {% endif %}
+        </div>
         <div id="userTasks" style="display: block">
+        {% if pending_tasks.user or in_dev_tasks.user or in_review_tasks.user or completed_tasks.user %}
         {% if pending_tasks.user %}
             {% include "components/tasks-card.html" with tasks_type='Pendientes' view='U' tasks_list=pending_tasks.user %}
         {% endif %}
@@ -32,8 +47,12 @@
         {% if completed_tasks.user %}
             {% include "components/tasks-card.html" with tasks_type='Completadas' view='U' tasks_list=completed_tasks.user %}
         {% endif %}
+        {% else %}
+        <p class="h4 text-center">No hay tareas aquí</p>
+        {% endif %}
         </div>
         <div id="allTasks" style="display: none">
+        {% if pending_tasks.everyoneOnTeam or in_dev_tasks.everyoneOnTeam or in_review_tasks.everyoneOnTeam or completed_tasks.everyoneOnTeam %}
         {% if pending_tasks.everyoneOnTeam %}
             {% include "components/tasks-card.html" with tasks_type='Pendientes' view='A' tasks_list=pending_tasks.everyoneOnTeam %}
         {% endif %}
@@ -46,11 +65,19 @@
         {% if completed_tasks.everyoneOnTeam %}
             {% include "components/tasks-card.html" with tasks_type='Completadas' view='A' tasks_list=completed_tasks.everyoneOnTeam %}
         {% endif %}
-            </div>
+        {% else %}
+        <p class="h4 text-center">No hay tareas aquí</p>
+        {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}
 
 {% block script %}
 <script src="{% static 'js/switchTasksView.js' %}"></script>
+<script>
+    $(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 {% endblock script%}

@@ -1,5 +1,6 @@
 from django import forms
-from users.models import Project
+from django.core import validators
+from users.models import Project, Task
 from users.widgets import ToggleWidget
 
 class ProjectUpdateForm(forms.ModelForm):
@@ -39,3 +40,50 @@ class ProjectCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs): 
 		super(ProjectCreateForm, self).__init__(*args, **kwargs)                       
 		self.fields['author'].disabled = True
+
+class DateTimeInput(forms.DateTimeInput):
+	input_type = 'datetime-local'
+
+class TaskForm(forms.ModelForm):
+	#due_date = forms.DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%dT%H:%M"))
+	def __init__(self,*args,**kwargs):
+		member_choices = kwargs.pop('team_members', None)
+		super(TaskForm,self).__init__(*args,**kwargs)
+		if member_choices:
+			self.fields['assigned_members'] = forms.ModelMultipleChoiceField(
+				widget=forms.CheckboxSelectMultiple,
+				queryset=member_choices.distinct(),
+				label = 'Asignar a'
+			)
+	#due_date = forms.DateTimeField(input_formats=["%Y-%m-%dT%H:%M"])
+
+	class Meta:
+		model = Task
+		fields = ['name', 'description', 'due_date', 'status', 'assigned_members']
+		labels = {
+			'due_date': ('Vencimiento'),
+		}
+		widgets = {'due_date': DateTimeInput(format = "%Y-%m-%dT%H:%M")}
+
+class NewTaskForm(forms.ModelForm):
+	#due_date = forms.DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%dT%H:%M"))
+	def __init__(self,*args,**kwargs):
+		member_choices = kwargs.pop('team_members', None)
+		super(NewTaskForm,self).__init__(*args,**kwargs)
+		self.fields['author'].disabled = True
+		self.fields['project'].disabled = True
+		if member_choices:
+			self.fields['assigned_members'] = forms.ModelMultipleChoiceField(
+				widget=forms.CheckboxSelectMultiple,
+				queryset=member_choices.distinct(),
+				label = 'Asignar a',
+			)
+	#due_date = forms.DateTimeField(input_formats=["%Y-%m-%dT%H:%M"])
+
+	class Meta:
+		model = Task
+		fields = '__all__'
+		labels = {
+			'due_date': ('Vencimiento'),
+		}
+		widgets = {'due_date': DateTimeInput(format = "%Y-%m-%dT%H:%M")}

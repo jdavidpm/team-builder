@@ -1,9 +1,34 @@
+from typing import TYPE_CHECKING
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from PIL import Image
 from django.urls import reverse
 import datetime
+
+User.__str__ = lambda user_instance: user_instance.first_name + " " + user_instance.last_name
+
+class Question(models.Model):
+	CATEGORY_CHOICES = {
+		('personality', 'Personalidad'),
+		('team_performance', 'Desempeño de equipo'),
+	}
+
+	question_text = models.CharField(max_length=200)
+	number = models.IntegerField()
+	category = models.CharField(max_length=17, choices=CATEGORY_CHOICES)
+	subcategory = models.CharField(max_length=50)
+
+	def __str__(self):
+		return self.question_text
+
+class Answer(models.Model):
+	question = models.ForeignKey(Question, on_delete=models.CASCADE)
+	value = models.IntegerField()
+	user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True)
+	date = models.DateTimeField()
+	def __str__(self):
+		return self.user + " : " + self.question
 
 
 # Ramas de conocimiento
@@ -385,7 +410,8 @@ class Task(models.Model):
 	activity = models.ManyToManyField(
 		User,
 		through = 'TaskActivity',
-		through_fields= ('task', 'user')
+		through_fields= ('task', 'user'),
+		blank=True
 	)
 	def __str__(self):
 		return f'{self.name}'
