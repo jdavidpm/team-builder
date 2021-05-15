@@ -3,12 +3,9 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-md-2"></div>
 		<div class="col-md-8 col-sm-10 jumbotron">
-			<h1 class="fs-4"> Test de Personalidad </h1>
-            <h1 class="fs-4 d-flex align-items-center justify-content-center"><i class="fas fa-h-square fs-6"></i>EXACO</h1>
+			<h1 class="fs-3"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
-		<div class="col-md-2"></div>
 	</div>
 {% endblock header %}
 {% block content %}
@@ -18,9 +15,9 @@
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
-					<legend class="jumbotron border-bottom mb-4">
+					<legend class="jumbotron border-bottom mb-4 py-2">
 						<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-								<h3 class="text-secondary text-center text-uppercase">
+								<h3 class="text-dark text-center text-uppercase">
 									Instrucciones
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
