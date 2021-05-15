@@ -1,10 +1,9 @@
 {% extends 'layout/base.html' %}
-{% load crispy_forms_tags %}
 
 {% block header %}
 	<div class="masthead row d-flex justify-content-center">
-		<div class="col-md-2 col-sm-10"></div>
-		<div class="col-md-8 col-sm-10">
+		
+		<div class="col-md-9 col-sm-10">
 			<div class="jumbotron pt-0 pb-2">
 				{% block messages %}{% include "components/messages.html" %}{% endblock %}
 				<div class="pt-2 d-flex justify-content-between">
@@ -28,30 +27,34 @@
 					<div class="media-body text-center">
 						<img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
 						<h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
-						<p class="text-secondary">{{ user.username }} - {{ user.email }}</p>
+						<p class="text-muted text-uppercase mt-n2">({{ user.username }})</p>
+						<p class="text-muted mt-n3"><a class="nounderline" data-toggle="tooltip" title="Enviar email" href="mailto:{{ user.email }}">{{ user.email }}</a></p>
 					</div>
 				</div>
-				<div class="media">
+				<div class="media d-flex justify-content-center">
 					<ul class="nav nav-pills nav-justified mb-3" role="tablist">
 						{% for field in fields %}
-							<li class="nav-item px-4 py-4 d-flex justify-content-center align-items-center">
-								<a class="nav-link" data-toggle="tab" href="#card_{{ forloop.counter }}" role="tab"><i class="{{ field.icon }} mr-2 mb-1"></i><span class="text-secondary font-weight-bold">{{ field.name }}</span></a>
+							<li class="nav-item mt-2 mx-2">
+								<a class="nav-link d-flex flex-column" data-toggle="tab" href="#card_{{ forloop.counter }}" role="tab">
+									<i class="{{ field.icon }} mr-2 mb-1 fs-2"></i>
+									<span class="text-secondary font-weight-bold fs-1">{{ field.name }}</span>
+								</a>
 							</li>
 						{% endfor %}
 					</ul>
 				</div>
 				<div class="tab-content">
 					{% for field in fields %}
-					<div id="card_{{ forloop.counter }}" class="container tab-pane fade">
-						{% for value in field.values %}
-							<h6 class="text-center">{{ value.name }}</h6>
-						{% endfor %}
-					</div>
+						<div id="card_{{ forloop.counter }}" class="container tab-pane fade col-md-4">
+							{% for value in field.values %}
+								<h6 class="text-center content-section my-0">{{ value.name }}</h6>
+							{% endfor %}
+						</div>
 					{% endfor %}
 				</div>
 			</div>
 		</div>
-		<div class="col-md-2"></div>
+
 	</div>
 {% endblock header %}
 
