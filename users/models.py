@@ -423,7 +423,19 @@ class TaskActivity(models.Model):
 	date = models.DateTimeField(auto_now=True, null=False)
 	description = models.CharField(max_length=256, null=False)
 	def __str__(self):
-		return f'{self.task}'
+		return f'{self.date}: {self.user} {self.description}'
+
+class Notification(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	category = models.CharField(max_length=30)
+	notification_text = models.CharField(max_length=100)
+	date = models.DateTimeField(auto_now=True)
+	join_invitation = models.ForeignKey(JoinInvitation, on_delete=models.CASCADE, null=True, blank=True)
+	join_request = models.ForeignKey(JoinRequest, on_delete=models.CASCADE, null=True, blank=True)
+	task_activity = models.ForeignKey(TaskActivity, on_delete=models.CASCADE, null=True, blank=True)
+
+	def __str__(self):
+		return f'{self.date}: {self.notification_text}'
 
 
 class Association(models.Model):
