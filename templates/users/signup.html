@@ -3,12 +3,11 @@
 
 {% block header %}
 	<div class="masthead d-flex justify-content-center row">
-		<div class="col-md-3"></div>
-		<div class="content-section col-md-6 col-sm-10">
+		<div class="jumbotron col-md-6 col-sm-10 p-5">
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
-					<legend class="border-bottom mb-4">Registro</legend>
+					<legend class="border-bottom mb-5"><h3>Registro</h3></legend>
 					<div class="d-flex flex-wrap">
 						{% for field in u_form.visible_fields|slice:":2" %}
 							<div class="mt-n4 col-md-6">
@@ -32,11 +31,10 @@
 			</form>
 			<div class="border-top pt-3">
 				<small class="text-muted">
-					¿Ya tienes cuenta? <a class="ml-2" href="{% url 'users-signin' %}">Iniciar Sesión</a>
+					¿Ya tienes cuenta? <a class="nounderline ml-2" href="{% url 'users-signin' %}">Iniciar Sesión</a>
 				</small>
 			</div>
 		</div>
-		<div class="col-md-3"></div>
 	</div>
 {% endblock header %}
 {% block content %}
