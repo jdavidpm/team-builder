@@ -71,7 +71,8 @@ def team_update_members(request, id):
 		if request.method == 'POST':
 			m_form = TeamMembersForm(request.POST)
 			if m_form.is_valid():
-				m_form.save()
+				team.members.set(m_form.cleaned_data['members'])
+				team.save()
 				messages.success(request, f'¡El equipo fue actualizada con éxito!')
 				return redirect('teams-item', id=team.id)
 		else:
