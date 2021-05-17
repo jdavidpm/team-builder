@@ -1,0 +1,81 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">
+	<div class="col-md-8 col-sm-10 jumbotron">
+		<h1 class="fs-3"><i class="fas fa-dice-d6 mr-4"></i>Auto-evaluación de desempeño de equipo</h1>
+	</div>
+</div>
+{% endblock header %}
+{% block content %}
+<div class="masthead d-flex justify-content-center row pt-0">
+	<div class="col-md-8 col-sm-10">
+		{% block messages %}{% include "components/messages.html" %}{% endblock %}
+		<form method='POST' action="">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="jumbotron border-bottom mb-4 py-2">
+					<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button"
+						aria-expanded="false" aria-controls="collapseExample">
+						<h3 class="text-dark text-center text-uppercase">
+							Instrucciones
+							<i class="ml-2 fas fa-chevron-down text-collapsed"></i>
+							<!--More-->
+							<i class="ml-2 fas fa-chevron-up text-expanded"></i>
+							<!--Less-->
+						</h3>
+					</a>
+					<div class="collapse px-5 pt-4" id="collapseExample">
+
+						<p class="text-justify font-weight-normal">
+							Esta auto-evaluación consta de una serie de enunciados relacionados al desempeño de tu
+							equipo, por favor lee con atención cada uno y evalúalo honestamente con una escala de 0 a 4,
+							donde:
+						
+						<ul>
+							<li class="font-weight-bold">0 = Muy en desacuerdo</li>
+							<li class="font-weight-bold">1 = En desacuerdo</li>
+							<li class="font-weight-bold">2 = Neutral</li>
+							<li class="font-weight-bold">3 = De acuerdo</li>
+							<li class="font-weight-bold">4 = Totalmente de acuerdo</li>
+						</ul>
+
+						<div class="d-flex justify-content-end">
+							<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample"
+								role="button" aria-expanded="true" aria-controls="collapseExample">
+								<i class="ml-2 fas fa-chevron-up text-expanded"></i>
+								<!--Less-->
+							</a>
+						</div>
+						</p>
+
+					</div>
+				</legend>
+				<div class="jumbotron mt-2">
+					{% for field in form %}
+					<div class="d-flex flex-column mb-4">
+						{{ field.errors }}
+						<label for="{{ field.id_for_label }}" class="mx-5">
+							<h5>{{field.label_tag}}</h5>
+						</label>
+						<div class="d-inline-flex justify-content-around">
+							{% for radio in field %}
+							<label class="containerRadio zoom">
+								<h6 class="fs-1 mt-1">{{ radio.choice_label }}</h6>
+								{{ radio.tag }}
+								<span class="checkmark"></span>
+							</label>
+							{% endfor %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</fieldset>
+			<div class="form-group text-right">
+				<button class="btn btn-outline-info" type="submit">Evaluar</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock content %}
