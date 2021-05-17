@@ -50,9 +50,11 @@ def team_create(request):
 	if request.method == 'POST':
 		c_form = TeamCreateForm(request.POST, initial={'founder': request.user})
 		if c_form.is_valid():
-			c_form.save()
+			obj = c_form.save()
+			obj.members.set([request.user])
+			obj.save()
 			messages.success(request, f'¡El equipo fue creado con éxito!')
-			return redirect('teams-list')
+			return redirect('teams-update-members', id=obj.id)
 	else:
 		c_form = TeamCreateForm(initial={'founder': request.user})
 	context = {
