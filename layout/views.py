@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from users.models import Task
+from users.models import Task, User
 from .forms import PersonalityTestForm
 from json import loads
 from urllib import request
@@ -60,3 +60,17 @@ def hexaco_results(request):
 		'bool': False 
 	}
 	return render(request, 'layout/hexaco_results.html', context)
+
+def hexaco_compare(request):
+	hexaco_caps = 'hexaco'
+	labels = ['Honestidad', 'Emoción', 'Extraversión', 'Amabilidad', 'Escrupulosidad', 'Apertura']
+	values_m = [getattr(request.user.profile, 'personality_' + c) for c in hexaco_caps]
+	values_c = [getattr(User.objects.filter(id=27)[0].profile, 'personality_' + c) for c in hexaco_caps]
+	context = {
+		'title': 'Comparar HEXACO',
+		'labels': labels,
+		'values_m': values_m,
+		'values_c': values_c,
+		'compare_user': User.objects.filter(id=27)[0].first_name
+	}
+	return render(request, 'layout/hexaco_compare.html', context)
