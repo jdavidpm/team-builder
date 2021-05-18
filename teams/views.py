@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm
 
+@login_required
 def teams(request):
 	return render(request, 'teams/teams.html', {'title': 'Equipos'})
 
+@login_required
 def teams_item(request, id):
 	team = request.user.membership_teams.all().filter(id=id)
 	if len(team):
@@ -14,6 +16,7 @@ def teams_item(request, id):
 	else:
 		return redirect('teams-list')
 
+@login_required
 def team_update(request, id):
 	team = request.user.membership_teams.all().filter(id=id)
 	if len(team):
@@ -51,6 +54,7 @@ def team_create(request):
 	}
 	return render(request, 'teams/team_create.html', context)
 
+@login_required
 def team_update_members(request, id):
 	team = request.user.membership_teams.all().filter(id=id)
 	if len(team):

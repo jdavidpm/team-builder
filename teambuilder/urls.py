@@ -22,7 +22,7 @@ urlpatterns = [
     path('', include('layout.urls')),
     path('', include('users.urls')),
     path('', include('projects.urls')),
-    path('', include('teams.urls')),
+    path('', include('teams.urls'))
 ]
 
 if 'survey' in settings.INSTALLED_APPS:

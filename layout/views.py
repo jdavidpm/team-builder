@@ -1,9 +1,10 @@
-from django.db.models import query
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from users.models import Task
 from .forms import PersonalityTestForm
 from json import loads
 from urllib import request
+from django.contrib.auth.decorators import login_required
 
 data = None
 with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/hexaco_items.json") as url:
@@ -25,6 +26,7 @@ def about(request):
 def tools(request):
 	return render(request, 'layout/tools.html', {'title': 'Herramientas'})
 
+@login_required
 def hexaco_test(request):
 	dict_facets = {'H':0, 'E':0, 'X':0, 'A':0, 'C':0, 'O':0}
 	list_values = [1, 2, 3, 4, 5]
@@ -44,7 +46,7 @@ def hexaco_test(request):
 	else:
 		form = PersonalityTestForm()
 	return render(request, 'layout/hexaco_test.html', {'title': 'Test de Personalidad', 'form': form})
-
+@login_required
 def hexaco_results(request):
 	hexaco_caps = 'hexaco'
 	chart_type = request.GET.get('type')

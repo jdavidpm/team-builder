@@ -9,6 +9,7 @@
 				<fieldset class="form-group">
 					<legend class="border-bottom mb-5"><h3>Actualizar Perfil</h3></legend>
 					<div class="d-flex flex-wrap">
+						{{ u_form|as_crispy_errors }}
 						{% for field in u_form.visible_fields|slice:":-1" %}
 							<div class="mt-n4 col-md-6">
 								{{ field.errors }}

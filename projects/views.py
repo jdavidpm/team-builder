@@ -120,7 +120,7 @@ def filtered_tasks(request, filter_by="", object_id=""):
     }
     return render(request, 'projects/tasks.html', context)
 
-@login_required()
+@login_required
 def updateTask(request, pk):
     task = get_object_or_404(Task, pk=pk)
 

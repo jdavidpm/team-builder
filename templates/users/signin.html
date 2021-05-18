@@ -10,6 +10,7 @@
 				<fieldset class="form-group">
 					<legend class="border-bottom mb-5"><h3>Iniciar Sesión</h3></legend>
 					<div class="mx-3">
+						{{ form|as_crispy_errors }}
 						{{ form.username |as_crispy_field}}
 						<small class="form-text text-muted mt-n2 mb-2">También puedes usar tu correo electrónico para iniciar sesión.</small>
 						{{ form.password |as_crispy_field}}

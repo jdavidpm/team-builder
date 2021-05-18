@@ -57,9 +57,9 @@ div.taskdiv a.tasklink {
 .containerRadio input[type=radio] {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
+  /*cursor: pointer;
   height: 0;
-  width: 0;
+  width: 0;*/
 }
 
 /* Create a custom radio button */

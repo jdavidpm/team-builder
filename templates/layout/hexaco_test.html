@@ -11,7 +11,6 @@
 {% block content %}
 	<div class="masthead d-flex justify-content-center row pt-0">
 		<div class="col-md-8 col-sm-10">
-			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
@@ -54,12 +53,14 @@
 						</div>
 					{% endif %}
 					<div class="jumbotron mt-2">
+						{% block messages %}{% include "components/messages.html" %}{% endblock %}
 						{% for field in form %}
 							<div class="d-flex flex-column mb-4">
-								{{ field.errors }}
+								{{ form|as_crispy_errors }}
 								<label for="{{ field.id_for_label }}" class="mx-5"><h5>{{field.label_tag}}</h5></label>
-								<div class="d-inline-flex justify-content-around">
+								<div class="d-inline-flex justify-content-around"> 
 									{% for radio in field %}
+										
 										<label class="containerRadio zoom">
 											<h6 class="fs-1 mt-1">{{ radio.choice_label }}</h6>
 											{{ radio.tag }}

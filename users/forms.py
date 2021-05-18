@@ -1,9 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Profile
 from .widgets import ToggleWidget, PictureWidget
 
+class SignInFrom(AuthenticationForm):
+	class Meta:
+		model = User
+		
 class UserSignUpForm(UserCreationForm):
 	email = forms.EmailField(label=u'Correo Electrónico')
 
