@@ -45,6 +45,14 @@
 							
 						</div>
 					</legend>
+					{% if user.profile.personality_h %}
+						<div class="d-flex flex-nonwrap justify-content-around form-group">
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
+							
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
+							
+						</div>
+					{% endif %}
 					<div class="jumbotron mt-2">
 						{% for field in form %}
 							<div class="d-flex flex-column mb-4">
