@@ -3,7 +3,7 @@
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
 		<div class="col-md-2"></div>
-		<div class="col-md-8 col-sm-10 jumbotron">
+		<div class="col-md-8 col-sm-10 jumbotron shadow">
 			<h1 class="fs-4 text-secondary"><i class="fas fa-users mr-4"></i>Equipos</h1>
 		</div>
 		<div class="col-md-2"></div>
@@ -12,13 +12,13 @@
 {% block content %}
 	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
 		<div class="col-md-2"></div>
-		<div class="col-md-4 col-sm-10">
+		<div class="col-md-5 col-sm-10">
 			<div id="accordion">
 				{% for team in request.user.membership_teams.all %}
 					<div class="col-md-12 px-0 mb-0">
-						<div class="jumbotron d-flex p-2" id="card_{{ team.id }}">
-							<span class="mb-0"><button class="btn btn-link collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
-								<h3 class="text-secondary">
+						<div class="jumbotron shadow d-flex p-2" id="card_{{ team.id }}">
+							<span class="mb-0"><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
+								<h3>
 									{{ team.name }}
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
@@ -26,17 +26,17 @@
 							</button></span>
 							<div class="ml-2 fs-2 ml-auto pr-2">
 							
-							<a class="nounderline" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Detalles">
-								<i class="fas fa-window-restore text-secondary"></i>
+							<a class="nounderline btn btn-outline-secondary border-0" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Detalles">
+								<i class="fs-2 fas fa-window-restore"></i>
 							</a>
 							
-							<a class="nounderline" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
-								<i class="fas fa-edit text-secondary ml-3"></i>
+							<a class="nounderline btn btn-outline-secondary border-0" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+								<i class="fs-2 fas fa-edit pl-2"></i>
 							</a>
 							</div>
 						</div>
 						<div id="collapse_{{ team.id }}" class="collapse mt-n4" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
-							<div class="jumbotron border border-light bg-secondary text-light p-0">
+							<div class="jumbotron shadow border bg-secondary text-light p-0">
 								<div class="row">
 									<div class="col-6 ml-auto"><p class="lead">
 										<h6 class="text-muted ml-5">Creador</h6>
@@ -53,10 +53,10 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div class="col-md-1"></div>
+		
 		<div class="col-md-3 col-sm-10">
-			<div class="jumbotron px-4 py-4">
-				<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
+			<div class="jumbotron shadow px-4 py-4">
+				<a class="nounderline btn btn-outline-secondary border-0 pb-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 					<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
 				</a>
 				<div class="collapse" id="collapseMenu">

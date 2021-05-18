@@ -7,7 +7,7 @@ from json import loads
 from urllib import request
 
 data = None
-with request.urlopen("https://raw.githubusercontent.com/jdavidpm/team-builder/master/static/json/team_performance.json") as url:
+with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/team_performance.json") as url:
 	data = loads(url.read().decode(encoding='utf-8'))
 
 @login_required
