@@ -74,3 +74,11 @@ def hexaco_compare(request):
 		'compare_user': User.objects.filter(id=27)[0].first_name
 	}
 	return render(request, 'layout/hexaco_compare.html', context)
+
+def search_results(request):
+	query = request.GET.get('q')
+	context = {
+		'title': 'Resultados de búsqueda',
+		'tmp': query
+	}
+	return render(request, 'layout/search_results.html', context)

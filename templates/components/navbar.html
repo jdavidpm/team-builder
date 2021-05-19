@@ -12,8 +12,8 @@
 					</div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav d-flex align-items-start flex-row">
-						<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2 fs-2"></i></a></li>
 						{% if user.is_authenticated %}						
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2 fs-2"></i></a></li>
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fs-2 fas fa-user-circle"></i></a></li>
 							<li class="nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
 								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fs-2 fas fa-tools"></i></a>
@@ -27,13 +27,11 @@
 									<a class="dropdown-item {% if request.path == '/tools/' %}active{% endif %}" href="{% url 'layout-tools'%}">Todas</a>
 								</div>
 							</li>
-							<form class="form-inline">
-								<input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
-								<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-							</form>
+							{% include 'components/search_bar.html' %}
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded"><i class="fas fa-bell px-2 fs-2"></i></a></li>
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fs-2 fas fa-sign-out-alt"></i></a></li>
 						{% else %}
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
 							<!--<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
 							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span class="px-2"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
@@ -49,11 +47,11 @@
 					</div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav d-flex align-items-start">
-						<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2 fs-2"></i>Inicio</a></li>
+						<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
 						{% if user.is_authenticated %}						
-							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fs-2 fas fa-user-circle"></i>Perfil</a></li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fas fa-user-circle"></i>Perfil</a></li>
 							<li class="mb-2 nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
-								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fs-2 fas fa-tools"></i>Herramientas</a>
+								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fas fa-tools"></i>Herramientas</a>
 								<div class="dropdown-menu text-capitalize" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item {% if request.path == '/teams/' %}active{% endif %}" href="{% url 'teams-list' %}">Equipos</a>
 									<a class="dropdown-item {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects-list'%}">Proyectos</a>
@@ -64,12 +62,11 @@
 									<a class="dropdown-item {% if request.path == '/tools/' %}active{% endif %}" href="{% url 'layout-tools'%}">Todas</a>
 								</div>
 							</li>
-							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded"><i class="fas fa-bell px-2 fs-2"></i>Notificaciones</a></li>
-							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fs-2 fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
-							<form class="form-inline mb-2">
-								<input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
-								<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-							</form>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded"><i class="fas fa-bell px-2"></i>Notificaciones</a></li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
+							<div class="mb-2">
+								{% include 'components/search_bar.html' %}
+							</div>
 						{% else %}
 							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
 							<!--<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
