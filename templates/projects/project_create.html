@@ -3,7 +3,7 @@
 
 {% block content %}
 	<div class="masthead row justify-content-center">
-		<div class="jumbotron col-md-6 col-sm-10 p-5">
+		<div class="jumbotron shadow col-md-6 col-sm-10 p-5">
 			<form method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<fieldset class="form-group">
@@ -11,8 +11,8 @@
 					{{ c_form|crispy }}
 					<span class="text-center">{{ t_form|crispy }}</span>
 				</fieldset>
-				<div class="form-group">
-					<button class="btn btn-outline-info" type="submit">Crear</button>
+				<div class="form-group text-right">
+					<button class="btn btn-outline-secondary" type="submit">Crear</button>
 				</div>
 			</form>
 		</div>

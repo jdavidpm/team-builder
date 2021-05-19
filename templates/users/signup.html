@@ -3,7 +3,7 @@
 
 {% block header %}
 	<div class="masthead d-flex justify-content-center row">
-		<div class="jumbotron col-md-6 col-sm-10 p-5">
+		<div class="jumbotron shadow col-md-6 col-sm-10 p-5">
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
@@ -26,7 +26,7 @@
 					</div>
 				</fieldset>
 				<div class="form-group mx-4">
-					<button class="btn btn-outline-info" type="submit">Registrate</button>
+					<button class="btn btn-outline-secondary" type="submit">Registrate</button>
 				</div>
 			</form>
 			<div class="border-top pt-3">

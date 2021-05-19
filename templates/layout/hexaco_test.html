@@ -3,7 +3,7 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-md-8 col-sm-10 jumbotron">
+		<div class="col-md-8 col-sm-10 jumbotron shadow-sm">
 			<h1 class="fs-3"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
 	</div>
@@ -14,7 +14,7 @@
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
-					<legend class="jumbotron border-bottom mb-4 py-2">
+					<legend class="jumbotron shadow-sm border-bottom mb-4 py-2">
 						<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 								<h3 class="text-dark text-center text-uppercase">
 									Instrucciones
@@ -46,13 +46,13 @@
 					</legend>
 					{% if user.profile.personality_h %}
 						<div class="d-flex flex-nonwrap justify-content-around form-group">
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-compare' %}?type=bar'" class="btn btn-outline-info" type="submit">Comparar resultados (<i class="fas fa-equals"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-compare' %}?type=bar'" class="shadow btn btn-outline-info" type="submit">Comparar resultados (<i class="fas fa-equals"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
 							
 						</div>
 					{% endif %}
-					<div class="jumbotron mt-2">
+					<div class="jumbotron shadow-sm mt-2">
 						{% block messages %}{% include "components/messages.html" %}{% endblock %}
 						{% for field in form %}
 							<div class="d-flex flex-column mb-4">

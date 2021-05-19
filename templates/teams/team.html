@@ -2,14 +2,14 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-md-8 col-sm-10 jumbotron shadow">
+		<div class="col-md-8 col-sm-10 jumbotron shadow-sm">
 			<h1 class="fs-4">{{ team.name }}</h1>
 		</div>
 	</div>
 {% endblock header %}
 {% block content %}
 	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap">
-		<div class="col-md-8 col-sm-10 jumbotron p-2 mb-2 shadow">
+		<div class="col-md-8 col-sm-10 jumbotron p-2 mb-2 shadow-sm">
 			<div class="d-flex p-2" id="card_{{ team.id }}">
 				<span><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
 					<h3>
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-8 col-sm-10 jumbotron bg-secondary text-light p-0 mb-0 shadow">
+		<div class="col-md-8 col-sm-10 jumbotron bg-secondary text-light p-0 mb-0 shadow-sm">
 			<div id="collapse_{{ team.id }}" class="collapse p-2" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
 				<div class="row">
 						<div class="col-md-6 ml-auto"><p class="lead">

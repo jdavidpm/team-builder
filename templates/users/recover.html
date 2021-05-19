@@ -4,7 +4,7 @@
 {% block header %}
 	<div class="masthead d-flex justify-content-center row">
 		<div class="col-md-3"></div>
-		<div class="jumbotron col-md-6 col-sm-8 p-5">
+		<div class="jumbotron shadow col-md-6 col-sm-8 p-5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<form method="POST">
 				{% csrf_token %}
@@ -13,7 +13,7 @@
 					{{ form|crispy }}
 				</fieldset>
 				<div class="form-group d-flex justify-content-end">
-					<button class="btn btn-outline-info" type="submit">Solicita reinicio de contraseña</button>
+					<button class="btn btn-outline-secondary" type="submit">Solicita reinicio de contraseña</button>
 				</div>
 			</form>
 		</div>

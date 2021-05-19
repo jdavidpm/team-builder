@@ -1,32 +1,28 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center">	
-		<div class="col-md-8 col-sm-10 jumbotron">
-			<h1 class="fs-3"><i class="fas fa-dice-d6 mr-4"></i>Resultados de Personalidad HEXACO</h1>
+	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-around flex-wrap">	
+		<div class="col-md-10 col-sm-10 col-lg-10">
+			<h1 class="fs-3 jumbotron shadow-sm px-5"><i class="fas fa-dice-d6 mr-4"></i>Resultados de Personalidad HEXACO</h1>
+			<div class="d-flex justify-content-between align-items-start flex-wrap">
+				<canvas id="chart" width="500" height="500" class="jumbotron shadow-sm col-md-7 p-0 mx-0"></canvas>
+				<div class="text-left mb-2">
+					<a class="nounderline btn btn-outline-secondary border-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
+						<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
+					</a>
+					<div class="collapse text-left py-2" id="collapseMenu">
+						<a class="my-4 btn btn-outline-secondary shadow nounderline" target="_blank" href="{% url 'layout-hexaco-test' %}"><i class="fas fa-plus mr-2"></i>Volver a realizar</a>
+						<a class="my-4 btn btn-outline-secondary shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=polarArea"><i class="fas fa-chart-pie mr-2"></i>Gráfico Radar</a>
+						<a class="my-4 btn btn-outline-secondary shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=bar"><i class="fas fa-chart-bar mr-2"></i>Gráfico Barras</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock header %}
 
 {% block content %}
 	<div class="text-center mb-0 pb-0 d-flex justify-content-center">
-		<div class="col-md-9 col-sm-10 d-flex flex-wrap justify-content-center">
-			<canvas id="chart" width="550" height="550" class="jumbotron col-md-8 col-sm-12 p-0 mx-0"></canvas>
-			<div class="col-md-3 col-sm-12 ml-2">
-				<div class="jumbotron py-2">
-					<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
-						<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
-					</a>
-					<div class="collapse" id="collapseMenu">
-						<ul class="list-group text-left">
-							<li class="list-group-item list-group-item bg-secondary rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'layout-hexaco-test' %}"><i class="fas fa-plus mr-2"></i>Volver a realizar</a></li>
-							<li class="list-group-item list-group-item bg-secondary rounded my-2"><a class="nav-link text-white" href="{% url 'layout-hexaco-results' %}?type=polarArea"><i class="fas fa-chart-pie mr-2"></i>Gráfico Radar</a></li>
-							<li class="list-group-item list-group-item bg-secondary rounded my-2"><a class="nav-link text-white" href="{% url 'layout-hexaco-results' %}?type=bar"><i class="fas fa-chart-bar mr-2"></i>Gráfico Barras</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 {% endblock content %}
 
@@ -70,7 +66,7 @@
 					},
 				plugins: {
 					title: {
-						display: true,
+						display: false,
 						color: '#2c3e50',
 						padding: 20,
 						font: {

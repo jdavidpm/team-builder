@@ -3,7 +3,7 @@
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
 		<div class="col-md-2"></div>
-		<div class="col-md-8 col-sm-10 jumbotron shadow">
+		<div class="col-md-8 col-sm-10 jumbotron shadow-sm">
 			<h1 class="fs-4"><i class="fas fa-lightbulb mr-4"></i>Proyectos</h1>
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 		</div>
@@ -17,7 +17,7 @@
 			<div id="accordion">
 				{% for project in request.user.created_projects.all %}
 					<div class="col-md-12 px-0 mb-0">
-						<div class="jumbotron shadow d-flex p-2" id="card_{{ project.id }}">
+						<div class="jumbotron shadow-sm d-flex p-2" id="card_{{ project.id }}">
 							<span class="mb-0"><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
 								<h3>
 									{{ project.name }}
@@ -37,7 +37,7 @@
 							</div>
 						</div>
 						<div id="collapse_{{ project.id }}" class="collapse mt-n4" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
-							<div class="jumbotron shadow bg-secondary text-light p-0">
+							<div class="jumbotron shadow-sm bg-secondary text-light p-0">
 								<div class="row">
 									<div class="col-6 ml-auto"><p class="lead">
 										<h6 class="text-muted ml-5">Autor</h6>
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="col-md-3 col-sm-10">
-			<div class="jumbotron shadow px-4 py-4">
+			<div class="jumbotron shadow-sm px-4 py-4">
 				<a class="nounderline btn btn-outline-secondary border-0 pb-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 					<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
 				</a>

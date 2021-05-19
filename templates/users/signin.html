@@ -3,7 +3,7 @@
 
 {% block header %}
 	<div class="masthead d-flex justify-content-center row">
-		<div class="jumbotron col-md-6 col-sm-8 p-5">
+		<div class="jumbotron shadow col-md-6 col-sm-8 p-5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<form method="POST">
 				{% csrf_token %}
@@ -17,7 +17,7 @@
 					</div>
 				</fieldset>
 				<div class="form-group mx-3">
-					<button class="btn btn-outline-info" type="submit">Iniciar</button>
+					<button class="btn btn-outline-secondary" type="submit">Iniciar</button>
 					<small class="text-muted">
 						<a class="nounderline ml-2" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
 					</small>

@@ -3,7 +3,7 @@
 {% block header %}
 	<div class="masthead row d-flex justify-content-center">
 		<div class="col-md-9 col-sm-10">
-			<div class="jumbotron pt-0 pb-2">
+			<div class="jumbotron shadow-sm pt-0 pb-2">
 				{% block messages %}{% include "components/messages.html" %}{% endblock %}
 				<div class="pt-2 d-flex justify-content-between">
 					<a class="nounderline" href="{{user.profile.get_absolute_url|add:'update/'}}" data-toggle="tooltip" title="Editar perfil">
@@ -46,7 +46,7 @@
 					{% for field in fields %}
 						<div id="card_{{ forloop.counter }}" class="container tab-pane fade col-md-4">
 							{% for value in field.values %}
-								<h6 class="text-center content-section my-0">{{ value.name }}</h6>
+								<h6 class="text-center content-section shadow-sm bg-primary rounded text-white my-0">{{ value.name }}</h6>
 							{% endfor %}
 						</div>
 					{% endfor %}

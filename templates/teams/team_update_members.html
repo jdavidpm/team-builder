@@ -4,15 +4,15 @@
 {% block content %}
 	<div class="masthead row justify-content-center">
 		<div class="col-md-3"></div>
-		<div class="jumbotron col-md-6 col-sm-10 p-5">
+		<div class="jumbotron shadow col-md-6 col-sm-10 p-5">
 			<form method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<fieldset class="form-group">
 					<legend class="border-bottom mb-5"><h3>Agregar Integrantes</h3></legend>
 					{{ m_form|crispy }}
 				</fieldset>
-				<div class="form-group d-flex justify-content-between">
-					<button class="btn btn-outline-info" type="submit">Guardar</button>
+				<div class="form-group d-flex justify-content-end">
+					<button class="btn btn-outline-secondary" type="submit">Guardar</button>
 				</div>
 			</form>
 		</div>
