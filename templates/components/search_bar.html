@@ -1,4 +1,4 @@
-	<form class="form-inline ml-2" action="{% url 'layout-search-results' %}">
-		<input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" data-toggle="tooltip" data-placement="bottom" title="Busca perfiles o proyectos" name="q">
-		<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-	</form>
+<form class="form-inline ml-2" role="form" action="{% url 'layout-search-results' %}">
+	<input id="form_sr"class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" data-toggle="tooltip" data-placement="bottom" title="Busca perfiles o proyectos" name="q" data-validetta="required,minLength[4]">
+	<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+</form>

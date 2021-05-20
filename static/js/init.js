@@ -68,3 +68,10 @@
 })(jQuery); // End of use strict
 
 $('[data-toggle="tooltip"]').tooltip()
+var $form = $("form"),
+  $successMsg = $(".alert");
+$form.validetta({
+  bubblePosition: "bottom",
+  bubbleGapTop: 10,
+  bubbleGapLeft: -5
+});
