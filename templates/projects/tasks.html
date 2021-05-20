@@ -36,16 +36,16 @@
         <div id="userTasks" style="display: block">
         {% if pending_tasks.user or in_dev_tasks.user or in_review_tasks.user or completed_tasks.user %}
         {% if pending_tasks.user %}
-            {% include "components/tasks-card.html" with tasks_type='Pendientes' view='U' tasks_list=pending_tasks.user %}
+            {% include "components/tasks_card.html" with tasks_type='Pendientes' view='U' tasks_list=pending_tasks.user %}
         {% endif %}
         {% if in_dev_tasks.user %}
-            {% include "components/tasks-card.html" with tasks_type='En desarrollo' view='U' tasks_list=in_dev_tasks.user %}
+            {% include "components/tasks_card.html" with tasks_type='En desarrollo' view='U' tasks_list=in_dev_tasks.user %}
         {% endif %}
         {% if in_review_tasks.user %}
-            {% include "components/tasks-card.html" with tasks_type='Listas para revisión' view='U' tasks_list=in_review_tasks.user %}
+            {% include "components/tasks_card.html" with tasks_type='Listas para revisión' view='U' tasks_list=in_review_tasks.user %}
         {% endif %}
         {% if completed_tasks.user %}
-            {% include "components/tasks-card.html" with tasks_type='Completadas' view='U' tasks_list=completed_tasks.user %}
+            {% include "components/tasks_card.html" with tasks_type='Completadas' view='U' tasks_list=completed_tasks.user %}
         {% endif %}
         {% else %}
         <p class="h4 text-center">No hay tareas aquí</p>
@@ -54,16 +54,16 @@
         <div id="allTasks" style="display: none">
         {% if pending_tasks.everyoneOnTeam or in_dev_tasks.everyoneOnTeam or in_review_tasks.everyoneOnTeam or completed_tasks.everyoneOnTeam %}
         {% if pending_tasks.everyoneOnTeam %}
-            {% include "components/tasks-card.html" with tasks_type='Pendientes' view='A' tasks_list=pending_tasks.everyoneOnTeam %}
+            {% include "components/tasks_card.html" with tasks_type='Pendientes' view='A' tasks_list=pending_tasks.everyoneOnTeam %}
         {% endif %}
         {% if in_dev_tasks.everyoneOnTeam %}
-            {% include "components/tasks-card.html" with tasks_type='En desarrollo' view='A' tasks_list=in_dev_tasks.everyoneOnTeam %}
+            {% include "components/tasks_card.html" with tasks_type='En desarrollo' view='A' tasks_list=in_dev_tasks.everyoneOnTeam %}
         {% endif %}
         {% if in_review_tasks.everyoneOnTeam %}
-            {% include "components/tasks-card.html" with tasks_type='Listas para revisión' view='A' tasks_list=in_review_tasks.everyoneOnTeam %}
+            {% include "components/tasks_card.html" with tasks_type='Listas para revisión' view='A' tasks_list=in_review_tasks.everyoneOnTeam %}
         {% endif %}
         {% if completed_tasks.everyoneOnTeam %}
-            {% include "components/tasks-card.html" with tasks_type='Completadas' view='A' tasks_list=completed_tasks.everyoneOnTeam %}
+            {% include "components/tasks_card.html" with tasks_type='Completadas' view='A' tasks_list=completed_tasks.everyoneOnTeam %}
         {% endif %}
         {% else %}
         <p class="h4 text-center">No hay tareas aquí</p>

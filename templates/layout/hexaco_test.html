@@ -3,8 +3,8 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-md-8 col-sm-10 jumbotron shadow-sm">
-			<h1 class="fs-3"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
+		<div class="col-md-8 col-sm-10 jumbotron bg-secondary shadow-sm">
+			<h1 class="fs-3 text-white"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
 	</div>
 {% endblock header %}
@@ -46,9 +46,9 @@
 					</legend>
 					{% if user.profile.personality_h %}
 						<div class="d-flex flex-nonwrap justify-content-around form-group">
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-compare' %}?type=bar'" class="shadow btn btn-outline-info" type="submit">Comparar resultados (<i class="fas fa-equals"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-info" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-compare' %}?type=bar'" class="shadow btn btn-outline-secondary" type="submit">Comparar resultados (<i class="fas fa-equals"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
 							
 						</div>
 					{% endif %}
