@@ -5,6 +5,8 @@ from .forms import PersonalityTestForm
 from json import loads
 from urllib import request
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from itertools import chain
 
 data = None
 with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/hexaco_items.json") as url:
@@ -81,10 +83,16 @@ def search_results(request):
 	profile_results = User.objects.filter(first_name__icontains=query)
 	team_results = Team.objects.filter(name__icontains=query)
 	project_results = Project.objects.filter(name__icontains=query)
+	total_results = list(chain(profile_results, project_results, team_results))
+	paginator = Paginator(total_results, 2)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
 	context = {
 		'title': 'Resultados de búsqueda',
 		'profile_results': profile_results,
 		'team_results': team_results,
 		'project_results': project_results,
+		'page_obj': page_obj,
+		'query': query
 	}
 	return render(request, 'layout/search_results.html', context)

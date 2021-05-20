@@ -6,12 +6,12 @@
 		<form>
 			<div class="form-row align-items-center justify-content-around px-4">
 				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="inputState"><span class="text-white">Muestra</span></label>
+					<label for="sampleSize"><span class="text-white">Muestra</span></label>
 					<div class="input-group mb-2 ml-2">
 						<div class="input-group-prepend">
 							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
 						</div>
-						<select id="inputState" class="form-control">
+						<select id="sampleSize" class="form-control">
 							<option selected>1</option>
 							<option>2</option>
 						</select>
@@ -46,9 +46,9 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
 						</div>
-						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Intereses">
+						<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
 						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a><i class="fas fa-plus"></i></a></div>
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
 						</div>
 					</div>
 				</div>
@@ -57,9 +57,9 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
 						</div>
-						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Experiencia">
+						<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
 						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a><i class="fas fa-plus"></i></a></div>
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
 						</div>
 					</div>
 				</div>
@@ -68,9 +68,9 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
 						</div>
-						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Campos">
+						<input type="text" class="form-control" id="fieldsFilter" placeholder="Campos">
 						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a><i class="fas fa-plus"></i></a></div>
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="fieldsFilterButton"><i class="fas fa-plus"></i></a></div>
 						</div>
 					</div>
 				</div>
@@ -81,13 +81,14 @@
 		</form>
 	</div>
 	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
-		{% for u in profile_results %}
+		{% for obj in page_obj %}
+		{% if obj|get_class == "User" %}
 			<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-				<div class="shadow-sm bg-secondary {% if u.profile.experience.all or u.profile.interests.all or u.profile.languages.all or u.profile.frameworks.all or u.profile.sw_tools.all or u.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-4">
-					<a href="{{ u.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ u.first_name }}">
-						<img class="rounded-circle thumbnail border border-primary" src="{{ u.profile.image.url }}"/>
-						<h3>{{ u.first_name }}</h3>
-						{% if u.profile.experience.all or u.profile.interests.all or u.profile.languages.all or u.profile.frameworks.all or u.profile.sw_tools.all or u.profile.hw_tools.all %}
+				<div class="shadow-sm bg-secondary {% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-4">
+					<a href="{{ obj.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ obj.first_name }}">
+						<img class="rounded-circle thumbnail border border-primary" src="{{ obj.profile.image.url }}"/>
+						<h3>{{ obj.first_name }}</h3>
+						{% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %}
 							<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 								<i class="fas fa-info-circle mr-2"></i>Información
 								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -99,58 +100,58 @@
 				</div>
 				<div class="collapse" id="card_profile_{{forloop.counter}}">
 					<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
-						{% if u.profile.experience.all %}
+						{% if obj.profile.experience.all %}
 						<div class="mb-3 px-2">
 							<h5>Experiencia</h5>
-							{% for exp in u.profile.experience.all %}
+							{% for exp in obj.profile.experience.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if u.profile.interests.all %}
+						{% if obj.profile.interests.all %}
 						<div class="mb-3 px-2">
 							<h5>Intereses</h5>
-							{% for exp in u.profile.interests.all %}
+							{% for exp in obj.profile.interests.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if u.profile.languages.all %}
+						{% if obj.profile.languages.all %}
 						<div class="mb-3 px-2">
 							<h5>Lenguajes</h5>
-							{% for exp in u.profile.languages.all %}
+							{% for exp in obj.profile.languages.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if u.profile.frameworks.all %}
+						{% if obj.profile.frameworks.all %}
 						<div class="mb-3 px-2">
 							<h5>Frameworks</h5>
-							{% for exp in u.profile.frameworks.all %}
+							{% for exp in obj.profile.frameworks.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if u.profile.sw_tools.all %}
+						{% if obj.profile.sw_tools.all %}
 						<div class="mb-3 px-2">
 							<h5>Herramientas SW</h5>
-							{% for exp in u.profile.sw_tools.all %}
+							{% for exp in obj.profile.sw_tools.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if u.profile.hw_tools.all %}
+						{% if obj.profile.hw_tools.all %}
 						<div class="mb-3 px-2">
 							<h5>Herramientas HW</h5>
-							{% for exp in u.profile.hw_tools.all %}
+							{% for exp in obj.profile.hw_tools.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if u.profile.distributions.all %}
+						{% if obj.profile.distributions.all %}
 						<div class="mb-3 px-2">
 							<h5>Distribuciones</h5>
-							{% for exp in u.profile.distributions.all %}
+							{% for exp in obj.profile.distributions.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
@@ -158,11 +159,11 @@
 					</div>
 				</div>			
 			</div>
-		{% endfor %}
-		{% for project in project_results %}
+		{% endif %}
+		{% if obj|get_class == "Project" %}
 			<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 				<div class="bg-secondary rounded py-4">
-					<a href="{{ project.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ project.name }}</h3></a>
+					<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
 					<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
 						<i class="fas fa-info-circle mr-2"></i>Información
 						<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -172,17 +173,17 @@
 				</div>
 				<div class="collapse" id="card_project_{{forloop.counter}}">
 					<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-start">
-						<h6><span class="text-muted">Autor: </span>{{ project.author }}</h6>
-						<h6 class="text-capitalize"><span class="text-muted">Estado: </span>{{ project.status }}</h6>
-						<h6><span class="text-muted">Campos: </span> {{ project.fields.all|join:", " }} </h6>
+						<h6><span class="text-muted">Autor: </span>{{ obj.author }}</h6>
+						<h6 class="text-capitalize"><span class="text-muted">Estado: </span>{{ obj.status }}</h6>
+						<h6><span class="text-muted">Campos: </span> {{ obj.fields.all|join:", " }} </h6>
 					</div>
 				</div>
 			</div>
-		{% endfor %}
-		{% for team in team_results|sort_by:"id" %}
+		{% endif %}
+		{% if obj|get_class == "Team" %}
 			<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 				<div class="bg-secondary rounded py-4">
-					<a href="{{ team.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ team.name }}</h3></a>
+					<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
 					<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
 						<i class="fas fa-info-circle mr-2"></i>Información
 						<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -192,10 +193,49 @@
 				</div>
 				<div class="collapse" id="card_team_{{forloop.counter}}">
 					<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
-						<h6><span class="text-muted">Creador: </span>{{ team.founder }}</h6>
+						<h6><span class="text-muted">Creador: </span>{{ obj.founder }}</h6>
 					</div>
 				</div>
 			</div>
+		{% endif %}
 		{% endfor %}
 	</div>
+	<div class="pagination">
+		<span class="step-links">
+			{% if page_obj.has_previous %}
+				<a href="?q={{ query }}&page=1">&laquo; first</a>
+				<a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+
+			{% if page_obj.has_next %}
+				<a href="?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+				<a href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+			{% endif %}
+		</span>
+	</div>
+
+	<script type="text/javascript">
+		document.getElementById("interestsFilterButton").onclick = addInterest;
+		document.getElementById("experiencesFilterButton").onclick = addExperience;
+		document.getElementById("fieldsFilterButton").onclick = addField;
+		function addInterest()
+		{
+			field = document.getElementById("interestsFilter").value;
+			alert(field);
+		}
+		function addExperience()
+		{
+			field = document.getElementById("experiencesFilter").value;
+			alert(field);
+		}
+		function addField()
+		{
+			field = document.getElementById("fieldsFilter").value;
+			alert(field);
+		}
+	</script>
 {% endblock content %}
