@@ -1,92 +1,134 @@
 {% extends 'layout/base.html' %}
+{% load team_tags %}
 
 {% block content %}
-<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
-	{% for u in profile_results%}
-		<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-			<div class="bg-secondary rounded-top py-4">
-				<a href="{{ u.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ u.first_name }}">
-					<img class="rounded-circle thumbnail border border-primary" src="{{ u.profile.image.url }}"/>
-					<h3>{{ u.first_name }}</h3>
-					<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+	<div class="masthead bg-primary d-flex align-items-center justify-content-around pt-5 mt-5 pb-4">
+		<form>
+			<div class="form-group d-flex flex-row align-items-center">
+				<label for="inputState"><span class="text-white">Muestra</span></label>
+				<select id="inputState" class="form-control ml-2">
+					<option selected>Choose...</option>
+					<option>...</option>
+				</select>
+			</div>
+		</form>
+	</div>
+	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
+		{% for u in profile_results %}
+			<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+				<div class="shadow-sm bg-secondary {% if u.profile.experience.all or u.profile.interests.all or u.profile.languages.all or u.profile.frameworks.all or u.profile.sw_tools.all or u.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-4">
+					<a href="{{ u.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ u.first_name }}">
+						<img class="rounded-circle thumbnail border border-primary" src="{{ u.profile.image.url }}"/>
+						<h3>{{ u.first_name }}</h3>
+						{% if u.profile.experience.all or u.profile.interests.all or u.profile.languages.all or u.profile.frameworks.all or u.profile.sw_tools.all or u.profile.hw_tools.all %}
+							<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+								<i class="fas fa-info-circle mr-2"></i>Información
+								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+								<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+								</h3>
+							</a>
+						{% endif %}
+					</a>
+				</div>
+				<div class="collapse" id="card_profile_{{forloop.counter}}">
+					<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
+						{% if u.profile.experience.all %}
+						<div class="mb-3 px-2">
+							<h5>Experiencia</h5>
+							{% for exp in u.profile.experience.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if u.profile.interests.all %}
+						<div class="mb-3 px-2">
+							<h5>Intereses</h5>
+							{% for exp in u.profile.interests.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if u.profile.languages.all %}
+						<div class="mb-3 px-2">
+							<h5>Lenguajes</h5>
+							{% for exp in u.profile.languages.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if u.profile.frameworks.all %}
+						<div class="mb-3 px-2">
+							<h5>Frameworks</h5>
+							{% for exp in u.profile.frameworks.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if u.profile.sw_tools.all %}
+						<div class="mb-3 px-2">
+							<h5>Herramientas SW</h5>
+							{% for exp in u.profile.sw_tools.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if u.profile.hw_tools.all %}
+						<div class="mb-3 px-2">
+							<h5>Herramientas HW</h5>
+							{% for exp in u.profile.hw_tools.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if u.profile.distributions.all %}
+						<div class="mb-3 px-2">
+							<h5>Distribuciones</h5>
+							{% for exp in u.profile.distributions.all %}
+								<p class="my-0">{{ exp }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+					</div>
+				</div>			
+			</div>
+		{% endfor %}
+		{% for project in project_results %}
+			<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+				<div class="bg-secondary rounded py-4">
+					<a href="{{ project.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ project.name }}</h3></a>
+					<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
 						<i class="fas fa-info-circle mr-2"></i>Información
 						<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 						<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 						</h3>
 					</a>
-				</a>
-			</div>
-			<div class="collapse" id="card_profile_{{forloop.counter}}">
-				<div class="bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
-					{% if u.profile.experience.all %}
-					<div class="mb-3 px-2">
-						<h5>Experiencia</h5>
-						{% for exp in u.profile.experience.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-					{% if u.profile.interests.all %}
-					<div class="mb-3 px-2">
-						<h5>Intereses</h5>
-						{% for exp in u.profile.interests.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-					{% if u.profile.languages.all %}
-					<div class="mb-3 px-2">
-						<h5>Lenguajes</h5>
-						{% for exp in u.profile.languages.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-					{% if u.profile.frameworks.all %}
-					<div class="mb-3 px-2">
-						<h5>Frameworks</h5>
-						{% for exp in u.profile.frameworks.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-					{% if u.profile.sw_tools.all %}
-					<div class="mb-3 px-2">
-						<h5>Herramientas SW</h5>
-						{% for exp in u.profile.sw_tools.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-					{% if u.profile.hw_tools.all %}
-					<div class="mb-3 px-2">
-						<h5>Herramientas HW</h5>
-						{% for exp in u.profile.hw_tools.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-					{% if u.profile.distributions.all %}
-					<div class="mb-3 px-2">
-						<h5>Distribuciones</h5>
-						{% for exp in u.profile.distributions.all %}
-							<p class="my-0">{{ exp }}</p>
-						{% endfor %}
-					</div>
-					{% endif %}
 				</div>
-			</div>			
-		</div>
-	{% endfor %}
-	{% for project in project_results%}
-		<div class="jumbotron bg-secondary col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-			<a href="{{ project.get_absolute_url }}" class="nounderline"><h3>{{ project.name }}</h3></a>
-		</div>
-	{% endfor %}
-	{% for team in team_results%}
-		<div class="jumbotron bg-secondary col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-			<a href="{{ team.get_absolute_url }}" class="nounderline"><h3>{{ team.name }}</h3></a>
-		</div>
-	{% endfor %}
-</div>
+				<div class="collapse" id="card_project_{{forloop.counter}}">
+					<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-start">
+						<h6><span class="text-muted">Autor: </span>{{ project.author }}</h6>
+						<h6 class="text-capitalize"><span class="text-muted">Estado: </span>{{ project.status }}</h6>
+						<h6><span class="text-muted">Campos: </span> {{ project.fields.all|join:", " }} </h6>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		{% for team in team_results|sort_by:"id" %}
+			<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+				<div class="bg-secondary rounded py-4">
+					<a href="{{ team.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ team.name }}</h3></a>
+					<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
+						<i class="fas fa-info-circle mr-2"></i>Información
+						<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+						<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+						</h3>
+					</a>
+				</div>
+				<div class="collapse" id="card_team_{{forloop.counter}}">
+					<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
+						<h6><span class="text-muted">Creador: </span>{{ team.founder }}</h6>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock content %}
