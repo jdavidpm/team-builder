@@ -2,14 +2,81 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary d-flex align-items-center justify-content-around pt-5 mt-5 pb-4">
+	<div class="masthead bg-primary pt-5 mt-5 pb-4 rounded-bottom">
 		<form>
-			<div class="form-group d-flex flex-row align-items-center">
-				<label for="inputState"><span class="text-white">Muestra</span></label>
-				<select id="inputState" class="form-control ml-2">
-					<option selected>Choose...</option>
-					<option>...</option>
-				</select>
+			<div class="form-row align-items-center justify-content-around px-4">
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="inputState"><span class="text-white">Muestra</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
+						</div>
+						<select id="inputState" class="form-control">
+							<option selected>1</option>
+							<option>2</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="inputState"><span class="text-white">Proyectos</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
+						</div>
+						<select id="inputState" class="form-control">
+							<option selected>Sí</option>
+							<option>No</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="inputState"><span class="text-white">Equipos</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+						</div>
+						<select id="inputState" class="form-control">
+							<option selected>Sí</option>
+							<option>No</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+						</div>
+						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Intereses">
+						<div class="input-group-append">
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a><i class="fas fa-plus"></i></a></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+						</div>
+						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Experiencia">
+						<div class="input-group-append">
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a><i class="fas fa-plus"></i></a></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
+						</div>
+						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Campos">
+						<div class="input-group-append">
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a><i class="fas fa-plus"></i></a></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-outline-secondary mb-2">Filtrar</button>
+				</div>
 			</div>
 		</form>
 	</div>
