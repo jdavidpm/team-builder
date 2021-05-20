@@ -108,3 +108,9 @@ def team_evaluate(request, id):
 		form = TeamEvaluationForm()
 		
 	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form})
+
+def teams_join_request(request):
+	return render(request, 'teams/teams_join_request.html')
+
+def teams_join_invitation(request):
+	return render(request, 'teams/teams_join_invitation.html')
