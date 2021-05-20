@@ -42,8 +42,9 @@
 						{% endfor %}
 					</div>
 				</fieldset>
-				<div class="form-group">
-					<button class="btn btn-outline-info" type="submit">Guardar</button>
+				<div class="form-group d-flex justify-content-around">
+					<a class="btn btn-outline-secondary nounderline ml-2" href="{% url 'password_reset' %}">Cambiar contraseña </a>
+					<button class="btn btn-outline-secondary" type="submit">Guardar</button>
 				</div>
 			</form>
 		</div>

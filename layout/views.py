@@ -64,19 +64,24 @@ def hexaco_results(request):
 	}
 	return render(request, 'layout/hexaco_results.html', context)
 
-def hexaco_compare(request):
-	hexaco_caps = 'hexaco'
-	labels = ['Honestidad', 'Emoción', 'Extraversión', 'Amabilidad', 'Escrupulosidad', 'Apertura']
-	values_m = [getattr(request.user.profile, 'personality_' + c) for c in hexaco_caps]
-	values_c = [getattr(User.objects.filter(id=27)[0].profile, 'personality_' + c) for c in hexaco_caps]
-	context = {
-		'title': 'Comparar HEXACO',
-		'labels': labels,
-		'values_m': values_m,
-		'values_c': values_c,
-		'compare_user': User.objects.filter(id=27)[0].first_name
-	}
-	return render(request, 'layout/hexaco_compare.html', context)
+def hexaco_compare(request, username):
+	user_compare = User.objects.filter(username=username)
+	if len(user_compare):
+		user_compare = user_compare[0]
+		hexaco_caps = 'hexaco'
+		labels = ['Honestidad', 'Emoción', 'Extraversión', 'Amabilidad', 'Escrupulosidad', 'Apertura']
+		values_m = [getattr(request.user.profile, 'personality_' + c) for c in hexaco_caps]
+		values_c = [getattr(user_compare.profile, 'personality_' + c) for c in hexaco_caps]
+		context = {
+			'title': 'Comparar HEXACO',
+			'labels': labels,
+			'values_m': values_m,
+			'values_c': values_c,
+			'compare_user': user_compare.first_name
+		}
+		return render(request, 'layout/hexaco_compare.html', context)
+	return redirect('layout-hexaco-results')
+	
 
 def search_results(request):
 	query = request.GET.get('q')

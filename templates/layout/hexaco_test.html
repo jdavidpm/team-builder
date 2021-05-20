@@ -47,7 +47,6 @@
 					{% if user.profile.personality_h %}
 						<div class="d-flex flex-nonwrap justify-content-around form-group">
 							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-compare' %}?type=bar'" class="shadow btn btn-outline-secondary" type="submit">Comparar resultados (<i class="fas fa-equals"></i>)</button>
 							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
 							
 						</div>
