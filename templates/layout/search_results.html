@@ -1,7 +1,21 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-<div class="masthead bg-white text-secondary text-center pt-5 mt-5">
-    <h1>{{tmp}}</h1>
+<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex align-items-around justify-content-center flex-wrap">
+	{% for profile in profile_results%}
+		<div class="jumbotron bg-secondary col-3 mx-4">
+			<a href="{{ profile.profile.get_absolute_url }}" class="nounderline"><h3>{{ profile.first_name }}</h3></a>
+		</div>
+	{% endfor %}
+	{% for project in project_results%}
+		<div class="jumbotron bg-secondary col-3 mx-4">
+			<a href="{{ project.get_absolute_url }}" class="nounderline"><h3>{{ project.name }}</h3></a>
+		</div>
+	{% endfor %}
+	{% for team in team_results%}
+		<div class="jumbotron bg-secondary col-3 mx-4">
+			<a href="{{ team.get_absolute_url }}" class="nounderline"><h3>{{ team.name }}</h3></a>
+		</div>
+	{% endfor %}
 </div>
 {% endblock content %}

@@ -14,7 +14,7 @@
 					<div class="navbar-nav d-flex align-items-start flex-row">
 						{% if user.is_authenticated %}						
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2 fs-2"></i></a></li>
-							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fs-2 fas fa-user-circle"></i></a></li>
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Mi perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fs-2 fas fa-user-circle"></i></a></li>
 							<li class="nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
 								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fs-2 fas fa-tools"></i></a>
 								<div class="dropdown-menu text-capitalize" aria-labelledby="navbarDropdown">
@@ -49,7 +49,7 @@
 					<div class="navbar-nav d-flex align-items-start">
 						<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
 						{% if user.is_authenticated %}						
-							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fas fa-user-circle"></i>Perfil</a></li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Mi perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fas fa-user-circle"></i>Perfil</a></li>
 							<li class="mb-2 nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
 								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fas fa-tools"></i>Herramientas</a>
 								<div class="dropdown-menu text-capitalize" aria-labelledby="navbarDropdown">
