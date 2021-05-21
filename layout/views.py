@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
+from urllib import parse
 from users.models import Task, User, Team, Project
 from .forms import PersonalityTestForm
 from json import loads
 from urllib import request
 from django.contrib.auth.decorators import login_required
+from django.http import QueryDict
 from django.core.paginator import Paginator
 from itertools import chain
 
@@ -87,20 +89,22 @@ def hexaco_compare(request, username):
 	
 
 def search_results(request):
-	query = request.GET.get('q')
+	query, sampleSize, hasProjects, hasTeams = request.GET.get('q'), request.GET.get('sampleSize'), request.GET.get('hasProjects'), request.GET.get('hasTeams')
 	profile_results = User.objects.filter(first_name__icontains=query)
 	team_results = Team.objects.filter(name__icontains=query)
 	project_results = Project.objects.filter(name__icontains=query)
-	total_results = list(chain(profile_results, project_results, team_results))
+	total_results = list(chain(profile_results, project_results if hasProjects == 'Sí' else [], team_results if hasTeams == 'Sí' else []))
+
 	paginator = Paginator(total_results, 2)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
+
 	context = {
 		'title': 'Resultados de búsqueda',
-		'profile_results': profile_results,
-		'team_results': team_results,
-		'project_results': project_results,
 		'page_obj': page_obj,
-		'query': query
+		'query': query,
+		'sampleSize': sampleSize,
+		'hasProjects': hasProjects,
+		'hasTeams': hasTeams
 	}
 	return render(request, 'layout/search_results.html', context)
