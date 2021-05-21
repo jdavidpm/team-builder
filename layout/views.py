@@ -95,9 +95,11 @@ def search_results(request):
 	project_results = Project.objects.filter(name__icontains=query)
 	total_results = list(chain(profile_results, project_results if hasProjects == 'Sí' else [], team_results if hasTeams == 'Sí' else []))
 
-	paginator = Paginator(total_results, 2)
+	paginator = Paginator(total_results, int(sampleSize) if sampleSize else 5)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
+
+	print(request.GET)
 
 	context = {
 		'title': 'Resultados de búsqueda',
