@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
 from users.models import Team
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
@@ -110,7 +111,16 @@ def team_evaluate(request, id):
 	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form})
 
 def teams_join_request(request):
-	return render(request, 'teams/teams_join_request.html')
+	id_receiver = request.GET.get('toReceive')
+	receiver_user = User.objects.filter(id=id_receiver)[0]
+	if receiver_user != request.user:
+		context = {
+			'title': 'Enviar solicitud a ' + receiver_user.first_name,
+			'receiver_user': receiver_user
+		}
+		return render(request, 'teams/teams_join_request.html', context)
+	else:
+		return redirect('users-profile', username=request.user.username)
 
 def teams_join_invitation(request):
 	return render(request, 'teams/teams_join_invitation.html')
