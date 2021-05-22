@@ -2,8 +2,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from users.models import Team
+from users.models import Team, JoinInvitation, JoinRequest
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
+from django.core.mail import send_mail
 from json import loads
 from urllib import request
 
@@ -110,17 +111,35 @@ def team_evaluate(request, id):
 		
 	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form})
 
-def teams_join_request(request):
+def teams_join_invitation(request):
 	id_receiver = request.GET.get('toReceive')
 	receiver_user = User.objects.filter(id=id_receiver)[0]
+	current_user_teams = Team.objects.filter(founder=request.user)
 	if receiver_user != request.user:
 		context = {
 			'title': 'Enviar solicitud a ' + receiver_user.first_name,
-			'receiver_user': receiver_user
+			'receiver_user': receiver_user,
+			'current_user_teams': current_user_teams
 		}
-		return render(request, 'teams/teams_join_request.html', context)
+		return render(request, 'teams/teams_join_invitation.html', context)
 	else:
 		return redirect('users-profile', username=request.user.username)
 
-def teams_join_invitation(request):
-	return render(request, 'teams/teams_join_invitation.html')
+def teams_join_invitation_done(request):
+	user_to = User.objects.filter(username=request.GET.get('userTo'))[0]
+	team_to = Team.objects.filter(name=request.GET.get('emailTeamInvite'))[0]
+	boolEmail = send_mail(
+			'Acabas de recibir una invitación - ' + request.GET.get('emailSubject'),
+			'Acaba de llegarte una invitación para unirte al equipo ' + request.GET.get('emailTeamInvite') + ' su creador (' + request.user.first_name + ') te manda el siguiente mensaje: ' + request.GET.get('messagePersonalized'),
+			request.GET.get('emailFrom'),
+			[request.GET.get('emailTo')],
+			fail_silently=False,
+			)
+	new_invitation = JoinInvitation(to_user=user_to, from_user=request.user, team=team_to)
+	new_request = JoinRequest(team=team_to, user=request.user)
+	new_invitation.save()
+	new_request.save()
+	return render(request, 'teams/teams_join_invitation_done.html')
+
+def teams_join_request(request):
+	return render(request, 'teams/teams_join_request.html')
