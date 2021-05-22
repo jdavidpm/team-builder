@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', 'localhost']
 INSTALLED_APPS = [
     'layout.apps.LayoutConfig',
     'users.apps.UsersConfig',
+    'teams.apps.TeamsConfig',
+    'projects.apps.ProjectsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

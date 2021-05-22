@@ -35,13 +35,13 @@ def signup(request):
 def profile(request, username):
 	fields, users = [], []
 	if username == request.user.username:
-		users = User.objects.all().exclude(username='ssiet').exclude(username=request.user.username)
+		users = User.objects.all().exclude(username=request.user.username)
 		for field in request.user.profile._meta.many_to_many:
 			if bool(getattr(request.user.profile, field.name).all()):
 				fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
 		return render(request, 'users/profile.html', {'title': request.user.first_name, 'fields': fields, 'users': users})
 	else:
-		users = User.objects.all().exclude(username='ssiet').exclude(username=username)
+		users = User.objects.all().exclude(username=username)
 		foreign_user = User.objects.filter(username=username).first()
 		for field in foreign_user.profile._meta.many_to_many:
 			if bool(getattr(foreign_user.profile, field.name).all()):

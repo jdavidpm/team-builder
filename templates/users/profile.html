@@ -3,15 +3,15 @@
 {% block header %}
 	<div class="masthead row d-flex justify-content-center">
 		<div class="col-md-9 col-sm-10">
-			<div class="jumbotron pt-0 pb-2">
+			<div class="jumbotron bg-secondary shadow-sm pt-0 pb-2">
 				{% block messages %}{% include "components/messages.html" %}{% endblock %}
 				<div class="pt-2 d-flex justify-content-between">
 					<a class="nounderline" href="{{user.profile.get_absolute_url|add:'update/'}}" data-toggle="tooltip" title="Editar perfil">
-						<span class="fs-2 m-1"><i class="fas fa-user-edit text-dark"></i></span>
+						<i class="fas fa-user-edit btn btn-outline-light border-0 fs-2"></i>
 					</a>
 					<div class="dropleft">
 						<a class="nounderline dropdown-toggle" href="#" title="Menu" role="button" id="menuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="fs-2 m-1"><i class="fas fa-bars text-dark"></i></span>
+							<i class="fas fa-bars btn btn-outline-light border-0 fs-2"></i>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="menuProfile">
 							<div class="d-flex">
@@ -23,7 +23,7 @@
 					</div>
 				</div>				
 				<div class="media">
-					<div class="media-body text-center">
+					<div class="media-body text-center text-light mb-4">
 						<img class="rounded-circle account-img img-thumbnail" src="{{ user.profile.image.url }}"/>
 						<h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
 						<p class="text-muted text-uppercase mt-n2">({{ user.username }})</p>
@@ -36,7 +36,7 @@
 							<li class="nav-item mt-2 mx-2">
 								<a class="nav-link d-flex flex-column" data-toggle="tab" href="#card_{{ forloop.counter }}" role="tab">
 									<i class="{{ field.icon }} mr-2 mb-1 fs-2"></i>
-									<span class="text-secondary font-weight-bold fs-1">{{ field.name }}</span>
+									<span class="font-weight-bold fs-1">{{ field.name }}</span>
 								</a>
 							</li>
 						{% endfor %}
@@ -46,7 +46,7 @@
 					{% for field in fields %}
 						<div id="card_{{ forloop.counter }}" class="container tab-pane fade col-md-4">
 							{% for value in field.values %}
-								<h6 class="text-center content-section my-0">{{ value.name }}</h6>
+								<h6 class="text-center content-section shadow-sm bg-primary rounded text-white my-1 border-0">{{ value.name }}</h6>
 							{% endfor %}
 						</div>
 					{% endfor %}

@@ -2,18 +2,18 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-around flex-wrap">	
-		<div class="col-md-10 col-sm-10 col-lg-10 col-10">
-			<h1 class="fs-3 jumbotron bg-secondary text-white shadow-sm px-5"><i class="fas fa-dice-d6 mr-4"></i>Resultados de Personalidad HEXACO</h1>
+		<div class="col-md-10 col-sm-10 col-lg-10">
+			<h1 class="fs-3 jumbotron bg-secondary text-white px-5"><i class="fas fa-equals mr-4"></i>Comparación de Personalidad HEXACO</h1>
 			<div class="d-flex justify-content-between align-items-start flex-wrap">
-				<canvas id="chart" width="500" height="500" class="jumbotron shadow-sm col-md-7 p-0 mx-0"></canvas>
+				<canvas id="chart" width="500" height="500" class="jumbotron col-md-7 p-0 mx-0"></canvas>
 				<div class="text-left mb-2">
 					<a class="nounderline btn btn-outline-secondary border-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 						<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
 					</a>
 					<div class="collapse text-left py-2" id="collapseMenu">
-						<a class="my-4 btn btn-outline-secondary shadow nounderline" target="_blank" href="{% url 'layout-hexaco-test' %}"><i class="fas fa-plus mr-2"></i>Volver a realizar</a>
-						<a class="my-4 btn btn-outline-secondary shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=polarArea"><i class="fas fa-chart-pie mr-2"></i>Gráfico Radar</a>
-						<a class="my-4 btn btn-outline-secondary shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=bar"><i class="fas fa-chart-bar mr-2"></i>Gráfico Barras</a>
+						<a class="my-4 btn btn-outline-secondary nounderline" target="_blank" href="{% url 'layout-hexaco-test' %}"><i class="fas fa-plus mr-2"></i>Volver a realizar</a>
+						<a class="my-4 btn btn-outline-secondary nounderline" href="{% url 'layout-hexaco-results' %}?type=polarArea"><i class="fas fa-chart-pie mr-2"></i>Gráfico Radar</a>
+						<a class="my-4 btn btn-outline-secondary nounderline" href="{% url 'layout-hexaco-results' %}?type=bar"><i class="fas fa-chart-bar mr-2"></i>Gráfico Barras</a>
 					</div>
 				</div>
 			</div>
@@ -21,23 +21,18 @@
 	</div>
 {% endblock header %}
 
-{% block content %}
-	<div class="text-center mb-0 pb-0 d-flex justify-content-center">
-	</div>
-{% endblock content %}
-
 {% block script %}
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script>
 		$(document).ready(function(){
 			let ctx = document.getElementById("chart").getContext("2d");
 			let chart = new Chart(ctx, {
-			type: '{{ type }}',
+			type: 'radar',
 			data: {
 				labels: [{% for l in labels %}'{{ l }}', {% endfor %}],
 				datasets: [
 					{
-						label: "Promedio",
+						label: '{{ user.first_name }}',
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.2)',
 							'rgba(54, 162, 235, 0.2)',
@@ -54,7 +49,27 @@
 							'rgba(153, 102, 255, 1)',
 							'rgba(255, 159, 64, 1)'
 						],
-						data: [{% for v in values %}'{{ v }}', {% endfor %}]
+						data: [{% for v in values_m %}'{{ v }}', {% endfor %}]
+					},
+                    {
+						label: '{{ compare_user }}',
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						data: [{% for v in values_c %}'{{ v }}', {% endfor %}]
 					}
 				]
 			},
@@ -66,7 +81,7 @@
 					},
 				plugins: {
 					title: {
-						display: false,
+						display: true,
 						color: '#2c3e50',
 						padding: 20,
 						font: {
@@ -75,8 +90,8 @@
 						text: 'Rasgos de Personalidad',
 					},
 					legend: {
-						display: {% if type == 'bar' %}false {% else %} true {% endif %},
-						position: 'left',
+						display: true,
+						position: 'top',
 						labels: {
 							boxWidth: 25,
 							boxHeight: 25,
@@ -89,12 +104,11 @@
 				scale: {
 					beginAtZero: false,
 					min: 1,
-					max: 5,
 					r: {
-						max: 5,
+
 						min: 1,
 						ticks: {
-							stepSize: 1,
+							stepSize: 0.5,
 						}
 					}
 					},

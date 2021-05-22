@@ -1,0 +1,393 @@
+{% extends 'layout/base.html' %}
+{% load team_tags %}
+
+{% block content %}
+	<div class="masthead bg-primary pt-5 mt-5 pb-4 rounded-bottom">
+		<form role="form" action="{% url 'layout-search-results' %}">
+			<div class="form-row align-items-center justify-content-around px-4">
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="sampleSize"><span class="text-white">Muestra</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
+						</div>
+						<select id="sampleSize" name="sampleSize" class="form-control">
+							<option {% if sampleSize == '1'%} selected {% endif %}>1</option>
+							<option {% if sampleSize == '2'%} selected {% endif %}>2</option>
+							<option {% if sampleSize == '3'%} selected {% endif %}>3</option>
+							<option {% if sampleSize == '4'%} selected {% endif %}>4</option>
+							<option {% if sampleSize == '5'%} selected {% endif %}>5</option>
+							<option {% if sampleSize == '6'%} selected {% endif %}>6</option>
+							<option {% if sampleSize == '7'%} selected {% endif %}>7</option>
+							<option {% if sampleSize == '8'%} selected {% endif %}>8</option>
+						</select>
+
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="hasProjects"><span class="text-white">Proyectos</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
+						</div>
+						<select id="hasProjects" name="hasProjects" class="form-control">
+							<option {% if hasProjects == 'Sí' %} selected {% endif %}>Sí</option>
+							<option {% if hasProjects == 'No' %} selected {% endif %}>No</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="hasTeams"><span class="text-white">Equipos</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+						</div>
+						<select id="hasTeams" class="form-control" name="hasTeams">
+							<option {% if hasTeams == 'No'%} selected {% endif %}>No</option>
+							<option {% if hasTeams == 'Sí'%} selected {% endif %}>Sí</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+						</div>
+						<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
+						<div class="input-group-append">
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+						</div>
+						<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
+						<div class="input-group-append">
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
+						</div>
+						<input type="text" class="form-control" id="fieldsFilter" placeholder="Campos">
+						<div class="input-group-append">
+							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="fieldsFilterButton"><i class="fas fa-plus"></i></a></div>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="q" value="{{ query }}" />
+				<input type="hidden" name="page" value="{{ page_obj.number }}" />
+				<div class="col-auto">
+					<button type="submit" class="btn btn-outline-secondary mb-2">Filtrar</button>
+				</div>
+			</div>
+			<div>
+				<div id="badgesDiv" class="px-5 mx-5 py-2 d-flex justify-content-around flex-wrap">
+					{% for i in interest_dict %}
+						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+							<i class="fas fa-heart mr-2"></i>{{i}}
+							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
+								<span id="hid_{{i}}">&times;</span>
+							</button>
+							<input type="hidden" name="interest_{{i}}" value="{{ i }}" />
+						</span>
+					{% endfor %}
+					{% for i in experience_dict %}
+						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+							<i class="fas fa-briefcase mr-2"></i>{{i}}
+							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
+								<span id="hid_{{i}}">&times;</span>
+							</button>
+							<input type="hidden" name="experience_{{i}}" value="{{ i }}" />
+						</span>
+					{% endfor %}
+					{% for i in field_dict %}
+						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+							<i class="fas fa-clipboard-list mr-2"></i>{{i}}
+							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
+								<span id="hid_{{i}}">&times;</span>
+							</button>
+							<input type="hidden" name="field_{{i}}" value="{{ i }}" />
+						</span>
+					{% endfor %}
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
+		{% for obj in page_obj %}
+			{% if obj|get_class == "User" %}
+				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+					<div class="shadow-sm bg-secondary {% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
+						<div class="d-flex justify-content-end pt-0 mt-0 mr-2">
+							<a class="nounderline" href="{% url 'teams-join-request' %}" data-toggle="tooltip" title="Agregar a un equipo">
+								<i class="fas fa-plus btn btn-outline-light border-0"></i>
+							</a>
+						</div>
+						<a href="{{ obj.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ obj.first_name }}">
+							<img class="rounded-circle thumbnail border border-primary" src="{{ obj.profile.image.url }}"/>
+							<h3>{{ obj.first_name }}</h3>
+							{% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %}
+								<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+									<i class="fas fa-info-circle mr-2"></i>Información
+									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+									</h3>
+								</a>
+							{% endif %}
+						</a>
+					</div>
+					<div class="collapse" id="card_profile_{{forloop.counter}}">
+						<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
+							{% if obj.profile.experience.all %}
+							<div class="mb-3 px-2">
+								<h5>Experiencia</h5>
+								{% for exp in obj.profile.experience.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if obj.profile.interests.all %}
+							<div class="mb-3 px-2">
+								<h5>Intereses</h5>
+								{% for exp in obj.profile.interests.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if obj.profile.languages.all %}
+							<div class="mb-3 px-2">
+								<h5>Lenguajes</h5>
+								{% for exp in obj.profile.languages.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if obj.profile.frameworks.all %}
+							<div class="mb-3 px-2">
+								<h5>Frameworks</h5>
+								{% for exp in obj.profile.frameworks.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if obj.profile.sw_tools.all %}
+							<div class="mb-3 px-2">
+								<h5>Herramientas SW</h5>
+								{% for exp in obj.profile.sw_tools.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if obj.profile.hw_tools.all %}
+							<div class="mb-3 px-2">
+								<h5>Herramientas HW</h5>
+								{% for exp in obj.profile.hw_tools.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if obj.profile.distributions.all %}
+							<div class="mb-3 px-2">
+								<h5>Distribuciones</h5>
+								{% for exp in obj.profile.distributions.all %}
+									<p class="my-0">{{ exp }}</p>
+								{% endfor %}
+							</div>
+							{% endif %}
+						</div>
+					</div>			
+				</div>
+			{% endif %}
+			{% if obj|get_class == "Project" %}
+				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+					<div class="bg-secondary rounded py-4">
+						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
+						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
+							<i class="fas fa-info-circle mr-2"></i>Información
+							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+							</h3>
+						</a>
+					</div>
+					<div class="collapse" id="card_project_{{forloop.counter}}">
+						<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-start">
+							<h6><span class="text-muted">Autor: </span>{{ obj.author }}</h6>
+							<h6 class="text-capitalize"><span class="text-muted">Estado: </span>{{ obj.status }}</h6>
+							<h6><span class="text-muted">Campos: </span> {{ obj.fields.all|join:", " }} </h6>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if obj|get_class == "Team" %}
+				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+					<div class="bg-secondary rounded py-4">
+						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
+						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
+							<i class="fas fa-info-circle mr-2"></i>Información
+							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+							</h3>
+						</a>
+					</div>
+					<div class="collapse" id="card_team_{{forloop.counter}}">
+						<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
+							<h6><span class="text-muted">Creador: </span>{{ obj.founder }}</h6>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<!--<div class="pagination d-flex justify-content-center my-4">
+		<span class="step-links">
+			{% if page_obj.has_previous %}
+				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page=1">&laquo; Primera</a>
+				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.previous_page_number }}">Anterior</a>
+			{% endif %}
+			<span class="current font-italic">
+				Pág. {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+			</span>
+			{% if page_obj.has_next %}
+				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.next_page_number }}">Siguiente</a>
+				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+			{% endif %}
+		</span>
+	</div>-->
+
+	<script type="text/javascript">
+		document.getElementById("interestsFilterButton").onclick = addInterest;
+		document.getElementById("experiencesFilterButton").onclick = addExperience;
+		document.getElementById("fieldsFilterButton").onclick = addField;
+		document.getElementById("badgesDiv").addEventListener('click', function(event) {
+					funRemove(event.target);
+					});
+		
+		function addInterest()
+		{
+			interest = document.getElementById("interestsFilter").value;
+
+			if (!document.getElementById("spn_"+interest))
+			{
+				spanInterest = document.createElement("span");
+				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("id", "spn_"+interest);
+				spanInterest.innerHTML = interest; 
+
+				inputInterest = document.createElement("input");
+				inputInterest.setAttribute("type","hidden");
+				inputInterest.setAttribute("name","interest_"+interest);
+				inputInterest.setAttribute("value",interest);
+		
+
+				buttonInterest = document.createElement("button");
+				buttonInterest.setAttribute("type", "button");
+				buttonInterest.setAttribute("class", "close ml-2 mb-1 text-danger");
+				buttonInterest.setAttribute("id", "btn_"+interest);
+				buttonInterest.setAttribute("aria-label", "Close");
+				
+				hidInterest = document.createElement("span");
+				//hidInterest.setAttribute("aria-hidden", "true");
+				hidInterest.setAttribute("id", "hid_"+interest);
+				hidInterest.innerHTML = "&times;";
+
+				buttonInterest.appendChild(hidInterest);
+				spanInterest.appendChild(buttonInterest);
+				spanInterest.appendChild(inputInterest);
+				document.getElementById("badgesDiv").appendChild(spanInterest);
+
+			}
+
+		}
+		function funRemove(element)
+		{
+			element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+			
+		}
+		function addExperience()
+		{
+			experience = document.getElementById("experiencesFilter").value;
+
+			if (!document.getElementById("spn_"+experience))
+			{
+				spanInterest = document.createElement("span");
+				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("id", "spn_"+experience);
+				spanInterest.innerHTML = experience; 
+
+				inputInterest = document.createElement("input");
+				inputInterest.setAttribute("type","hidden");
+				inputInterest.setAttribute("name","experience_"+experience);
+				inputInterest.setAttribute("value",experience);
+		
+
+				buttonInterest = document.createElement("button");
+				buttonInterest.setAttribute("type", "button");
+				buttonInterest.setAttribute("class", "close ml-2 mb-1 text-danger");
+				buttonInterest.setAttribute("id", "btn_"+experience);
+				buttonInterest.setAttribute("aria-label", "Close");
+				
+				hidInterest = document.createElement("span");
+				//hidInterest.setAttribute("aria-hidden", "true");
+				hidInterest.setAttribute("id", "hid_"+experience);
+				hidInterest.innerHTML = "&times;";
+
+				buttonInterest.appendChild(hidInterest);
+				spanInterest.appendChild(buttonInterest);
+				spanInterest.appendChild(inputInterest);
+				document.getElementById("badgesDiv").appendChild(spanInterest);
+
+				document.getElementById("badgesDiv").addEventListener('click', function(event) {
+					funRemove(event.target);
+					});
+			}
+
+		}
+		function addField()
+		{
+			field = document.getElementById("fieldsFilter").value;
+
+			if (!document.getElementById("spn_"+field))
+			{
+				spanInterest = document.createElement("span");
+				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("id", "spn_"+field);
+				spanInterest.innerHTML = field; 
+
+				inputInterest = document.createElement("input");
+				inputInterest.setAttribute("type","hidden");
+				inputInterest.setAttribute("name","field_"+field);
+				inputInterest.setAttribute("value",field);
+		
+
+				buttonInterest = document.createElement("button");
+				buttonInterest.setAttribute("type", "button");
+				buttonInterest.setAttribute("class", "close ml-2 mb-1 text-danger");
+				buttonInterest.setAttribute("id", "btn_"+field);
+				buttonInterest.setAttribute("aria-label", "Close");
+				
+				hidInterest = document.createElement("span");
+				//hidInterest.setAttribute("aria-hidden", "true");
+				hidInterest.setAttribute("id", "hid_"+field);
+				hidInterest.innerHTML = "&times;";
+
+				buttonInterest.appendChild(hidInterest);
+				spanInterest.appendChild(buttonInterest);
+				spanInterest.appendChild(inputInterest);
+				document.getElementById("badgesDiv").appendChild(spanInterest);
+
+				document.getElementById("badgesDiv").addEventListener('click', function(event) {
+					funRemove(event.target);
+					});
+			}
+
+		}
+	</script>
+{% endblock content %}

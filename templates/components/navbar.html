@@ -1,22 +1,22 @@
 <!-- Navigation-->
-		<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+		<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top py-0" id="mainNav">
 			<div class="container">
 				<a class="navbar-brand mr-4 d-flex align-items-center" href="{% url 'layout-index' %}">
 					<i class="fas fa-users fs-3 py-0 px-2 text-white"></i>
 					Team Builder
 				</a>
 				<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars mr-2"></i>Menu</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
+
+				<div class="collapse navbar-collapse">
 					<div class="navbar-nav mr-auto" tabindex="0" data-toggle="tooltip" title="No tienes notificaciones nuevas"> 
-						<li class="nav-item mx-0 mx-lg-1 d-block align-items-center text-right"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#"><i class="far fa-bell fs-2"></i></a></li>
 					</div>
 					<!-- Navbar Right Side -->
-					<div class="navbar-nav">
-						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><span class="px-2"><i class="fas fa-home"></i></span>Inicio</a></li>
+					<div class="navbar-nav d-flex align-items-start flex-row">
 						{% if user.is_authenticated %}						
-							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><span class="px-2"><i class="fas fa-user-circle"></i></span>Perfil</a></li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="px-2"><i class="fas fa-tools"></i></span>Herramientas</a>
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2 fs-2"></i></a></li>
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Mi perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fs-2 fas fa-user-circle"></i></a></li>
+							<li class="nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
+								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fs-2 fas fa-tools"></i></a>
 								<div class="dropdown-menu text-capitalize" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item {% if request.path == '/teams/' %}active{% endif %}" href="{% url 'teams-list' %}">Equipos</a>
 									<a class="dropdown-item {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects-list'%}">Proyectos</a>
@@ -27,12 +27,51 @@
 									<a class="dropdown-item {% if request.path == '/tools/' %}active{% endif %}" href="{% url 'layout-tools'%}">Todas</a>
 								</div>
 							</li>
-							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><span class="px-2"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a></li>
+							{% include 'components/search_bar.html' %}
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2 fs-2"></i></a></li>
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fs-2 fas fa-sign-out-alt"></i></a></li>
 						{% else %}
-							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
-							<!--<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
-							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span class="px-2"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
-							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == '/signup/' %}active{% endif %}" href="{% url 'users-signup'%}"><span class="px-2"><i class="fas fa-user-plus"></i></span>Registro</a></li>
+							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
+							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
+							<!--<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
+							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span class="px-2"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
+							<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signup/' %}active{% endif %}" href="{% url 'users-signup'%}"><span class="px-2"><i class="fas fa-user-plus"></i></span>Registro</a></li>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<div class="d-md-none d-lg-none d-xl-none">
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<div class="navbar-nav mr-auto" tabindex="0" data-toggle="tooltip" title="No tienes notificaciones nuevas"> 
+					</div>
+					<!-- Navbar Right Side -->
+					<div class="navbar-nav d-flex align-items-start">
+						<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
+						{% if user.is_authenticated %}						
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Mi perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fas fa-user-circle"></i>Perfil</a></li>
+							<li class="mb-2 nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
+								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fas fa-tools"></i>Herramientas</a>
+								<div class="dropdown-menu text-capitalize" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item {% if request.path == '/teams/' %}active{% endif %}" href="{% url 'teams-list' %}">Equipos</a>
+									<a class="dropdown-item {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects-list'%}">Proyectos</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="{% url 'layout-hexaco-test' %}">HEXACO</a>
+									<a class="dropdown-item" href="{% url 'projects-tasks'%}">Tareas</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item {% if request.path == '/tools/' %}active{% endif %}" href="{% url 'layout-tools'%}">Todas</a>
+								</div>
+							</li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2"></i>Notificaciones</a></li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
+							<div class="mb-2">
+								{% include 'components/search_bar.html' %}
+							</div>
+						{% else %}
+							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
+							<!--<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
+							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span class="px-2"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
+							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signup/' %}active{% endif %}" href="{% url 'users-signup'%}"><span class="px-2"><i class="fas fa-user-plus"></i></span>Registro</a></li>
 						{% endif %}
 					</div>
 				</div>

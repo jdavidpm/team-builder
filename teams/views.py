@@ -7,7 +7,7 @@ from json import loads
 from urllib import request
 
 data = None
-with request.urlopen("https://raw.githubusercontent.com/jdavidpm/team-builder/master/static/json/team_performance.json") as url:
+with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/team_performance.json") as url:
 	data = loads(url.read().decode(encoding='utf-8'))
 
 @login_required
@@ -71,7 +71,8 @@ def team_update_members(request, id):
 		if request.method == 'POST':
 			m_form = TeamMembersForm(request.POST)
 			if m_form.is_valid():
-				m_form.save()
+				team.members.set(m_form.cleaned_data['members'])
+				team.save()
 				messages.success(request, f'¡El equipo fue actualizada con éxito!')
 				return redirect('teams-item', id=team.id)
 		else:
@@ -107,3 +108,9 @@ def team_evaluate(request, id):
 		form = TeamEvaluationForm()
 		
 	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form})
+
+def teams_join_request(request):
+	return render(request, 'teams/teams_join_request.html')
+
+def teams_join_invitation(request):
+	return render(request, 'teams/teams_join_invitation.html')
