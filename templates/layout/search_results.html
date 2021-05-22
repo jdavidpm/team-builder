@@ -17,6 +17,9 @@
 							<option {% if sampleSize == '3'%} selected {% endif %}>3</option>
 							<option {% if sampleSize == '4'%} selected {% endif %}>4</option>
 							<option {% if sampleSize == '5'%} selected {% endif %}>5</option>
+							<option {% if sampleSize == '6'%} selected {% endif %}>6</option>
+							<option {% if sampleSize == '7'%} selected {% endif %}>7</option>
+							<option {% if sampleSize == '8'%} selected {% endif %}>8</option>
 						</select>
 
 					</div>
@@ -28,8 +31,8 @@
 							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
 						</div>
 						<select id="hasProjects" name="hasProjects" class="form-control">
-							<option {% if hasTeams == 'No'%} selected {% endif %}>No</option>
-							<option {% if hasTeams == 'Sí'%} selected {% endif %}>Sí</option>
+							<option {% if hasProjects == 'Sí' %} selected {% endif %}>Sí</option>
+							<option {% if hasProjects == 'No' %} selected {% endif %}>No</option>
 						</select>
 					</div>
 				</div>
@@ -84,7 +87,37 @@
 					<button type="submit" class="btn btn-outline-secondary mb-2">Filtrar</button>
 				</div>
 			</div>
-			<div><div id="badgesDiv" class="px-5 mx-5 py-2 d-flex justify-content-around flex-wrap "></div></div>
+			<div>
+				<div id="badgesDiv" class="px-5 mx-5 py-2 d-flex justify-content-around flex-wrap">
+					{% for i in interest_dict %}
+						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+							<i class="fas fa-heart mr-2"></i>{{i}}
+							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
+								<span id="hid_{{i}}">&times;</span>
+							</button>
+							<input type="hidden" name="interest_{{i}}" value="{{ i }}" />
+						</span>
+					{% endfor %}
+					{% for i in experience_dict %}
+						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+							<i class="fas fa-briefcase mr-2"></i>{{i}}
+							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
+								<span id="hid_{{i}}">&times;</span>
+							</button>
+							<input type="hidden" name="experience_{{i}}" value="{{ i }}" />
+						</span>
+					{% endfor %}
+					{% for i in field_dict %}
+						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+							<i class="fas fa-clipboard-list mr-2"></i>{{i}}
+							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
+								<span id="hid_{{i}}">&times;</span>
+							</button>
+							<input type="hidden" name="field_{{i}}" value="{{ i }}" />
+						</span>
+					{% endfor %}
+				</div>
+			</div>
 		</form>
 	</div>
 	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
@@ -213,7 +246,7 @@
 		{% endfor %}
 	</div>
 
-	<div class="pagination d-flex justify-content-center my-4">
+	<!--<div class="pagination d-flex justify-content-center my-4">
 		<span class="step-links">
 			{% if page_obj.has_previous %}
 				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page=1">&laquo; Primera</a>
@@ -227,12 +260,15 @@
 				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
 			{% endif %}
 		</span>
-	</div>
+	</div>-->
 
 	<script type="text/javascript">
 		document.getElementById("interestsFilterButton").onclick = addInterest;
 		document.getElementById("experiencesFilterButton").onclick = addExperience;
 		document.getElementById("fieldsFilterButton").onclick = addField;
+		document.getElementById("badgesDiv").addEventListener('click', function(event) {
+					funRemove(event.target);
+					});
 		
 		function addInterest()
 		{
@@ -267,9 +303,6 @@
 				spanInterest.appendChild(inputInterest);
 				document.getElementById("badgesDiv").appendChild(spanInterest);
 
-				document.getElementById("badgesDiv").addEventListener('click', function(event) {
-					funRemove(event.target);
-					});
 			}
 
 		}

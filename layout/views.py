@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from urllib import parse
-from users.models import Task, User, Team, Project
+from users.models import Task, User, Team, Project, Field, Profile
 from .forms import PersonalityTestForm
 from json import loads
 from urllib import request
 from django.contrib.auth.decorators import login_required
-from django.http import QueryDict
+from django.db.models import Q
 from django.core.paginator import Paginator
 from itertools import chain
 
@@ -89,17 +89,48 @@ def hexaco_compare(request, username):
 	
 
 def search_results(request):
-	query, sampleSize, hasProjects, hasTeams = request.GET.get('q'), request.GET.get('sampleSize'), request.GET.get('hasProjects'), request.GET.get('hasTeams')
-	profile_results = User.objects.filter(first_name__icontains=query)
-	team_results = Team.objects.filter(name__icontains=query)
-	project_results = Project.objects.filter(name__icontains=query)
+	query = request.GET.get('q')
+	sampleSize, hasProjects, hasTeams = request.GET.get('sampleSize'), request.GET.get('hasProjects'), request.GET.get('hasTeams')
+	sampleSize = sampleSize if sampleSize else '5'
+	hasProjects = hasProjects if hasProjects else 'Sí'
+
+	interest_dict = []
+	{interest_dict.append(v) for q, v in request.GET.items() if q.startswith('interest_')}
+
+	experience_dict = []
+	{experience_dict.append(v) for q, v in request.GET.items() if q.startswith('experience_')}
+
+	field_dict = []
+	{field_dict.append(v) for q, v in request.GET.items() if q.startswith('field_')}
+
+	profile_query_qs, project_query_qs = Q(), Q()
+	profile_results, team_results, project_results = [], [], []
+	if len(interest_dict):
+		for i in interest_dict:
+			profile_query_qs = profile_query_qs | Q(interests=Field.objects.filter(name__icontains=i)[0])
+		profile_results = Profile.objects.filter(profile_query_qs)
+	
+	if len(experience_dict):
+		for i in experience_dict:
+			profile_query_qs = profile_query_qs | Q(experience=Field.objects.filter(name__icontains=i)[0])
+		profile_results = Profile.objects.filter(profile_query_qs)
+	
+	if len(field_dict):
+		for i in field_dict:
+			project_query_qs = project_query_qs | Q(fields=Field.objects.filter(name__icontains=i)[0])
+		project_results = Project.objects.filter(project_query_qs)
+
+
+	profile_results = User.objects.filter(Q(first_name__icontains=query) | Q(profile__in=profile_results)).distinct()
+	team_results = Team.objects.filter(name__icontains=query).distinct()
+	project_results = Project.objects.filter(Q(name__icontains=query)|project_query_qs).distinct()
 	total_results = list(chain(profile_results, project_results if hasProjects == 'Sí' else [], team_results if hasTeams == 'Sí' else []))
 
 	paginator = Paginator(total_results, int(sampleSize) if sampleSize else 5)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 
-	print(request.GET)
+
 
 	context = {
 		'title': 'Resultados de búsqueda',
@@ -107,6 +138,9 @@ def search_results(request):
 		'query': query,
 		'sampleSize': sampleSize,
 		'hasProjects': hasProjects,
-		'hasTeams': hasTeams
+		'hasTeams': hasTeams,
+		'interest_dict': interest_dict,
+		'experience_dict': experience_dict,
+		'field_dict': field_dict
 	}
 	return render(request, 'layout/search_results.html', context)
