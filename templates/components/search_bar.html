@@ -1,5 +1,5 @@
 {% load team_tags %}
-<form class="form-inline ml-2" role="form" action="{% url 'layout-search-results' %}">
+<form class="form-inline ml-2 d-flex justify-content-center" role="form" action="{% url 'layout-search-results' %}">
 	<input id="form_sr"class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" data-toggle="tooltip" data-placement="bottom" title="Busca perfiles o proyectos por nombre" name="q" data-validetta="required,minLength[4]">
 	<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
 </form>

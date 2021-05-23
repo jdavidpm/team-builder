@@ -1,15 +1,16 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-<div class="masthead bg-primary rounded-bottom mb-5 mx-5 shadow-sm text-white pt-5 d-flex flex-column pb-0">
-        <div class="mt-5 d-flex justify-content-center flex-wrap">
-            <h4>Enviar solicitud a {{receiver_user.first_name}}</h4>
-        </div>
-        <p class="text-center">Para enviarle solicitud necesitas llenar el siguiente formulario, eligiendo el <b>Equipo</b>, el asusto y sí gustas un mensaje personalidad para dar tus razones de incluirl@</p>
-</div>
-<div class="d-flex justify-content-center">
-        <div class="d-flex justify-content-around align-items-center col-6 bg-primary rounded text-white mb-5 py-4">
-            <div class="d-flex flex-column">
+<div class="d-flex justify-content-center flex-wrap">
+    <div class="masthead bg-primary rounded-bottom mb-5 shadow-sm text-white pt-5 d-flex flex-column pb-0 px-2 col-11 col-sm-10">
+            <div class="mt-5 d-flex justify-content-center flex-wrap text-center col-12">
+                <h4>Enviar solicitud a {{receiver_user.first_name}}</h4>
+            </div>
+            <p class="text-center">Para enviarle solicitud necesitas llenar el siguiente formulario, eligiendo el <b>Equipo</b>, el asusto y sí gustas un mensaje personalidad para dar tus razones de incluirl@</p>
+    </div>
+    <div class="d-flex justify-content-center col-11 col-sm-10">
+        <div class="d-flex justify-content-around align-items-center bg-primary rounded text-white mb-5 py-4 px-4">
+            <div class="d-flex flex-column mr-5 text-justify">
                 <a class="nounderline ml-2 text-white text-wrap font-weight-bold" href="{% url 'users-profile' receiver_user.username %}">
                     Para más detalles sobre {{receiver_user.first_name}} ({{receiver_user.username}}) visita su perfil 
                     <img class="rounded-circle thumbnail border border-secondary ml-3 mb-4" src="{{ receiver_user.profile.image.url }}"/>
@@ -39,9 +40,10 @@
                 <input type="hidden" name="emailFrom" value="{{ user.email }}" />
                 <input type="hidden" name="userTo" value="{{ receiver_user.username }}" />
                 <div class="col-auto text-right">
-					<button type="submit" class="btn btn-outline-secondary mb-2">Enviar</button>
-				</div>
+                    <button type="submit" class="btn btn-outline-secondary mb-2">Enviar</button>
+                </div>
             </form>
         </div>
+    </div>
 </div>
 {% endblock content %}

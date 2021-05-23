@@ -1,83 +1,83 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-<div class="masthead row justify-content-center">
-    {% include "components/tasks_sidebar.html" %}
-    <div class="col-md-8" id="tasksContent">
-        {% block messages %}{% include "components/messages.html" %}{% endblock %}
-        <h4 class="text-secondary">Tareas 
-            {% if request.resolver_match.kwargs.filter_by == 'project' %}
-            > Proyectos > {{ filter_object }}
-            {% elif request.resolver_match.kwargs.filter_by == 'team' %}
-            > Equipos > {{ filter_object }}
-            {% endif %}
-        </h4>
-        <div class="row ml-1 mb-2">
-            <ul class="col nav nav-pills">
-                <li class="nav-item">
-                  <a class="nav-link h6 active" id="showUserTasks" href="#">Asignadas a mí</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link h6" id="showAllTasks" href="#">Todas</a>
-                </li>
-            </ul>
-            {% if request.resolver_match.kwargs.filter_by == 'project' %}
-            <a class="btn btn-primary mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
-                <i class="fas fa-plus text-white"></i>
-            </a>
-            {% else %}
-            <span class="text-muted my-auto">Selecciona un proyecto para agregar una tarea &nbsp&nbsp</span>
-            <a class="btn btn-primary mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
-                data-toggle="tooltip">
-                <i class="fas fa-plus text-white"></i>
-            </a>
-            {% endif %}
-        </div>
-        <div id="userTasks" style="display: block">
-        {% if pending_tasks.user or in_dev_tasks.user or in_review_tasks.user or completed_tasks.user %}
-        {% if pending_tasks.user %}
-            {% include "components/tasks_card.html" with tasks_type='Pendientes' view='U' tasks_list=pending_tasks.user %}
-        {% endif %}
-        {% if in_dev_tasks.user %}
-            {% include "components/tasks_card.html" with tasks_type='En desarrollo' view='U' tasks_list=in_dev_tasks.user %}
-        {% endif %}
-        {% if in_review_tasks.user %}
-            {% include "components/tasks_card.html" with tasks_type='Listas para revisión' view='U' tasks_list=in_review_tasks.user %}
-        {% endif %}
-        {% if completed_tasks.user %}
-            {% include "components/tasks_card.html" with tasks_type='Completadas' view='U' tasks_list=completed_tasks.user %}
-        {% endif %}
-        {% else %}
-        <p class="h4 text-center">No hay tareas aquí</p>
-        {% endif %}
-        </div>
-        <div id="allTasks" style="display: none">
-        {% if pending_tasks.everyoneOnTeam or in_dev_tasks.everyoneOnTeam or in_review_tasks.everyoneOnTeam or completed_tasks.everyoneOnTeam %}
-        {% if pending_tasks.everyoneOnTeam %}
-            {% include "components/tasks_card.html" with tasks_type='Pendientes' view='A' tasks_list=pending_tasks.everyoneOnTeam %}
-        {% endif %}
-        {% if in_dev_tasks.everyoneOnTeam %}
-            {% include "components/tasks_card.html" with tasks_type='En desarrollo' view='A' tasks_list=in_dev_tasks.everyoneOnTeam %}
-        {% endif %}
-        {% if in_review_tasks.everyoneOnTeam %}
-            {% include "components/tasks_card.html" with tasks_type='Listas para revisión' view='A' tasks_list=in_review_tasks.everyoneOnTeam %}
-        {% endif %}
-        {% if completed_tasks.everyoneOnTeam %}
-            {% include "components/tasks_card.html" with tasks_type='Completadas' view='A' tasks_list=completed_tasks.everyoneOnTeam %}
-        {% endif %}
-        {% else %}
-        <p class="h4 text-center">No hay tareas aquí</p>
-        {% endif %}
+    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+        {% include "components/tasks_sidebar.html" %}
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
+            <h4 class="text-secondary">Tareas 
+                {% if request.resolver_match.kwargs.filter_by == 'project' %}
+                > Proyectos > {{ filter_object }}
+                {% elif request.resolver_match.kwargs.filter_by == 'team' %}
+                > Equipos > {{ filter_object }}
+                {% endif %}
+            </h4>
+            <div class="row ml-1 mb-2">
+                <ul class="col nav nav-pills">
+                    <li class="nav-item">
+                    <a class="nav-link h6 active" id="showUserTasks" href="#">Asignadas a mí</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link h6" id="showAllTasks" href="#">Todas</a>
+                    </li>
+                </ul>
+                {% if request.resolver_match.kwargs.filter_by == 'project' %}
+                <a class="btn btn-primary mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
+                    <i class="fas fa-plus text-white"></i>
+                </a>
+                {% else %}
+                <span class="text-muted my-auto">Selecciona un proyecto para agregar una tarea &nbsp&nbsp</span>
+                <a class="btn btn-primary mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
+                    data-toggle="tooltip">
+                    <i class="fas fa-plus text-white"></i>
+                </a>
+                {% endif %}
+            </div>
+            <div id="userTasks" style="display: block">
+                {% if pending_tasks.user or in_dev_tasks.user or in_review_tasks.user or completed_tasks.user %}
+                    {% if pending_tasks.user %}
+                        {% include "components/tasks_card.html" with tasks_type='Pendientes' view='U' tasks_list=pending_tasks.user %}
+                    {% endif %}
+                    {% if in_dev_tasks.user %}
+                        {% include "components/tasks_card.html" with tasks_type='En desarrollo' view='U' tasks_list=in_dev_tasks.user %}
+                    {% endif %}
+                    {% if in_review_tasks.user %}
+                        {% include "components/tasks_card.html" with tasks_type='Listas para revisión' view='U' tasks_list=in_review_tasks.user %}
+                    {% endif %}
+                    {% if completed_tasks.user %}
+                        {% include "components/tasks_card.html" with tasks_type='Completadas' view='U' tasks_list=completed_tasks.user %}
+                    {% endif %}
+                {% else %}
+                    <p class="h4 text-center">No hay tareas aquí</p>
+                {% endif %}
+            </div>
+            <div id="allTasks" style="display: none">
+                {% if pending_tasks.everyoneOnTeam or in_dev_tasks.everyoneOnTeam or in_review_tasks.everyoneOnTeam or completed_tasks.everyoneOnTeam %}
+                    {% if pending_tasks.everyoneOnTeam %}
+                        {% include "components/tasks_card.html" with tasks_type='Pendientes' view='A' tasks_list=pending_tasks.everyoneOnTeam %}
+                    {% endif %}
+                    {% if in_dev_tasks.everyoneOnTeam %}
+                        {% include "components/tasks_card.html" with tasks_type='En desarrollo' view='A' tasks_list=in_dev_tasks.everyoneOnTeam %}
+                    {% endif %}
+                    {% if in_review_tasks.everyoneOnTeam %}
+                        {% include "components/tasks_card.html" with tasks_type='Listas para revisión' view='A' tasks_list=in_review_tasks.everyoneOnTeam %}
+                    {% endif %}
+                    {% if completed_tasks.everyoneOnTeam %}
+                        {% include "components/tasks_card.html" with tasks_type='Completadas' view='A' tasks_list=completed_tasks.everyoneOnTeam %}
+                    {% endif %}
+                {% else %}
+                    <p class="h4 text-center">No hay tareas aquí</p>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 {% endblock content %}
 
 {% block script %}
-<script src="{% static 'js/switchTasksView.js' %}"></script>
-<script>
-    $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();
-});
-</script>
+    <script src="{% static 'js/switchTasksView.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 {% endblock script%}
