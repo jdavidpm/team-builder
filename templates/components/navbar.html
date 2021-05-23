@@ -1,6 +1,6 @@
 <!-- Navigation-->
-		<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top py-0" id="mainNav">
-			<div class="container">
+		<nav class="navbar navbar-expand-lg navbar-expand-md bg-secondary text-uppercase fixed-top py-0 d-flex justify-content-around" id="mainNav">
+			<div class="container mx-0 px-0">
 				<a class="navbar-brand mr-4 d-flex align-items-center" href="{% url 'layout-index' %}">
 					<i class="fas fa-users fs-3 py-0 px-2 text-white"></i>
 					Team Builder
@@ -8,8 +8,7 @@
 				<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars mr-2"></i>Menu</button>
 
 				<div class="collapse navbar-collapse">
-					<div class="navbar-nav mr-auto" tabindex="0" data-toggle="tooltip" title="No tienes notificaciones nuevas"> 
-					</div>
+					<div class="navbar-nav mr-auto" tabindex="0"></div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav d-flex align-items-start flex-row">
 						{% if user.is_authenticated %}						
@@ -41,10 +40,9 @@
 				</div>
 			</div>
 
-			<div class="d-md-none d-lg-none d-xl-none">
+			<div class="d-md-none d-lg-none d-xl-none col-12 d-flex flex-column">
 				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<div class="navbar-nav mr-auto" tabindex="0" data-toggle="tooltip" title="No tienes notificaciones nuevas"> 
-					</div>
+					<div class="navbar-nav mr-auto" tabindex="0"> </div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav d-flex align-items-start">
 						<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
@@ -64,7 +62,7 @@
 							</li>
 							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2"></i>Notificaciones</a></li>
 							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
-							<div class="mb-2">
+							<div class="mb-2 col-12 align-self-end">
 								{% include 'components/search_bar.html' %}
 							</div>
 						{% else %}

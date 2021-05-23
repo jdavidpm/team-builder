@@ -2,7 +2,7 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-md-8 col-sm-10 jumbotron bg-secondary shadow-sm">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary shadow-sm">
 			<h1 class="fs-4 text-white"><i class="fas fa-lightbulb mr-4"></i>Proyectos</h1>
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 		</div>
@@ -10,39 +10,37 @@
 {% endblock header %}
 {% block content %}
 	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
-		<div class="col-md-5 col-sm-10">
+		<div class="col-11 col-sm-11 col-md-5 col-lg-5 col-xl-5">
 			<div id="accordion">
 				{% for project in request.user.created_projects.all %}
 					<div class="col-md-12 px-0 mb-0">
-						<div class="jumbotron shadow-sm d-flex p-2" id="card_{{ project.id }}">
+						<div class="jumbotron shadow-sm d-flex p-2 justify-content-between flex-wrap" id="card_{{ project.id }}">
 							<span class="mb-0"><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
-								<h3>
+								<h3 class="text-nowrap">
 									{{ project.name }}
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 								</h3>
 							</button></span>
 							<div class="ml-2 fs-2 ml-auto pr-2">
-							
-							<a class="nounderline" href="{{ project.get_absolute_url }}" data-toggle="tooltip" title="Detalles">
-								<i class="fs-2 fas fa-window-restore btn btn-outline-secondary border-0"></i>
-							</a>
-							
-							<a class="nounderline" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
-								<i class="fs-2 fas fa-edit btn btn-outline-secondary border-0 pl-3"></i>
-							</a>
+								<a class="nounderline" href="{{ project.get_absolute_url }}" data-toggle="tooltip" title="Detalles">
+									<i class="fs-2 fas fa-window-restore btn btn-outline-secondary border-0"></i>
+								</a>
+								<a class="nounderline" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+									<i class="fs-2 fas fa-edit btn btn-outline-secondary border-0 pl-3"></i>
+								</a>
 							</div>
 						</div>
 						<div id="collapse_{{ project.id }}" class="collapse mt-n4" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
 							<div class="jumbotron shadow-sm bg-secondary text-light p-0">
-								<div class="row">
-									<div class="col-6 ml-auto"><p class="lead">
-										<h6 class="text-muted ml-5">Autor</h6>
-										<h5 class="ml-5">{{ project.author.first_name }} {{ project.author.last_name }}</h5>
+								<div class="row text-center ml-2">
+									<div class="col-6"><p class="lead">
+										<h6 class="text-muted text-left">Autor</h6>
+										<h5 class="text-left">{{ project.author.first_name }} {{ project.author.last_name }}</h5>
 									</p></div>
-									<div class="col-6 mr-auto"><p class="lead">
-										<h6 class="text-muted ml-5">Estado</h6>
-										<h5 class="text-capitalize ml-5">{{ project.status }}</h5>
+									<div class="col-6"><p class="lead">
+										<h6 class="text-muted text-left">Estado</h6>
+										<h5 class="text-capitalize text-left">{{ project.status }}</h5>
 									</p></div>
 								</div>
 							</div>
@@ -51,7 +49,7 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-10">
+		<div class="col-11 col-sm-11 col-md-5 col-lg-5 col-xl-5">
 			<div class="jumbotron shadow-sm px-4 py-4">
 				<a class="nounderline btn btn-outline-secondary border-0 pb-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 					<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>

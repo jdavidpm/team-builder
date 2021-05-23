@@ -65,7 +65,8 @@ def hexaco_results(request):
 		'labels': labels,
 		'values': values,
 		'type': chart_type if chart_type else 'polarArea',
-		'bool': False 
+		'bool': False,
+		'height': '300' if chart_type == 'bar' else '550'
 	}
 	return render(request, 'layout/hexaco_results.html', context)
 

@@ -1,5 +1,5 @@
-<div class="col-md-3 col-sm-10">
-    <div class="content-section">
+<div class="col-md-3 col-sm-10 mt-5">
+    <div class="jumbotron">
         <div class="list-group mb-2">
             {% if request.resolver_match.kwargs.filter_by  or request.resolver_match.kwargs.pk %}
             <a id="allTasksLink" href="{% url 'projects-tasks' %}"

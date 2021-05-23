@@ -2,23 +2,23 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-md-8 col-sm-10 jumbotron bg-secondary text-white shadow-sm">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary text-white shadow-sm">
 			<h1 class="fs-4">{{ team.name }}</h1>
 		</div>
 	</div>
 {% endblock header %}
 {% block content %}
 	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap">
-		<div class="col-md-8 col-sm-10 jumbotron p-2 mb-2 shadow-sm">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron p-2 mb-2 shadow-sm">
 			<div class="d-flex p-2" id="card_{{ team.id }}">
 				<span><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
-					<h3>
+					<h3 class="text-nowrap">
 						Detalles
 						<i class="ml-2 fs-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 						<i class="ml-2 fs-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 					</h3>
 				</button></span>
-				<div class="ml-2 fs-2 ml-auto pr-2 pt-2">
+				<div class="ml-2 fs-2 ml-auto pr-2 pt-2 d-flex justify-content-center flex-wrap">
 					<a class="nounderline btn btn-outline-secondary border-0" href="{{ team.get_absolute_url|add:'evaluate/' }}" data-toggle="tooltip" title="Evaluar">
 						<i class="fas fa-check-circle fs-2"></i>
 					</a>
@@ -31,30 +31,30 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-8 col-sm-10 jumbotron bg-secondary text-light p-0 mb-0 shadow-sm">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary text-light p-0 mb-0 shadow-sm">
 			<div id="collapse_{{ team.id }}" class="collapse p-2" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
-				<div class="row">
+				<div class="row text-center pl-3">
 						<div class="col-md-6 ml-auto"><p class="lead">
-							<h5 class="text-muted ml-5">Creador</h5>
-							<h5 class="ml-5">{{ team.founder.first_name }} {{ team.founder.last_name }}</h5>
+							<h5 class="text-muted text-left">Creador</h5>
+							<h5 class="text-left">{{ team.founder.first_name }} {{ team.founder.last_name }}</h5>
 						</p></div>
 						<div class="col-md-6 ml-auto"><p class="lead">
-							<h5 class="text-muted ml-5">Fecha de creación</h5>
-							<h5 class="ml-5">{{ team.creation_date|date }}</h5>
+							<h5 class="text-muted text-left">Fecha de creación</h5>
+							<h5 class="text-left">{{ team.creation_date|date }}</h5>
 						</p></div>
 						<div class="col-md-6 ml-auto"><p class="lead">
-							<h5 class="text-muted ml-5">Proyectos</h5>
+							<h5 class="text-muted text-left">Proyectos</h5>
 							{% for project in team.projects.all %}
 								<a class="nounderline" href="{{ project.get_absolute_url }}">
-									<h5 class="ml-5">{{ project }}</h5>
+									<h5 class="text-left">{{ project }}</h5>
 								</a>
 							{% endfor %}
 						</p></div>
 						<div class="col-md-6 ml-auto"><p class="lead">
-							<h5 class="text-muted ml-5">Integrantes</h5>
+							<h5 class="text-muted text-left">Integrantes</h5>
 							{% for member in team.members.all %}
 								<a class="nounderline" href="{{ member.profile.get_absolute_url }}">
-									<h5 class="ml-5">{{ member.first_name }}</h5>
+									<h5 class="text-left">{{ member.first_name }}</h5>
 								</a>
 							{% endfor %}
 						</p></div>
