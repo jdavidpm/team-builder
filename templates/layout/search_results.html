@@ -123,7 +123,7 @@
 	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
 		{% for obj in page_obj %}
 			{% if obj|get_class == "User" %}
-				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
+				<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="shadow-sm bg-secondary {% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
 						<div class="d-flex justify-content-end pt-0 mt-0 mr-2">
 							<a class="nounderline" href="{% url 'teams-join-invitation' %}?toReceive={{obj.id}}" data-toggle="tooltip" title="Agregar a un equipo">

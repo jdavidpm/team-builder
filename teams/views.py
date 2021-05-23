@@ -128,7 +128,7 @@ def teams_join_invitation(request):
 def teams_join_invitation_done(request):
 	user_to = User.objects.filter(username=request.GET.get('userTo'))[0]
 	team_to = Team.objects.filter(name=request.GET.get('emailTeamInvite'))[0]
-	boolEmail = send_mail(
+	'''boolEmail = send_mail(
 			'Acabas de recibir una invitación - ' + request.GET.get('emailSubject'),
 			'Acaba de llegarte una invitación para unirte al equipo ' + request.GET.get('emailTeamInvite') + ' su creador (' + request.user.first_name + ') te manda el siguiente mensaje: ' + request.GET.get('messagePersonalized'),
 			request.GET.get('emailFrom'),
@@ -138,7 +138,7 @@ def teams_join_invitation_done(request):
 	new_invitation = JoinInvitation(to_user=user_to, from_user=request.user, team=team_to)
 	new_request = JoinRequest(team=team_to, user=request.user)
 	new_invitation.save()
-	new_request.save()
+	new_request.save()'''
 	return render(request, 'teams/teams_join_invitation_done.html')
 
 def teams_join_request(request):
