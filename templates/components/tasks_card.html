@@ -1,6 +1,6 @@
 <div class="list-group mb-2">
     <a class="list-group-item list-group-item-action bg-light"
-        data-toggle="collapse" href="#{{ tasks_type }}{{ view }}">
+        data-toggle="collapse" href="#{{ cardid }}">
         {% if tasks_type == 'Pendientes' %}
         <span class="badge badge-pill badge-danger">
         {% elif tasks_type == 'En desarrollo' %}
@@ -13,7 +13,7 @@
             {{ tasks_type }}: {{ tasks_list|length }}
         </span>
     </a>
-    <div class="collapse show tasksList" id="{{ tasks_type }}{{ view }}">
+    <div class="collapse show tasksList" id="{{ cardid }}">
     {% for task in tasks_list %}
         <div class="taskdiv content-section mx-2 border mt-2 border-dark rounded taskbox">
             <a class="tasklink" href="{% url 'projects-update_task' task.id %}"></a>
