@@ -128,7 +128,7 @@ def teams_join_invitation(request):
 def teams_join_invitation_done(request):
 	user_to = User.objects.filter(username=request.GET.get('userTo'))[0]
 	team_to = Team.objects.filter(name=request.GET.get('emailTeamInvite'))[0]
-	'''boolEmail = send_mail(
+	boolEmail = send_mail(
 			'Acabas de recibir una invitación - ' + request.GET.get('emailSubject'),
 			'Acaba de llegarte una invitación para unirte al equipo ' + request.GET.get('emailTeamInvite') + ' su creador (' + request.user.first_name + ') te manda el siguiente mensaje: ' + request.GET.get('messagePersonalized'),
 			request.GET.get('emailFrom'),
@@ -138,8 +138,29 @@ def teams_join_invitation_done(request):
 	new_invitation = JoinInvitation(to_user=user_to, from_user=request.user, team=team_to)
 	new_request = JoinRequest(team=team_to, user=request.user)
 	new_invitation.save()
-	new_request.save()'''
-	return render(request, 'teams/teams_join_invitation_done.html')
+	new_request.save()
+	context = {
+		'title': 'Invitación enviada',
+		'user_to': user_to,
+		'team_to': team_to
+	}
+	return render(request, 'teams/teams_join_invitation_done.html', context)
 
 def teams_join_request(request):
+	team_respond = request.GET.get('teamRespond')
+	respond_request = request.GET.get('respondRequest')
+	action = request.GET.get('action')
+	if team_respond:
+		team_instance = Team.objects.filter(name=team_respond)[0]
+
+		if action == 'Responder':
+			if respond_request == 'Aceptar':
+				team_instance.members.set(list(team_instance.members.all()) + [request.user])
+			else:
+				old_invitation = JoinInvitation.objects.filter(to_user=request.user, team=team_instance)
+				old_request = JoinRequest.objects.filter(team=team_instance, user=request.user)
+				old_invitation.delete()
+				old_request.delete()
+		elif action == 'Salir':
+			team_instance.members.remove(request.user)
 	return render(request, 'teams/teams_join_request.html')

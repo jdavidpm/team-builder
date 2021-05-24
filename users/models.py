@@ -354,6 +354,9 @@ class JoinRequest(models.Model):
 	team = models.ForeignKey(Team, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	date = models.DateTimeField(auto_now=True, null=False)
+	
+	def __str__(self):
+    		return f'Invitación de {self.user.username} para unirse al equipo {self.team.name}'
 
 
 class JoinInvitation(models.Model):
@@ -367,6 +370,9 @@ class JoinInvitation(models.Model):
 	)
 
 	date = models.DateTimeField(auto_now=True, null=False)
+
+	def __str__(self):
+    		return f'Invitación de {self.from_user.username} para {self.to_user.username}'
 
 	class Meta:
 		unique_together = ('to_user', 'from_user')
