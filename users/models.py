@@ -104,6 +104,8 @@ class Profile(models.Model):
 		validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
 	)
 
+	results_private = models.BooleanField(default=True, null=False)
+
 	# Crea tablas en la BD para las relaciones M a N entre Usuario y Rama
 	#Every field below now has blank to True
 	experience = models.ManyToManyField(Field, related_name='experienced_profiles', blank=True)

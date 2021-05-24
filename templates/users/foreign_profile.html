@@ -18,9 +18,11 @@
 							</div>
 						</div>
 					</div>
-					<a class="nounderline" href="{% url 'layout-hexaco-compare' foreign_user.username %}" data-toggle="tooltip" title="Comparar personalidad con...">
-						<i class="fas fa-ruler btn btn-outline-light border-0 fs-2"></i>
-					</a>
+					{% if not foreign_user.profile.results_private %}
+						<a class="nounderline" href="{% url 'layout-hexaco-compare' foreign_user.username %}" data-toggle="tooltip" title="Comparar personalidad con...">
+							<i class="fas fa-ruler btn btn-outline-light border-0 fs-2"></i>
+						</a>
+					{% endif %}
 				</div>				
 				<div class="media">
 					<div class="media-body text-center text-light">

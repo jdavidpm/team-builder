@@ -152,7 +152,6 @@ def teams_join_request(request):
 	action = request.GET.get('action')
 	if team_respond:
 		team_instance = Team.objects.filter(name=team_respond)[0]
-
 		if action == 'Responder':
 			if respond_request == 'Aceptar':
 				team_instance.members.set(list(team_instance.members.all()) + [request.user])

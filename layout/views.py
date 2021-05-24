@@ -72,7 +72,7 @@ def hexaco_results(request):
 
 def hexaco_compare(request, username):
 	user_compare = User.objects.filter(username=username)
-	if len(user_compare):
+	if len(user_compare) and not user_compare[0].profile.results_private:
 		user_compare = user_compare[0]
 		hexaco_caps = 'hexaco'
 		labels = ['Honestidad', 'Emoción', 'Extraversión', 'Amabilidad', 'Escrupulosidad', 'Apertura']

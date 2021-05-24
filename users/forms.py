@@ -42,7 +42,7 @@ class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		image = forms.ImageField()
-		fields = ['school_register', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'image']
+		fields = ['school_register', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'results_private', 'image']
 		widgets = {
 			#'distributions' : forms.CheckboxSelectMultiple,
 			#'experience' : forms.CheckboxSelectMultiple,
@@ -62,11 +62,15 @@ class ProfileUpdateForm(forms.ModelForm):
 			'interests': ('Intereses'),
 			'languages': ('Lenguajes de Programación'),
 			'frameworks': ('Frameworks'),
+			'results_private': ('Personalidad privada'),
 			'image': ('Foto de Perfil')
 		}
 		help_texts = {
 			'school_register': ('Número de boleta o equivalente.'),
 		}
+		widgets = {
+			'results_private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
+			}
 
 class JustAnotherForm(forms.Form): #Toggle Widget in use example
 	working = forms.BooleanField(
