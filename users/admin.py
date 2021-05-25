@@ -23,6 +23,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Membership)
+admin.site.register(TeamEvaluation)
 admin.site.register(JoinRequest)
 admin.site.register(JoinInvitation)
 admin.site.register(ProjectActivity)

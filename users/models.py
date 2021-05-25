@@ -267,8 +267,29 @@ class Team(models.Model):
 	)
 
 	# Proyectos en los que el equipo trabaja
-	projects = models.ManyToManyField(Project)
+	projects = models.ManyToManyField(Project, null=True, blank=True)
 
+	evaluation = models.ManyToManyField(
+		User,
+		through = 'TeamEvaluation',
+		through_fields = ('team', 'user'),
+		related_name = 'evaluated_teams'
+	)
+
+	class Meta:
+		unique_together = ('founder', 'name')
+
+	def __str__(self):
+		return f'{self.name}'
+
+	def get_absolute_url(self):
+		return reverse('teams-item', kwargs={'id':self.id})
+	
+
+class TeamEvaluation(models.Model):
+	team = models.ForeignKey(Team, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	date = models.DateTimeField(auto_now=True, null=True, blank=True)
 	# evaluaciones de procesos operativos
 	evaluation_p1 = models.DecimalField(
 		max_digits = 3,
@@ -326,14 +347,8 @@ class Team(models.Model):
 		blank=True
 	)
 
-	class Meta:
-		unique_together = ('founder', 'name')
-
 	def __str__(self):
-		return f'{self.name}'
-
-	def get_absolute_url(self):
-		return reverse('teams-item', kwargs={'id':self.id})
+		return f'{self.team} by {self.user}'
 
 
 class Membership(models.Model):
