@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from users.models import Team, JoinInvitation, JoinRequest, Profile, Field, Tool, Framework, Language, Distribution
+from users.models import Team, JoinInvitation, JoinRequest, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
 from django.db.models import Q
 from json import loads
@@ -101,12 +101,14 @@ def team_evaluate(request, id):
 				processes_questions_count[process] += 1
 			dict_processes = {f: dict_processes[f] / processes_questions_count[f] for f in dict_processes}
 			team = get_object_or_404(Team, pk=id)
-			print(team.name)
-
+			team_eval = TeamEvaluation()
 			for f in dict_processes:
-				setattr(team, 'evaluation_' + f.lower(), dict_processes[f])
-			team.save()
-			return redirect('layout-index')
+				setattr(team_eval, 'evaluation_' + f.lower(), dict_processes[f])
+			team_eval.team = team
+			team_eval.user = request.user
+			team_eval.save()
+			# send confirmation message to frontend
+			return redirect('teams-item', id=id)
 	else:
 		form = TeamEvaluationForm()
 		
