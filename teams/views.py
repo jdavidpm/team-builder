@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from users.models import Team, JoinInvitation, JoinRequest, Profile, Field, Tool, Framework, Language, Distribution
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
-from django.core.mail import send_mail
 from django.db.models import Q
 from json import loads
 from urllib import request
+from .utils import *
 
 data = None
 with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/team_performance.json") as url:
@@ -124,22 +124,15 @@ def teams_join_invitation(request):
 		}
 		return render(request, 'teams/teams_join_invitation.html', context)
 	else:
-		return redirect('users-profile', username=request.user.username)
+		return redirect('users-profile', username=request.user.username) 	
 
 def teams_join_invitation_done(request):
 	user_to = User.objects.filter(username=request.GET.get('userTo'))[0]
 	team_to = Team.objects.filter(name=request.GET.get('emailTeamInvite'))[0]
-	boolEmail = send_mail(
-			'Acabas de recibir una invitación - ' + request.GET.get('emailSubject'),
-			'Acaba de llegarte una invitación para unirte al equipo ' + request.GET.get('emailTeamInvite') + ' su creador (' + request.user.first_name + ') te manda el siguiente mensaje: ' + request.GET.get('messagePersonalized'),
-			request.GET.get('emailFrom'),
-			[request.GET.get('emailTo')],
-			fail_silently=False,
-			)
-	new_invitation = JoinInvitation(to_user=user_to, from_user=request.user, team=team_to)
-	new_request = JoinRequest(team=team_to, user=request.user)
-	new_invitation.save()
-	new_request.save()
+	send_email_invite(request.GET.get('emailSubject'),request.GET.get('messagePersonalized'), request.GET.get('emailFrom'), [request.GET.get('emailTo')], fail_silently=False)
+
+	create_invitation(user_to, request.user, team_to)
+
 	context = {
 		'title': 'Invitación enviada',
 		'user_to': user_to,
@@ -157,10 +150,7 @@ def teams_join_request(request):
 			if respond_request == 'Aceptar':
 				team_instance.members.set(list(team_instance.members.all()) + [request.user])
 			else:
-				old_invitation = JoinInvitation.objects.filter(to_user=request.user, team=team_instance)
-				old_request = JoinRequest.objects.filter(team=team_instance, user=request.user)
-				old_invitation.delete()
-				old_request.delete()
+				delete_invitation(request.user, team_instance)
 		elif action == 'Salir':
 			team_instance.members.remove(request.user)
 	return render(request, 'teams/teams_join_request.html')
@@ -187,9 +177,9 @@ def teams_creation(request):
 	tool_dict = []
 	{tool_dict.append(v) for q, v in request.GET.items() if q.startswith('tool_')}
 
-	if action == 'Filtrar':
+	members_suggested = []
+	if action:
 		profile_query_qs = Q()
-		members_suggested = []
 		if len(interest_dict):
 			for i in interest_dict:
 				query = Field.objects.filter(name__icontains=i)
@@ -226,12 +216,12 @@ def teams_creation(request):
 		else:
 			message_info = 'Tu búsqueda no dió ningún resultado.'
 		members_suggested = User.objects.filter(Q(profile__in=members_suggested)).distinct()
-	elif action == 'Formar':
-    		pass
+		if action == 'Formar':
+			print(members_suggested)
 	else:
-    		message_info = 'Para poder formar un equipo ocupa al menos dos de los filtros mostrados arriba.'
+		message_info = 'Para poder formar un equipo ocupa al menos dos de los filtros mostrados arriba.'
 	context = {
-		'title': 'Formación de Integrantes', 
+		'title': 'Formación de Equipos', 
 		'message_info': message_info,
 		'interest_dict': interest_dict,
 		'experience_dict': experience_dict,
