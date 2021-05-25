@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from users.models import Team, JoinInvitation, JoinRequest, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation
+from users.models import Team, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
 from django.db.models import Q
 from json import loads
@@ -159,6 +159,7 @@ def teams_join_request(request):
 
 def teams_creation(request):
 	action = request.GET.get('action')
+	team_size = request.GET.get('teamSize')
 	message_info = False
 
 	interest_dict = []
@@ -218,8 +219,16 @@ def teams_creation(request):
 		else:
 			message_info = 'Tu búsqueda no dió ningún resultado.'
 		members_suggested = User.objects.filter(Q(profile__in=members_suggested)).distinct()
-		if action == 'Formar':
-			print(members_suggested)
+		if action == 'Crear':
+			new_team_name = request.GET.get('newTeamName') if request.GET.get('newTeamName') else 'No se nombró a tu equipo'
+			if not Team.objects.filter(name=new_team_name):	
+				new_team = Team(founder=request.user, name=new_team_name)
+				new_team.save()
+				new_team.members.set(members_suggested[:int(team_size)])
+				new_team.members.add(request.user)
+				return redirect('teams-list')
+			else:
+				messages.error(request, f'Ese nombre ya existe')
 	else:
 		message_info = 'Para poder formar un equipo ocupa al menos dos de los filtros mostrados arriba.'
 	context = {
@@ -231,6 +240,7 @@ def teams_creation(request):
 		'framework_dict': framework_dict,
 		'distribution_dict': distribution_dict,
 		'tool_dict': tool_dict,
-		'members_suggested': members_suggested
+		'members_suggested': members_suggested[:int(team_size if team_size else 0)],
+		'teamSize': team_size
 	}
 	return render(request, 'teams/teams_creation.html', context)
