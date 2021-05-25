@@ -2,7 +2,7 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 pb-4 rounded-bottom">
+	<div class="masthead bg-primary pt-5 mt-5 mx-4 pb-4 rounded-bottom">
 		<form role="form" action="{% url 'layout-search-results' %}">
 			<div class="form-row align-items-center justify-content-around px-4">
 				<div class="col-auto d-flex flex-row align-items-center">
@@ -84,7 +84,7 @@
 				<input type="hidden" name="q" value="{{ query }}" />
 				<input type="hidden" name="page" value="{{ page_obj.number }}" />
 				<div class="col-auto">
-					<button type="submit" class="btn btn-outline-secondary mb-2">Filtrar</button>
+					<button type="submit" class="btn btn-outline-secondary my-4">Filtrar</button>
 				</div>
 			</div>
 			<div>
@@ -121,6 +121,9 @@
 		</form>
 	</div>
 	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
+		{% if message_info %}
+			<span class="text-justify px-5 fs-3">{{message_info}}</span>
+		{% endif %}
 		{% for obj in page_obj %}
 			{% if obj|get_class == "User" %}
 				<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">

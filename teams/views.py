@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from users.models import Team, JoinInvitation, JoinRequest
+from users.models import Team, JoinInvitation, JoinRequest, Profile, Field, Tool, Framework, Language, Distribution
 from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
 from django.core.mail import send_mail
+from django.db.models import Q
 from json import loads
 from urllib import request
 
@@ -163,3 +164,81 @@ def teams_join_request(request):
 		elif action == 'Salir':
 			team_instance.members.remove(request.user)
 	return render(request, 'teams/teams_join_request.html')
+
+def teams_creation(request):
+	action = request.GET.get('action')
+	message_info = False
+
+	interest_dict = []
+	{interest_dict.append(v) for q, v in request.GET.items() if q.startswith('interest_')}
+
+	experience_dict = []
+	{experience_dict.append(v) for q, v in request.GET.items() if q.startswith('experience_')}
+
+	language_dict = []
+	{language_dict.append(v) for q, v in request.GET.items() if q.startswith('language_')}
+
+	framework_dict = []
+	{framework_dict.append(v) for q, v in request.GET.items() if q.startswith('framework_')}
+
+	distribution_dict = []
+	{distribution_dict.append(v) for q, v in request.GET.items() if q.startswith('distribution_')}
+
+	tool_dict = []
+	{tool_dict.append(v) for q, v in request.GET.items() if q.startswith('tool_')}
+
+	if action == 'Filtrar':
+		profile_query_qs = Q()
+		members_suggested = []
+		if len(interest_dict):
+			for i in interest_dict:
+				query = Field.objects.filter(name__icontains=i)
+				if query:
+					profile_query_qs = profile_query_qs | Q(interests=query[0])
+		if len(experience_dict):
+			for i in experience_dict:
+				query = Field.objects.filter(name__icontains=i)
+				if query:
+					profile_query_qs = profile_query_qs | Q(experience=query[0])
+		if len(language_dict):
+			for i in language_dict:
+				query = Language.objects.filter(name__icontains=i)
+				if query:
+					profile_query_qs = profile_query_qs | Q(languages=query[0])
+		if len(framework_dict):
+			for i in framework_dict:
+				query = Framework.objects.filter(name__icontains=i)
+				if query:
+					profile_query_qs = profile_query_qs | Q(frameworks=query[0])
+		if len(distribution_dict):
+			for i in distribution_dict:
+				query = Distribution.objects.filter(name__icontains=i)
+				if query:
+					profile_query_qs = profile_query_qs | Q(distributions=query[0])
+		if len(tool_dict):
+			for i in tool_dict:
+				query = Tool.objects.filter(name__icontains=i)
+				if query:
+					profile_query_qs = profile_query_qs | Q(sw_tools=query[0])
+					profile_query_qs = profile_query_qs | Q(hw_tools=query[0])
+		if len(profile_query_qs):
+			members_suggested = Profile.objects.filter(profile_query_qs)
+		else:
+			message_info = 'Tu búsqueda no dió ningún resultado.'
+		members_suggested = User.objects.filter(Q(profile__in=members_suggested)).distinct()
+	elif action == 'Formar':
+    		pass
+	else:
+    		message_info = 'Para poder formar un equipo ocupa al menos dos de los filtros mostrados arriba.'
+	context = {
+		'title': 'Formación de Integrantes', 
+		'message_info': message_info,
+		'interest_dict': interest_dict,
+		'experience_dict': experience_dict,
+		'language_dict': language_dict,
+		'framework_dict': framework_dict,
+		'distribution_dict': distribution_dict,
+		'tool_dict': tool_dict,
+		'members_suggested': members_suggested
+	}
+	return render(request, 'teams/teams_creation.html', context)

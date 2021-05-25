@@ -91,6 +91,7 @@ def hexaco_compare(request, username):
 
 def search_results(request):
 	query = request.GET.get('q')
+	message_info = None
 	sampleSize, hasProjects, hasTeams = request.GET.get('sampleSize'), request.GET.get('hasProjects'), request.GET.get('hasTeams')
 	sampleSize = sampleSize if sampleSize else '5'
 	hasProjects = hasProjects if hasProjects else 'Sí'
@@ -130,6 +131,8 @@ def search_results(request):
 	paginator = Paginator(total_results, int(sampleSize) if sampleSize else 5)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
+	if not len(page_obj):
+		message_info = 'Tu búsqueda no dió ningún resultado.'
 
 
 
@@ -142,6 +145,7 @@ def search_results(request):
 		'hasTeams': hasTeams,
 		'interest_dict': interest_dict,
 		'experience_dict': experience_dict,
-		'field_dict': field_dict
+		'field_dict': field_dict,
+		'message_info': message_info
 	}
 	return render(request, 'layout/search_results.html', context)
