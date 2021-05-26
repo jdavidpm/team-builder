@@ -78,11 +78,21 @@ class StudentProfileForm(forms.ModelForm):
 	class Meta:
 		model = Student
 		exclude = ['user']
+		labels = {
+			'entry_year': ('Año de Ingreso'),
+			'entry_semester': ('Semestre de Ingreso'),
+			'career': ('Carrera'),
+		}
 
 class TeacherProfileForm(forms.ModelForm):
 	class Meta:
 		model = Teacher
 		exclude = ['user']
+		labels = {
+			'entry_year': ('Año de Ingreso'),
+			'entry_semester': ('Semestre de Ingreso'),
+			'academy': ('Academia'),
+		}
 
 class AcademyProfileForm(forms.ModelForm):
 	class Meta:

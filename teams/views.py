@@ -469,7 +469,7 @@ def teams_creation(request):
 		'distribution_dict': distribution_dict,
 		'tool_dict': tool_dict,
 		'members_suggested': members_suggested[:int(team_size if team_size else 0)],
-		'recommended_members': recommended_members
+		'recommended_members': recommended_members,
 		'teamSize': team_size
 	}
 	return render(request, 'teams/teams_creation.html', context)
