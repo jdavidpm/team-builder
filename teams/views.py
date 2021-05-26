@@ -131,7 +131,7 @@ def teams_join_invitation(request):
 def teams_join_invitation_done(request):
 	user_to = User.objects.filter(username=request.GET.get('userTo'))[0]
 	team_to = Team.objects.filter(name=request.GET.get('emailTeamInvite'))[0]
-	send_email_invite(request.GET.get('emailSubject'),request.GET.get('messagePersonalized'), request.GET.get('emailFrom'), [request.GET.get('emailTo')], fail_silently=False)
+	send_email_invite(request.GET.get('emailSubject'),request.GET.get('messagePersonalized'), request.GET.get('emailFrom'), [request.GET.get('emailTo')],False, team_to.name, request.user.first_name)
 
 	create_invitation(user_to, request.user, team_to)
 
@@ -224,7 +224,10 @@ def teams_creation(request):
 			if not Team.objects.filter(name=new_team_name):	
 				new_team = Team(founder=request.user, name=new_team_name)
 				new_team.save()
-				new_team.members.set(members_suggested[:int(team_size)])
+				for new_member in members_suggested[:int(team_size)]:
+					send_email_invite('Equipo creado usando Team Builder', 'Equipo creado automaticamente usando Team Builder', request.user.email, [new_member.email], False, new_team.name, request.user.first_name)
+					create_invitation(new_member, request.user, new_team)
+				#new_team.members.set(members_suggested[:int(team_size)])
 				new_team.members.add(request.user)
 				return redirect('teams-list')
 			else:

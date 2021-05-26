@@ -380,21 +380,21 @@ class JoinRequest(models.Model):
 
 class JoinInvitation(models.Model):
 	to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
-	from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
 	
 	team = models.ForeignKey(
 		Team,
-		on_delete = models.CASCADE,
-		null = False
+		null = False,
+		on_delete=models.CASCADE,
+		related_name='team_invitations'
 	)
 
 	date = models.DateTimeField(auto_now=True, null=False)
 
 	def __str__(self):
-    		return f'Invitación de {self.from_user.username} para {self.to_user.username}'
+    		return f'Invitación para unirte a {self.team}'
 
 	class Meta:
-		unique_together = ('to_user', 'from_user')
+		unique_together = ('to_user',  'team')
 
 
 class ProjectActivity(models.Model):
