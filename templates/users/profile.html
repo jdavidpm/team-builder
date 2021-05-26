@@ -1,10 +1,10 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-	<div class="masthead row d-flex justify-content-center">
-		<div class="col-11 col-sm-11 mt-n5">
+	<div class="masthead row d-flex justify-content-center mb-0">
+		<div class="col-11 col-sm-10 mt-n5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<div class="jumbotron bg-secondary shadow-sm pt-0 pb-2">
-				{% block messages %}{% include "components/messages.html" %}{% endblock %}
 				<div class="pt-2 d-flex justify-content-between">
 					<a class="nounderline" href="{{user.profile.get_absolute_url|add:'update/'}}" data-toggle="tooltip" title="Editar perfil">
 						<i class="fas fa-user-edit btn btn-outline-light border-0 fs-2"></i>
@@ -58,9 +58,20 @@
 {% endblock header %}
 
 {% block content %}
-	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
-		<div class="col-md-7"></div>
-		<div class="col-md-3 col-sm-10"></div>
-		<div class="col-md-2"></div>
-	</div>
+	{% if user.profile.school_role %}
+		<div class="masthead row d-flex justify-content-center mt-0 pt-0">
+			<div class="col-11 col-sm-10 mt-0">
+				<div class="jumbotron bg-secondary shadow-sm text-white pt-4">
+					<h3>Información Escolar</h3></br>
+					{% if  user.profile.school_role == 'student' %}
+						<h5><span class="font-weight-normal">Estudiante de la <b>Escuela Súperior de Cómputo</b> desde <b>{{user.student_profile.entry_year}}</b>, entró en el semestre de <b>{% if user.student_profile.entry_semester == 'agosto' %}Agosto - Diciembre {% else %}Enero - Junio{% endif %}</b></span></h5>
+						<h5><span class="font-weight-normal">Dentro de la carrera de</span> <span class="text-capitalize">{{user.student_profile.career}}</span></h5>
+					{% else %}
+						<h5><span class="font-weight-normal">Profesor de la <b>Escuela Súperior de Cómputo</b> desde <b>{{user.teacher_profile.entry_year}}</b>, entró en el semestre de <b>{% if user.teacher_profile.entry_semester == 'agosto' %}Agosto - Diciembre {% else %}Enero - Junio{% endif %}</b></span></h5>
+						<h5><span class="font-weight-normal">Dentro de la academy de</span> <span class="text-capitalize">{{user.teacher_profile.academy}}</span></h5>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endblock content %}

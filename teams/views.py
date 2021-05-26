@@ -216,7 +216,7 @@ def gen_association_rules():
 	print(f"sample size is: {sample_size}")
 	if sample_size < 5:
 		print('not enough teams in sample')
-		return -1
+		return []
 	teams_sample = []
 	for _ in range(int(sample_size)):
 		teams_sample.append(filtered_teams_2.pop())

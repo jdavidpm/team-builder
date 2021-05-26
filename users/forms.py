@@ -77,22 +77,30 @@ class ProfileUpdateForm(forms.ModelForm):
 class StudentProfileForm(forms.ModelForm):
 	class Meta:
 		model = Student
-		exclude = ['user']
+		fields = ['user', 'entry_year', 'entry_semester', 'career']
 		labels = {
+			'user': ('Usuario'),
 			'entry_year': ('Año de Ingreso'),
 			'entry_semester': ('Semestre de Ingreso'),
 			'career': ('Carrera'),
 		}
+	def __init__(self, *args, **kwargs): 
+		super(StudentProfileForm, self).__init__(*args, **kwargs)                       
+		self.fields['user'].disabled = True
 
 class TeacherProfileForm(forms.ModelForm):
 	class Meta:
 		model = Teacher
-		exclude = ['user']
+		fields = ['user', 'entry_year', 'entry_semester', 'academy']
 		labels = {
+			'user': ('Usuario'),
 			'entry_year': ('Año de Ingreso'),
 			'entry_semester': ('Semestre de Ingreso'),
 			'academy': ('Academia'),
 		}
+	def __init__(self, *args, **kwargs): 
+		super(TeacherProfileForm, self).__init__(*args, **kwargs)                       
+		self.fields['user'].disabled = True
 
 class AcademyProfileForm(forms.ModelForm):
 	class Meta:

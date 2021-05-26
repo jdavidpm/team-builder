@@ -167,7 +167,7 @@ class Student(models.Model):
 	]
 	
 	# Fields
-	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='student_profile')
 	entry_year = models.IntegerField(
 		choices=YEAR_CHOICES,
 		null=False,
@@ -192,7 +192,7 @@ class Teacher(models.Model):
 	]
 	
 	# Fields
-	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='teacher_profile')
 	entry_year = models.IntegerField(
 		choices=YEAR_CHOICES,
 		null=False,

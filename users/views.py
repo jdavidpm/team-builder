@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, StudentProfileForm, TeacherProfileForm, SubjectProfileForm, AcademyProfileForm
 from django.contrib.auth.models import User
+from .models import Student, Teacher
 from django.conf import settings
 from .utils import *
 
@@ -57,6 +58,12 @@ def update_profile(request, username):
 			if u_form.is_valid() and p_form.is_valid():
 				u_form.save()
 				p_form.save()
+				if request.POST.get('school_role') == 'student':
+					new_student = Student(user = request.user)
+					new_student.save()
+				elif request.POST.get('school_role') == 'teacher':
+					new_teacher = Teacher(user = request.user)
+					new_teacher.save()
 				messages.success(request, f'¡Tu cuenta fue actualizada con éxito!')
 				return redirect('users-profile', username=request.user.username)
 		else:
@@ -75,17 +82,32 @@ def update_profile(request, username):
 def update_profile_school(request, username):
 	if request.method == 'POST':
 		if request.user.profile.school_role == 'student':
-			s_form = StudentProfileForm(instance=request.user)
+			s_form = StudentProfileForm(request.POST, initial={'user': request.user})
+			if s_form.is_valid():
+				s_form.save()
+				messages.success(request, f'¡Tu perfil ha sido actualizado con éxito!')
+				return redirect('users-profile', username=request.user.username)
 		elif request.user.profile.school_role == 'teacher':
-			s_form = TeacherProfileForm(instance=request.user)
+			s_form = TeacherProfileForm(request.POST, initial={'user': request.user})
+			if s_form.is_valid():
+				s_form.save()
+				messages.success(request, f'¡Tu perfil ha sido actualizado con éxito!')
+				return redirect('users-profile', username=request.user.username)
 		else:
 			return redirect('users-update', username=request.user.username)
 	else:
-		if request.user.profile.school_role == 'student':	
-			s_form = StudentProfileForm(instance=request.user)
+		if request.user.profile.school_role == 'student':
+			try:
+				s_form = StudentProfileForm(instance=request.user.student_profile, initial={'user': request.user})
+			except:
+				s_form = StudentProfileForm( initial={'user': request.user})
 		elif request.user.profile.school_role == 'teacher':
-			s_form = TeacherProfileForm(instance=request.user)
+			try:
+				s_form = TeacherProfileForm(instance=request.user.teacher_profile, initial={'user': request.user})
+			except:
+				s_form = TeacherProfileForm( initial={'user': request.user})
 		else:
+			messages.warning(request, f'Necesitas modificar tu rol en tu perfil para acceder a este formulario.')
 			return redirect('users-update-profile', username=request.user.username)
 	context = {
 		'title': 'Datos Escolares',
