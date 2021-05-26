@@ -1,7 +1,7 @@
 <div class="col-md-3 col-sm-10 mt-5">
     <div class="jumbotron">
         <div class="list-group mb-2">
-            {% if request.resolver_match.kwargs.filter_by  or request.resolver_match.kwargs.pk %}
+            {% if request.resolver_match.kwargs.filter_by or request.resolver_match.kwargs.pk or request.resolver_match.kwargs.project_id %}
             <a id="allTasksLink" href="{% url 'projects-tasks' %}"
                 class="list-group-item list-group-item-action border-dark h6">
             {% else %}
@@ -18,15 +18,18 @@
             </a>
             <div class="collapse show" id="projectsList">
                 {% if projects %}
-                {% for project in projects %}
-                    {% if request.resolver_match.kwargs.filter_by != 'project' or request.resolver_match.kwargs.object_id != project.id %}
-                <a href="{% url 'projects-filteredtasks' 'project' project.id %}"
-                    class="list-group-item list-group-item-action navbarTaskItem pt-1 pb-1">{{ project }}</a>
-                    {% else %}
+                    {% for project in projects %}
+                    {% if request.resolver_match.kwargs.filter_by == 'project' and request.resolver_match.kwargs.object_id == project.id %}
                 <a href="{% url 'projects-filteredtasks' 'project' project.id %}"
                     class="list-group-item list-group-item-action navbarTaskItem active pt-1 pb-1">{{ project }}</a>
+                    {% elif request.resolver_match.kwargs.project_id == project.id or request.resolver_match.kwargs.pk == project.id %}
+                <a href="{% url 'projects-filteredtasks' 'project' project.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem active pt-1 pb-1">{{ project }}</a>
+                    {% else %}
+                <a href="{% url 'projects-filteredtasks' 'project' project.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem pt-1 pb-1">{{ project }}</a>
                     {% endif %}
-                {% endfor %}
+                    {% endfor %}
                 {% else %}
                 <p class="text-center mt-2">Ninguno de tus equipos tiene proyectos asociados</p>
                 {% endif %}

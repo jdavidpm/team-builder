@@ -1,42 +1,57 @@
 {% extends 'layout/base.html' %}
 
+{% block header %}
+	<div class="masthead text-center mb-0 pb-0 pt-5 mt-5 d-flex justify-content-center align-items-baseline flex-wrap">	
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary shadow-sm">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<h1 class="fs-4 text-white"><i class="fas fa-envelope mr-4"></i>Invitaciones</h1>
+		</div>
+	</div>
+{% endblock header %}
+
 {% block content %}
-<div class="masthead bg-primary rounded-bottom mb-5 mx-5 shadow-sm text-white pt-5 d-flex flex-column pb-0">
-        <div class="mt-5 d-flex justify-content-center flex-wrap">
-            <h4>Enviar solicitud a {{receiver_user.first_name}}</h4>
+    <div class="d-flex flex-row justify-content-around flex-wrap text-secondary px-2">
+        <div class="bg-grayish rounded col-11 col-sm-5 mx-2 p-4 mb-4">
+            <h3 class="border-bottom mb-4 pb-2">Invitaciones Recibidas</h3>
+            {% for received in user.received_invitations.all %}            
+                <div class="d-flex flex-column border-bottom px-4">
+                        <form id='respondForm{{forloop.counter}}' class="d-flex flex-row align-items-center flex-wrap my-4">
+                            {% if received.to_user in received.team.members.all%}
+                                <label class="d-flex align-items-center mr-2"><h6>Ya estás en el equipo {{ received.team }}</h6></label>  
+                                <input type="hidden" name="teamRespond" value="{{ received.team }}" />
+                                <input type="submit" value="Salir" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-secondary mt-n1">
+                            {% else %}
+                                <div class="input-group mb-2 ml-2 col-12 col-sm-12 d-flex flex-column">
+                                    <h6>{{received}}</h6>
+                                    <div class="d-flex flex-row">
+                                        <label for="respondRequest" class="align-items-center"><h6>Responder</h6></label>             
+                                        <select id="respondRequest" name="respondRequest" class="form-control col-6 col-sm-6 ml-4">
+                                            <option {% if respondRequest == 'Aceptar' %} selected {% endif %}>Aceptar</option>
+                                            <option {% if respondRequest == 'Rechazar' %} selected {% endif %}>Rechazar</option>
+                                        </select>
+                                    </div>
+                                <input type="hidden" name="teamRespond" value="{{ received.team }}" />
+                                <input type="submit" value="Responder" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-secondary mt-3">
+                                </div>
+                            {% endif %}
+                        </form>
+                 </div>
+            {% endfor %}
         </div>
-        <p class="text-center">Para enviarle solicitud necesitas llenar el siguiente formulario, eligiendo el <b>Equipo</b>, el asusto y sí gustas un mensaje personalidad para dar tus razones de incluirl@</p>
-</div>
-<div class="d-flex justify-content-center">
-        <div class="d-flex justify-content-around align-items-center col-6 bg-primary rounded text-white mb-5 py-4">
-            <div class="d-flex flex-column">
-                <a class="nounderline ml-2 text-white text-wrap font-weight-bold" href="{% url 'users-profile' receiver_user.username %}">
-                    Para más detalles sobre {{receiver_user.first_name}} ({{receiver_user.username}}) visita su perfil 
-                    <img class="rounded-circle thumbnail border border-secondary ml-3 mb-4" src="{{ receiver_user.profile.image.url }}"/>
-                </a>
-                El correo electronico de {{ receiver_user.first_name }} es: <a class="nounderline text-white ml-4" data-toggle="tooltip" title="Enviar email" href="mailto:{{ receiver_user.email }}">{{ receiver_user.email }}</a>
-                en caso de necesitar un contacto más directo.
-            </div>
-            <form>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Mensaje corto (Asunto)</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Invitación a mi equipo">
-                </div>
-                <div class="form-group">
-                    <label for="inputState">Equipo</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Elige...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Mensaje Personalizado</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="col-auto text-right">
-					<button type="submit" class="btn btn-outline-secondary mb-2">Enviar</button>
-				</div>
-            </form>
+        <div class="bg-grayish rounded col-11 col-sm-5 mx-2 p-4 mb-4">
+            <h3 class="border-bottom mb-4 pb-2">Invitaciones Enviadas</h3>
+            {% for team in user.membership_teams.all %}
+                {% for sent in team.team_invitations.all %}
+                    <h6 class="mx-4 border-bottom pb-2 text-justify">
+                        {% if sent.to_user in sent.team.members.all%}
+                            {{sent.to_user}} aún aceptó a tu:
+                        {% else %}
+                            {{sent.to_user}} aún no ha respondido a tu:
+                        {% endif %}
+                        <span class="text-muted">invitación a unirte en el equipo {{sent.team}}</span>
+                    </h6>
+                {% endfor %}
+            {% endfor %}
         </div>
-</div>
+    </div>
 {% endblock content %}

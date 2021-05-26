@@ -2,21 +2,30 @@ from django import forms
 from users.models import Team
 from json import loads
 from urllib import request
+from users.widgets import ToggleWidget
 
 class TeamUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Team
-		fields = ['name', 'projects']
+		fields = ['name', 'projects', 'private']
+
+		widgets = {
+			'private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
+			}
 
 		labels = {
 			'name':('Nombre'),
 			'projects':('Proyectos'),
+			'private':('Privado')
 			}
 
 class TeamCreateForm(forms.ModelForm):
 	class Meta:
 		model = Team
-		fields = ['founder', 'name', 'projects']
+		fields = ['founder', 'name', 'projects', 'private']
+		widgets = {
+			'private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
+			}
 		labels = {
 				'founder':('Creador'),
 				'name':('Nombre'),

@@ -1,4 +1,9 @@
 {% extends 'layout/base.html' %}
 
-{% block content %}
-{% endblock content %}
+{% block header %}  
+    <div class="masthead d-flex justify-content-center align-items-center col-12 col-sm-12 mb-5">
+        <div class="alert alert-info text-center my-5">
+            Se acaba de enviar la invitación a {{user_to}} para unirse a tu equipo {{team_to}}.
+        </div>
+    </div>
+{% endblock header %}

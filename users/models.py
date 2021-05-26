@@ -66,6 +66,13 @@ class Profile(models.Model):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	school_register = models.CharField(max_length=10, null=True, blank=True, unique=True) #Is really necessary the default=0?
 
+	ROLE_CHOICES = [
+		('student', 'Estudiante'),
+		('teacher', 'Maestro')
+	]
+
+	school_role = models.CharField(max_length=20, choices=ROLE_CHOICES, null=True, blank=False)
+
 	# Cocientes de dimensiones de personalidad, con 2 dígitos para decimales y 3 dígitos en total
 	personality_h = models.DecimalField(
 		null=True,
@@ -103,6 +110,8 @@ class Profile(models.Model):
 		decimal_places=2,
 		validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
 	)
+
+	results_private = models.BooleanField(default=True, null=False)
 
 	# Crea tablas en la BD para las relaciones M a N entre Usuario y Rama
 	#Every field below now has blank to True
@@ -149,7 +158,7 @@ class Career(models.Model):
 
 class Student(models.Model):
 	# Opciones para elegir el año de ingreso, desde 15 años atrás hasta la actualidad
-	YEAR_CHOICES = [(y, y) for y in range(datetime.date.today().year, datetime.date.today().year-15, -1)]
+	YEAR_CHOICES = [(y, y) for y in range(datetime.date.today().year, datetime.date.today().year-25, -1)]
 
 	# Opciones para elegir el semestre de ingreso, para después calcular el semestre actual del usuario
 	SEMESTER_CHOICES = [
@@ -167,17 +176,37 @@ class Student(models.Model):
 	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=False, blank=False)
 	career = models.ForeignKey(Career, on_delete=models.PROTECT)
 
-
 class Academy(models.Model):
 	name = models.CharField(max_length=64, null=False, blank=False, unique=True)
+	def __str__(self):
+		return f'{self.name}'
 
+class Teacher(models.Model):
+    	# Opciones para elegir el año de ingreso, desde 15 años atrás hasta la actualidad
+	YEAR_CHOICES = [(y, y) for y in range(datetime.date.today().year, datetime.date.today().year-25, -1)]
+
+	# Opciones para elegir el semestre de ingreso, para después calcular el semestre actual del usuario
+	SEMESTER_CHOICES = [
+		('agosto', 'Agosto - Diciembre'),
+		('enero', 'Enero - Junio')
+	]
+	
+	# Fields
+	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+	entry_year = models.IntegerField(
+		choices=YEAR_CHOICES,
+		null=False,
+		blank=False,
+	)
+	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=False, blank=False)
+	academy = models.ForeignKey(Academy, on_delete=models.PROTECT)
 
 class Subject(models.Model):
 	name = models.CharField(max_length=64, null=False, blank=False, unique=True)
 	academy = models.ForeignKey(Academy, on_delete=models.PROTECT)
 
 	# Crea tabla para relaciones M a N entre usuarios profesores y Unidades de Aprendizaje
-	teachers = models.ManyToManyField(User)
+	teachers = models.ManyToManyField(Teacher)
 
 	# Crea tabla para relaciones M a N entre Unidades de Aprendizaje y Ramas
 	fields = models.ManyToManyField(Field)
@@ -248,6 +277,8 @@ class Team(models.Model):
 	creation_date = models.DateTimeField(auto_now=True, null=False)
 
 	name = models.CharField(max_length=32, null=False, blank=False)
+
+	private = models.BooleanField(default=True, null=False)
 	
 	members = models.ManyToManyField(
 		User,
@@ -265,8 +296,37 @@ class Team(models.Model):
 	)
 
 	# Proyectos en los que el equipo trabaja
-	projects = models.ManyToManyField(Project)
+	projects = models.ManyToManyField(Project, null=True, blank=True)
 
+	evaluations = models.ManyToManyField(
+		User,
+		through = 'TeamEvaluation',
+		through_fields = ('team', 'user'),
+		related_name = 'evaluated_teams'
+	)
+
+	average_eval = models.DecimalField(
+		max_digits = 3,
+		decimal_places = 2,
+		validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
+		null = True,
+		blank = True
+	)
+
+	class Meta:
+		unique_together = ('founder', 'name')
+
+	def __str__(self):
+		return f'{self.name}'
+
+	def get_absolute_url(self):
+		return reverse('teams-item', kwargs={'id':self.id})
+	
+
+class TeamEvaluation(models.Model):
+	team = models.ForeignKey(Team, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	date = models.DateTimeField(auto_now=True, null=True, blank=True)
 	# evaluaciones de procesos operativos
 	evaluation_p1 = models.DecimalField(
 		max_digits = 3,
@@ -324,14 +384,8 @@ class Team(models.Model):
 		blank=True
 	)
 
-	class Meta:
-		unique_together = ('founder', 'name')
-
 	def __str__(self):
-		return f'{self.name}'
-
-	def get_absolute_url(self):
-		return reverse('teams-item', kwargs={'id':self.id})
+		return f'{self.team} by {self.user}'
 
 
 class Membership(models.Model):
@@ -354,22 +408,28 @@ class JoinRequest(models.Model):
 	team = models.ForeignKey(Team, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	date = models.DateTimeField(auto_now=True, null=False)
+	
+	def __str__(self):
+    		return f'Invitación de {self.user.username} para unirse al equipo {self.team.name}'
 
 
 class JoinInvitation(models.Model):
 	to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
-	from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
 	
 	team = models.ForeignKey(
 		Team,
-		on_delete = models.CASCADE,
-		null = False
+		null = False,
+		on_delete=models.CASCADE,
+		related_name='team_invitations'
 	)
 
 	date = models.DateTimeField(auto_now=True, null=False)
 
+	def __str__(self):
+    		return f'Invitación para unirte a {self.team}'
+
 	class Meta:
-		unique_together = ('to_user', 'from_user')
+		unique_together = ('to_user',  'team')
 
 
 class ProjectActivity(models.Model):

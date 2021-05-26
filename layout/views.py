@@ -72,7 +72,7 @@ def hexaco_results(request):
 
 def hexaco_compare(request, username):
 	user_compare = User.objects.filter(username=username)
-	if len(user_compare):
+	if len(user_compare) and not user_compare[0].profile.results_private:
 		user_compare = user_compare[0]
 		hexaco_caps = 'hexaco'
 		labels = ['Honestidad', 'Emoción', 'Extraversión', 'Amabilidad', 'Escrupulosidad', 'Apertura']
@@ -91,6 +91,7 @@ def hexaco_compare(request, username):
 
 def search_results(request):
 	query = request.GET.get('q')
+	message_info = None
 	sampleSize, hasProjects, hasTeams = request.GET.get('sampleSize'), request.GET.get('hasProjects'), request.GET.get('hasTeams')
 	sampleSize = sampleSize if sampleSize else '5'
 	hasProjects = hasProjects if hasProjects else 'Sí'
@@ -123,13 +124,18 @@ def search_results(request):
 
 
 	profile_results = User.objects.filter(Q(first_name__icontains=query) | Q(profile__in=profile_results)).distinct()
-	team_results = Team.objects.filter(name__icontains=query).distinct()
-	project_results = Project.objects.filter(Q(name__icontains=query)|project_query_qs).distinct()
+	team_results = Team.objects.filter(Q(name__icontains=query)&Q(private=False)).distinct()
+	if len(project_query_qs):
+		project_results = Project.objects.filter((Q(name__icontains=query)|project_query_qs)|Q(private=False)).distinct()
+	else:
+		project_results = Project.objects.filter(Q(name__icontains=query)&Q(private=False))
 	total_results = list(chain(profile_results, project_results if hasProjects == 'Sí' else [], team_results if hasTeams == 'Sí' else []))
 
 	paginator = Paginator(total_results, int(sampleSize) if sampleSize else 5)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
+	if not len(page_obj):
+		message_info = 'Tu búsqueda no dió ningún resultado.'
 
 
 
@@ -142,6 +148,7 @@ def search_results(request):
 		'hasTeams': hasTeams,
 		'interest_dict': interest_dict,
 		'experience_dict': experience_dict,
-		'field_dict': field_dict
+		'field_dict': field_dict,
+		'message_info': message_info
 	}
 	return render(request, 'layout/search_results.html', context)
