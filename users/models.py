@@ -298,11 +298,19 @@ class Team(models.Model):
 	# Proyectos en los que el equipo trabaja
 	projects = models.ManyToManyField(Project, null=True, blank=True)
 
-	evaluation = models.ManyToManyField(
+	evaluations = models.ManyToManyField(
 		User,
 		through = 'TeamEvaluation',
 		through_fields = ('team', 'user'),
 		related_name = 'evaluated_teams'
+	)
+
+	average_eval = models.DecimalField(
+		max_digits = 3,
+		decimal_places = 2,
+		validators = [MinValueValidator(0.0), MaxValueValidator(5.0)],
+		null = True,
+		blank = True
 	)
 
 	class Meta:

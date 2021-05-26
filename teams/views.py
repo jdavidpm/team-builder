@@ -8,6 +8,8 @@ from django.db.models import Q
 from json import loads
 from urllib import request
 from .utils import *
+from apriori_python import apriori
+import tabulate
 
 data = None
 with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/team_performance.json") as url:
@@ -107,7 +109,25 @@ def team_evaluate(request, id):
 			team_eval.team = team
 			team_eval.user = request.user
 			team_eval.save()
-			# send confirmation message to frontend
+			
+			# compute average evaluation for current team
+			# if a user evaluated the team more than once, each evaluation will be considered for the team average evaluation (might be changed in a future update)
+			evaluations = dict()
+			for process in dict_processes:
+				evaluations[process] = {'sum': 0, 'avg': 0}
+			total_evaluations = len(team.teamevaluation_set.all())
+			for evaluation in team.teamevaluation_set.all():
+				for process, eval in evaluations.items():
+					eval['sum'] += getattr(evaluation, 'evaluation_' + process)
+			general_avg_sum = 0
+			for process, eval in evaluations.items():
+				eval['avg'] = eval['sum'] / total_evaluations
+				general_avg_sum += eval['avg']
+			team.average_eval = general_avg_sum / len(dict_processes)
+			team.save()
+
+			# -------- missing confirmation message here to frontend before returning --------
+
 			return redirect('teams-item', id=id)
 	else:
 		form = TeamEvaluationForm()
@@ -157,6 +177,119 @@ def teams_join_request(request):
 			team_instance.members.remove(request.user)
 	return render(request, 'teams/teams_join_request.html')
 
+# association rules functions (there might be a better place to put all this stuff)
+TEAMS_SAMPLE_FRACTION = 0.3 #(top TEAMS_SAMPLE_FRACTION % in performance evaluation)
+MIN_TEAM_EVALUATORS = 1
+IDEAL_SELECTED_FACET_SET_SIZE = 2
+MIN_SUPPORT = 0.4
+MIN_CONFIDENCE = 0.7
+MIN_LIFT = 1.4
+FACETS_MAP = ['h', 'e', 'x', 'a', 'c', 'o']
+
+def has_enough_evaluators(team):
+	evaluators = set()
+	evaluations = team.teamevaluation_set.all()
+	for evaluation in evaluations:
+		evaluators.add(evaluation.user)
+	# print("team: ", team)
+	# print(evaluators)
+	if len(evaluators) >= MIN_TEAM_EVALUATORS:
+		return True
+	else:
+		return False
+
+def has_enough_members(team):
+	members = team.members.all()
+	if len(members) >= 2:
+		return True
+	else:
+		return False
+	
+def gen_association_rules():
+	# get sample of teams with highest performance evaluations (top TEAMS_SAMPLE_FRACTION%)
+	all_teams = list(Team.objects.exclude(average_eval__isnull=True).order_by('average_eval'))
+	filtered_teams_1 = [team for team in all_teams if has_enough_members(team)]
+	# print(filtered_teams_1)
+	filtered_teams_2 = [team for team in filtered_teams_1 if has_enough_evaluators(team)]
+	# print(filtered_teams_2)
+	sample_size = len(filtered_teams_2) * TEAMS_SAMPLE_FRACTION
+	print(f"sample size is: {sample_size}")
+	if sample_size < 5:
+		print('not enough teams in sample')
+		return -1
+	teams_sample = []
+	for _ in range(int(sample_size)):
+		teams_sample.append(filtered_teams_2.pop())
+	# print("\nteam sample:")
+	# print(teams_sample)
+	
+	# generate transactions as apriori algorithm input
+	personalities_transactions = []
+	for team in teams_sample:
+		print(team)
+		team_personalities = set()
+		for member in team.members.all():
+			# print(member)
+			member_personalities = []
+			for facet in FACETS_MAP:
+				value = getattr(member.profile, 'personality_' + facet)
+				# print("facet: ", facet, ", value: ", value)
+				if value:
+					threshold = value - 3
+					member_personalities.append({'facet': facet, 'threshold': threshold})
+				else:
+					break
+			if not member_personalities:
+				break
+			member_personalities = sorted(member_personalities, key = lambda i: abs(i['threshold']))
+			# print(member_personalities)
+			current_added_facets = 0
+			while member_personalities:
+				if abs(member_personalities[-1]['threshold']) == 2.0 or current_added_facets < IDEAL_SELECTED_FACET_SET_SIZE:
+					facet_dict = member_personalities.pop()
+					if facet_dict['threshold'] < 0:
+						team_personalities.add('-'+facet_dict['facet'])
+					else:
+						team_personalities.add(facet_dict['facet'])
+					current_added_facets += 1
+				else:
+					break
+		# print("\n---------team facets-------------\n", team_personalities)
+		if team_personalities:
+			personalities_transactions.append(list(team_personalities))
+	# print(personalities_transactions)
+	if personalities_transactions:
+		# get rules with apriori algorithm, it takes the transactions from where to extract rules, min support and min confidence
+		freqItemSet, rules_list = apriori(personalities_transactions, minSup=MIN_SUPPORT, minConf=MIN_CONFIDENCE)
+		dict_keys = ['antecedent', 'consecuent', 'confidence']
+		rules = list()
+		for index, rule in enumerate(rules_list):
+			rule_dict = dict(zip(dict_keys, rule))
+			
+			# create new keys that are not present in rule_dict yet
+			rule_dict['itemset_frequence'] = 0
+			rule_dict['consecuent_frequence'] = 0
+
+			rule_itemset = rule[0].union(rule[1])
+			
+			# calculate itemset_frecuence and consecuent_frecuence
+			for transaction in personalities_transactions:
+				if rule_itemset.issubset(transaction):
+					rule_dict['itemset_frequence'] += 1
+				if rule[1].issubset(transaction):
+					rule_dict['consecuent_frequence'] += 1
+			
+			# create new keys and calculate and assign its values
+			rule_dict['support'] = rule_dict['itemset_frequence'] / len(personalities_transactions)
+			rule_dict['lift'] = rule_dict['confidence'] / (rule_dict['consecuent_frequence']/len(personalities_transactions))
+
+			rules.append(rule_dict)
+	else:
+		return[]
+
+	return [ rule for rule in rules if (rule['lift'] > MIN_LIFT) ]
+
+
 def teams_creation(request):
 	action = request.GET.get('action')
 	team_size = request.GET.get('teamSize')
@@ -181,6 +314,7 @@ def teams_creation(request):
 	{tool_dict.append(v) for q, v in request.GET.items() if q.startswith('tool_')}
 
 	members_suggested = []
+	recommended_members = []
 	if action:
 		profile_query_qs = Q()
 		if len(interest_dict):
@@ -219,6 +353,97 @@ def teams_creation(request):
 		else:
 			message_info = 'Tu búsqueda no dió ningún resultado.'
 		members_suggested = User.objects.filter(Q(profile__in=members_suggested)).distinct()
+    
+		if action == 'Obtener recomendaciones':
+			rules_list = gen_association_rules() # a list of dicts
+			
+			if len(rules_list) > 0:
+				rules_list = sorted(rules_list, key = lambda i: (i['lift'], i['confidence'], i['support']))[::-1]
+				header = rules_list[0].keys()
+				rows = [rule.values() for rule in rules_list]
+				print(tabulate.tabulate(rows, header))
+				user_personalities = []
+				selected_users_personalities = []
+				for facet in FACETS_MAP:
+					value = getattr(request.user.profile, 'personality_' + facet)
+					if value == None:
+						message_info = "Realiza primero la prueba HEXACO para obtener recomendaciones"
+						context = {
+							'title': 'Formación de Equipos', 
+							'message_info': message_info,
+							'interest_dict': interest_dict,
+							'experience_dict': experience_dict,
+							'language_dict': language_dict,
+							'framework_dict': framework_dict,
+							'distribution_dict': distribution_dict,
+							'tool_dict': tool_dict,
+							'members_suggested': members_suggested
+						}
+						return render(request, 'teams/teams_creation.html', context)
+					
+					# print("facet: ", facet, ", value: ", value)
+					threshold = value - 3
+					if threshold > 0:
+						user_personalities.append({'facet': facet, 'threshold': threshold})
+					else:
+						user_personalities.append({'facet': '-'+facet, 'threshold': threshold})
+				user_personalities = sorted(user_personalities, key = lambda i: abs(i['threshold']))
+				selected_users_personalities.extend([user_personalities[-1]['facet'], user_personalities[-2]['facet']])
+				# print(user_personalities)
+				# print(selected_users_personalities)
+				target_facets = []
+				for rule in rules_list:
+					for user_facet in selected_users_personalities:
+						if user_facet in rule['antecedent']:
+							# print(user_facet, " in ", rule['antecedent'])
+							target_facets.extend([facet for facet in list(rule['consecuent']) if facet not in target_facets])
+						elif user_facet in rule['consecuent']:
+							# print(user_facet, " in ", rule['consecuent'])
+							target_facets.extend([facet for facet in list(rule['antecedent']) if facet not in target_facets])
+				# print("target facets: ", target_facets)
+
+				
+				# print(members_suggested)
+				for member in members_suggested:
+					member_personalities = []
+					selected_member_personalities = []
+					test_value = getattr(member.profile, 'personality_h')
+					if test_value == None:
+						break
+					for facet in FACETS_MAP:
+						value = getattr(member.profile, 'personality_' + facet)
+						threshold = value - 3
+						if threshold > 0:
+							member_personalities.append({'facet': facet, 'threshold': threshold})
+						else:
+							member_personalities.append({'facet': '-'+facet, 'threshold': threshold})
+					member_personalities = sorted(member_personalities, key = lambda i: abs(i['threshold']))
+					selected_member_personalities.extend(
+						[member_personalities[-1], member_personalities[-2]] # could add a 3rd facet to increase possibilities of being included in recommendations
+					)
+					# print(member_personalities)
+					# print(selected_member_personalities)
+
+					for selected_facet_dict in selected_member_personalities:
+						if selected_facet_dict['facet'] in target_facets:
+							recommended_members.append({'member': member, 'selected_facet': selected_facet_dict})
+				# print("recommended: ")	
+				# print(recommended_members)
+				ids = []
+				duplicates = []
+				recommended_members = sorted(recommended_members, key = lambda i: abs(i['selected_facet']['threshold']))[::-1]
+				recommended_members = [ member_dict['member'] for member_dict in recommended_members]
+				for i, member in enumerate(recommended_members):
+					if member.id in ids:
+						duplicates.append(i)
+					ids.append(member.id)
+				for index in duplicates:
+					recommended_members.pop(index)
+				print("ordered recomended")
+				print(recommended_members) # descending ordered members list (most recommended first)
+				
+			else:
+				message_info = "Lo sentimos, no hay recomendaciones"
 		if action == 'Crear':
 			new_team_name = request.GET.get('newTeamName') if request.GET.get('newTeamName') else 'No se nombró a tu equipo'
 			if not Team.objects.filter(name=new_team_name):	
@@ -244,6 +469,8 @@ def teams_creation(request):
 		'distribution_dict': distribution_dict,
 		'tool_dict': tool_dict,
 		'members_suggested': members_suggested[:int(team_size if team_size else 0)],
+		'recommended_members': recommended_members
 		'teamSize': team_size
 	}
 	return render(request, 'teams/teams_creation.html', context)
+
