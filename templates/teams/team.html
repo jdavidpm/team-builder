@@ -34,6 +34,10 @@
 		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary text-light p-0 mb-0 shadow-sm">
 			<div id="collapse_{{ team.id }}" class="collapse p-2" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
 				<div class="row text-center pl-3">
+						<div class="col-md-12 ml-auto"><p class="lead">
+							<h5 class="text-muted text-left">Descripción </h5>
+							<h5 class="text-left">{{ team.description }}</h5>
+						</p></div>
 						<div class="col-md-6 ml-auto"><p class="lead">
 							<h5 class="text-muted text-left">Creador</h5>
 							<h5 class="text-left">{{ team.founder.first_name }} {{ team.founder.last_name }}</h5>

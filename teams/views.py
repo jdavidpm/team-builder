@@ -293,6 +293,7 @@ def gen_association_rules():
 def teams_creation(request):
 	action = request.GET.get('action')
 	team_size = request.GET.get('teamSize')
+	is_compatible = request.GET.get('isCompatible')
 	message_info = False
 
 	interest_dict = []
@@ -313,7 +314,7 @@ def teams_creation(request):
 	tool_dict = []
 	{tool_dict.append(v) for q, v in request.GET.items() if q.startswith('tool_')}
 
-	members_suggested = []
+	filtered_members = []
 	recommended_members = []
 	if action:
 		profile_query_qs = Q()
@@ -349,12 +350,12 @@ def teams_creation(request):
 					profile_query_qs = profile_query_qs | Q(sw_tools=query[0])
 					profile_query_qs = profile_query_qs | Q(hw_tools=query[0])
 		if len(profile_query_qs):
-			members_suggested = Profile.objects.filter(profile_query_qs)
+			filtered_members = Profile.objects.filter(profile_query_qs)
 		else:
 			message_info = 'Tu búsqueda no dió ningún resultado.'
-		members_suggested = User.objects.filter(Q(profile__in=members_suggested)).distinct()
+		filtered_members = User.objects.filter(Q(profile__in=filtered_members)).distinct()
     
-		if action == 'Obtener recomendaciones':
+		if action == 'Generar equipo' and is_compatible == 'Personalidad':
 			rules_list = gen_association_rules() # a list of dicts
 			
 			if len(rules_list) > 0:
@@ -377,7 +378,8 @@ def teams_creation(request):
 							'framework_dict': framework_dict,
 							'distribution_dict': distribution_dict,
 							'tool_dict': tool_dict,
-							'members_suggested': members_suggested
+							'filtered_members': [], 
+							'isCompatible': is_compatible
 						}
 						return render(request, 'teams/teams_creation.html', context)
 					
@@ -403,8 +405,8 @@ def teams_creation(request):
 				# print("target facets: ", target_facets)
 
 				
-				# print(members_suggested)
-				for member in members_suggested:
+				# print(filtered_members)
+				for member in filtered_members:
 					member_personalities = []
 					selected_member_personalities = []
 					test_value = getattr(member.profile, 'personality_h')
@@ -449,10 +451,10 @@ def teams_creation(request):
 			if not Team.objects.filter(name=new_team_name):	
 				new_team = Team(founder=request.user, name=new_team_name)
 				new_team.save()
-				for new_member in members_suggested[:int(team_size)]:
+				for new_member in filtered_members[:int(team_size)]:
 					send_email_invite('Equipo creado usando Team Builder', 'Equipo creado automaticamente usando Team Builder', request.user.email, [new_member.email], False, new_team.name, request.user.first_name)
 					create_invitation(new_member, request.user, new_team)
-				#new_team.members.set(members_suggested[:int(team_size)])
+				#new_team.members.set(filtered_members[:int(team_size)])
 				new_team.members.add(request.user)
 				return redirect('teams-list')
 			else:
@@ -468,9 +470,9 @@ def teams_creation(request):
 		'framework_dict': framework_dict,
 		'distribution_dict': distribution_dict,
 		'tool_dict': tool_dict,
-		'members_suggested': members_suggested[:int(team_size if team_size else 0)],
-		'recommended_members': recommended_members,
-		'teamSize': team_size
+		'filtered_members': filtered_members[:int(team_size if team_size else 0)] if is_compatible == 'Ninguna' else recommended_members,
+		'teamSize': team_size,
+		'isCompatible': is_compatible
 	}
 	return render(request, 'teams/teams_creation.html', context)
 

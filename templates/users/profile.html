@@ -58,6 +58,15 @@
 {% endblock header %}
 
 {% block content %}
+	<div class="masthead row d-flex justify-content-center mt-0 pt-0">
+		<div class="col-11 col-sm-10 mt-0">
+			<div class="jumbotron bg-secondary shadow-sm text-white pt-4">
+				<h3>Información Personal</h3></br>
+				<h5>Sobre mi</br><span class="font-weight-normal">{{user.profile.description}}</span></h5>
+			</div>
+		</div>
+	</div>
+
 	{% if user.profile.school_role %}
 		<div class="masthead row d-flex justify-content-center mt-0 pt-0">
 			<div class="col-11 col-sm-10 mt-0">

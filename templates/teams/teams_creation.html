@@ -91,15 +91,14 @@
 					</div>
 				</div>
 				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="sortBy"><span class="text-white">Ordenamiento</span></label>
+					<label for="isCompatible"><span class="text-white">Compatibilidad</span></label>
 					<div class="input-group mb-2 ml-2">
 						<div class="input-group-prepend">
 							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-sort"></i></div>
 						</div>
-						<select id="sortBy" name="sortBy" class="form-control">
-							<option {% if sortBy == 'Personalidad' %} selected {% endif %}>Personalidad</option>
-							<option {% if sortBy == 'Nombre' %} selected {% endif %}>Nombre</option>
-							<option {% if sortBy == 'Ninguna' %} selected {% endif %}>Ninguna</option>
+						<select id="isCompatible" name="isCompatible" class="form-control">
+							<option {% if isCompatible == 'Personalidad' %} selected {% endif %}>Personalidad</option>
+							<option {% if isCompatible == 'Ninguna' %} selected {% endif %}>Ninguna</option>
 						</select>
 
 					</div>
@@ -115,11 +114,11 @@
 									<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								{% if members_suggested %}
+								{% if filtered_members %}
 									<div class="modal-body">
 										<h6 class="text-secondary">
 											Integrantes: 
-											{% for mem in members_suggested %}
+											{% for mem in filtered_members %}
 												<span class="text-muted">{{ mem.first_name }}{% if not forloop.last %}, {% endif %}</span>
 											{% endfor %}
 										</h6>
@@ -141,8 +140,8 @@
 						</div>
 					</div>
 					<!--<input type="submit" value="Formar" name="action" class="btn btn-outline-secondary mx-4">-->
-					<input type="submit" value="Filtrar" name="action" class="btn btn-outline-secondary mx-4">
-					<input type="submit" value="Obtener recomendaciones" name="action" class="btn btn-outline-secondary mx-4">
+					<!--<input type="submit" value="Filtrar" name="action" class="btn btn-outline-secondary mx-4">-->
+					<input type="submit" value="Generar equipo" name="action" class="btn btn-outline-secondary mx-4">
 					<!--<button type="submit" action="filterMembers" class="btn btn-outline-secondary mb-2">Aplicar</button>-->
 				</div>
 			</div>
@@ -210,7 +209,7 @@
 		{% if message_info %}
 			<span class="text-justify px-5 mx-5 fs-3">{{message_info}}</span>
 		{% endif %}
-		{% for user_i in members_suggested %}
+		{% for user_i in filtered_members %}
 			<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 				<div class="shadow-sm bg-secondary {% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
 					<div class="d-flex justify-content-end pt-0 mt-0 mr-2">

@@ -1,0 +1,92 @@
+[
+    {
+        "statement_id": "1",
+        "statement_text": "Mi equipo terminó o cumplió con todos los trabajos, prácticas y tareas asignadas",
+        "statement_category": "efficiency, p1"
+    },
+    {
+        "statement_id": "2",
+        "statement_text": "El trabajo producido por mi equipo fue de calidad y cumplió todos los requerimientos y especificaciones",
+        "statement_category": "efficiency, p1"
+    },
+    {
+        "statement_id": "3",
+        "statement_text": "El tiempo asignado para realizar todas las tareas y actividades resultó suficiente para mi equipo",
+        "statement_category": "efficiency, p1"
+    },
+    {
+        "statement_id": "4",
+        "statement_text": "Como equipo establecimos normas o acuerdos que facilitaron el trabajo en equipo",
+        "statement_category": "participation and decision making, p2"
+    },
+    {
+        "statement_id": "5",
+        "statement_text": "Todos los integrantes participaron en las tareas de mi equipo",
+        "statement_category": "participation and decision making, p2"
+    },
+    {
+        "statement_id": "6",
+        "statement_text": "Las decisiones en mi equipo se tomaron teniendo en cuenta la opinión de todos los integrantes",
+        "statement_category": "participation and decision making, p2"
+    },
+    {
+        "statement_id": "7",
+        "statement_text": "Se habló sobre varias ideas o puntos de vista de diferentes integrantes, y se seleccionaron de forma unánime",
+        "statement_category": "conflict management, p3"
+    },
+    {
+        "statement_id": "8",
+        "statement_text": "No hubo conflictos de tipo interpersonal y si los hubo, se resolvieron sin que nadie se haya sentido perjudicado",
+        "statement_category": "conflict management, p3"
+    },
+    {
+        "statement_id": "9",
+        "statement_text": "Mi equipo usó un método para la resolución de cada ejercicio o problema planteado",
+        "statement_category": "problem solving, p4"
+    },
+    {
+        "statement_id": "10",
+        "statement_text": "Se notó la creatividad para la resolución de los problemas o las propuestas planteadas",
+        "statement_category": "problem solving, p4"
+    },
+    {
+        "statement_id": "11",
+        "statement_text": "El trabajo de mi equipo transcurrió en un ambiente de confianza",
+        "statement_category": "internal communication and trust, p5"
+    },
+    {
+        "statement_id": "12",
+        "statement_text": "A pesar de las diferencias entre los miembros de mi equipo, existió un ambiente de respeto entre todos",
+        "statement_category": "internal communication and trust, p5"
+    },
+    {
+        "statement_id": "13",
+        "statement_text": "La comunicación fue buena entre los integrantes de mi equipo",
+        "statement_category": "internal communication and trust, p5"
+    },
+    {
+        "statement_id": "14",
+        "statement_text": "Las tareas y actividade que cada integrante de mi equipo debía realizar fueron claras desde el inicio y se establecieron fechas límite",
+        "statement_category": "collaboration/cooperation/coordination, p6"
+    },
+    {
+        "statement_id": "15",
+        "statement_text": "Mis compañeros contribuyeron al equipo como fue planeado y como fue necesario que lo fueran haciendo",
+        "statement_category": "collaboration/cooperation/coordination, p6"
+    },
+    {
+        "statement_id": "16",
+        "statement_text": "Existió colaboración entre los integrantes (nos hemos ayudado, compartido información, comunicado las dificultades, etc.)",
+        "statement_category": "collaboration/cooperation/coordination, p6"
+    },
+    {
+        "statement_id": "17",
+        "statement_text": "El líder de mi equipo fue aceptado por todos los miembros del equipo",
+        "statement_category": "leadership, p7"
+    },
+    {
+        "statement_id": "18",
+        "statement_text": "El líder de mi equipo dirigió y coordinó las actividades del equipo",
+        "statement_category": "leadership, p7"
+    }
+]

@@ -66,6 +66,8 @@ class Profile(models.Model):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	school_register = models.CharField(max_length=10, null=True, blank=True, unique=True) #Is really necessary the default=0?
 
+	description = models.TextField(null=True, blank=True)
+
 	ROLE_CHOICES = [
 		('student', 'Estudiante'),
 		('teacher', 'Maestro')
@@ -170,11 +172,11 @@ class Student(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='student_profile')
 	entry_year = models.IntegerField(
 		choices=YEAR_CHOICES,
-		null=False,
+		null=True,
 		blank=False,
 	)
-	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=False, blank=False)
-	career = models.ForeignKey(Career, on_delete=models.PROTECT)
+	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=True, blank=False)
+	career = models.ForeignKey(Career, on_delete=models.PROTECT, null=True)
 
 class Academy(models.Model):
 	name = models.CharField(max_length=64, null=False, blank=False, unique=True)
@@ -195,11 +197,11 @@ class Teacher(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='teacher_profile')
 	entry_year = models.IntegerField(
 		choices=YEAR_CHOICES,
-		null=False,
+		null=True,
 		blank=False,
 	)
-	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=False, blank=False)
-	academy = models.ForeignKey(Academy, on_delete=models.PROTECT)
+	entry_semester = models.CharField(max_length=6, choices=SEMESTER_CHOICES, null=True, blank=False)
+	academy = models.ForeignKey(Academy, on_delete=models.PROTECT, null=True)
 
 class Subject(models.Model):
 	name = models.CharField(max_length=64, null=False, blank=False, unique=True)
@@ -272,6 +274,7 @@ class Team(models.Model):
 
 	# El usuario que crea el equipo
 	founder = models.ForeignKey(User, on_delete=models.PROTECT, related_name='founder')
+	image = models.ImageField(default='default_team.jpg', upload_to='teams_pics')
 
 	# fecha y hora de creación del equipo
 	creation_date = models.DateTimeField(auto_now=True, null=False)
@@ -279,6 +282,8 @@ class Team(models.Model):
 	name = models.CharField(max_length=32, null=False, blank=False)
 
 	private = models.BooleanField(default=True, null=False)
+
+	description = models.TextField(null=True, blank=True)
 	
 	members = models.ManyToManyField(
 		User,
