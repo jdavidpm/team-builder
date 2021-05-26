@@ -250,6 +250,8 @@ class Team(models.Model):
 	creation_date = models.DateTimeField(auto_now=True, null=False)
 
 	name = models.CharField(max_length=32, null=False, blank=False)
+
+	private = models.BooleanField(default=True, null=False)
 	
 	members = models.ManyToManyField(
 		User,

@@ -90,9 +90,22 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="sortBy"><span class="text-white">Ordenamiento</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-sort"></i></div>
+						</div>
+						<select id="sortBy" name="sortBy" class="form-control">
+							<option {% if sortBy == 'Personalidad' %} selected {% endif %}>Personalidad</option>
+							<option {% if sortBy == 'Nombre' %} selected {% endif %}>Nombre</option>
+							<option {% if sortBy == 'Ninguna' %} selected {% endif %}>Ninguna</option>
+						</select>
+
+					</div>
+				</div>
 				<div class="col-auto">
 					<button type="button" class="btn btn-outline-secondary mx-4" data-toggle="modal" data-target="#modalTeam">Crear Equipo</button>
-
 					<div class="modal fade" id="modalTeam" tabindex="-1" role="dialog" aria-labelledby="modalTeamLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">

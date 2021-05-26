@@ -18,7 +18,7 @@ class MembersInlineAdmin(admin.TabularInline):
     model = Team.members.through
 
 class TeamAdmin(admin.ModelAdmin):
-    fields = ['founder', 'name', 'projects',]
+    fields = ['founder', 'name', 'private', 'projects']
     inlines = [MembersInlineAdmin, ]
 
 admin.site.register(Team, TeamAdmin)
