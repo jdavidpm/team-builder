@@ -14,7 +14,8 @@ urlpatterns = [
     path('recover/done', authViews.PasswordResetDoneView.as_view(template_name='users/recover_done.html'), name='password_reset_done'),
     path('recover/confirm/<uidb64>/<token>/', authViews.PasswordResetConfirmView.as_view(template_name='users/recover_confirm.html'), name='password_reset_confirm'),
     path('recover/complete', authViews.PasswordResetCompleteView.as_view(template_name='users/recover_complete.html'), name='password_reset_complete'),
-    path('profile/<str:username>/update/', views.updateProfile, name='users-update-profile')
+    path('profile/<str:username>/update/', views.update_profile, name='users-update-profile'),
+    path('profile/<str:username>/update/school/', views.update_profile_school, name='users-update-profile-school')
 ]
 
 if settings.DEBUG:

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, StudentProfileForm, TeacherProfileForm, SubjectProfileForm, AcademyProfileForm
 from django.contrib.auth.models import User
 from django.conf import settings
 from .utils import *
@@ -49,7 +49,7 @@ def profile(request, username):
 		return render(request, 'users/foreign_profile.html', {'title': foreign_user.first_name, 'foreign_user': foreign_user, 'fields': fields, 'users': users})
 
 @login_required
-def updateProfile(request, username):
+def update_profile(request, username):
 	if username == request.user.username:
 		if request.method == 'POST':
 			u_form = UserUpdateForm(request.POST, instance=request.user)
@@ -71,3 +71,24 @@ def updateProfile(request, username):
 	else:
 		messages.warning(request, f'No tienes permiso para entrar a esta página')
 		return redirect('layout-index')
+
+def update_profile_school(request, username):
+	if request.method == 'POST':
+		if request.user.profile.school_role == 'student':
+			s_form = StudentProfileForm(instance=request.user)
+		elif request.user.profile.school_role == 'teacher':
+			s_form = TeacherProfileForm(instance=request.user)
+		else:
+			return redirect('users-update', username=request.user.username)
+	else:
+		if request.user.profile.school_role == 'student':	
+			s_form = StudentProfileForm(instance=request.user)
+		elif request.user.profile.school_role == 'teacher':
+			s_form = TeacherProfileForm(instance=request.user)
+		else:
+			return redirect('users-update-profile', username=request.user.username)
+	context = {
+		'title': 'Datos Escolares',
+		's_form': s_form,
+	}
+	return render(request, 'users/update_profile_school.html', context)

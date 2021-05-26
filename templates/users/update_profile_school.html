@@ -1,0 +1,23 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+	<div class="masthead d-flex justify-content-center row">
+		<div class="jumbotron shadow-sm col-10 col-md-6 col-sm-8 p-3">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<form method="POST">
+				{% csrf_token %}
+				<fieldset class="form-group">
+					<legend class="border-bottom mb-5"><h3>Datos Escolares</h3></legend>
+					<div class="mx-3">
+						{{ s_form |crispy}}
+					</div>
+				</fieldset>
+				<div class="form-group mx-3">
+					<button class="btn btn-outline-secondary" type="submit">Guadar</button>
+				</div>
+			</form>
+			<div class="border-top pt-3"></div>
+		</div>
+	</div>
+{% endblock %}

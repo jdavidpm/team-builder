@@ -90,9 +90,57 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" name="page" value="{{ page_obj.number }}" />
+				<div class="col-auto d-flex flex-row align-items-center">
+					<label for="sortBy"><span class="text-white">Ordenamiento</span></label>
+					<div class="input-group mb-2 ml-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-sort"></i></div>
+						</div>
+						<select id="sortBy" name="sortBy" class="form-control">
+							<option {% if sortBy == 'Personalidad' %} selected {% endif %}>Personalidad</option>
+							<option {% if sortBy == 'Nombre' %} selected {% endif %}>Nombre</option>
+							<option {% if sortBy == 'Ninguna' %} selected {% endif %}>Ninguna</option>
+						</select>
+
+					</div>
+				</div>
 				<div class="col-auto">
-					<input type="submit" value="Formar" name="action" class="btn btn-outline-secondary mx-4">
+					<button type="button" class="btn btn-outline-secondary mx-4" data-toggle="modal" data-target="#modalTeam">Crear Equipo</button>
+					<div class="modal fade" id="modalTeam" tabindex="-1" role="dialog" aria-labelledby="modalTeamLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalTeamLabel">Nombra tu Equipo</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								{% if members_suggested %}
+									<div class="modal-body">
+										<h6 class="text-secondary">
+											Integrantes: 
+											{% for mem in members_suggested %}
+												<span class="text-muted">{{ mem.first_name }}{% if not forloop.last %}, {% endif %}</span>
+											{% endfor %}
+										</h6>
+										<div class="input-group d-flex flex-row">
+											<div class="input-group-prepend">
+												<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+											</div>
+											<input placeholder="Nombre de Equipo" type="text" class="form-control" id="team-name" name="newTeamName" data-validetta="minLength[5]"/>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+										<input type="submit" value="Crear" name="action" class="btn btn-primary">
+									</div>
+								{% else %}
+									<h6 class="text-danger py-5 mb-5 text-center">Necesitas integrantes</h6>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+					<!--<input type="submit" value="Formar" name="action" class="btn btn-outline-secondary mx-4">-->
 					<input type="submit" value="Filtrar" name="action" class="btn btn-outline-secondary mx-4">
 					<input type="submit" value="Obtener recomendaciones" name="action" class="btn btn-outline-secondary mx-4">
 					<!--<button type="submit" action="filterMembers" class="btn btn-outline-secondary mb-2">Aplicar</button>-->
@@ -160,7 +208,7 @@
 	</div>
 	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
 		{% if message_info %}
-			<span class="text-justify px-5 fs-3">{{message_info}}</span>
+			<span class="text-justify px-5 mx-5 fs-3">{{message_info}}</span>
 		{% endif %}
 		{% for user_i in members_suggested %}
 			<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
@@ -247,6 +295,8 @@
 		{% endfor %}
 	</div>
 
+{% endblock content %}
+{% block script %}
 	<script type="text/javascript">
 		document.getElementById("interestsFilterButton").onclick = addInterest;
 		document.getElementById("experiencesFilterButton").onclick = addExperience;
@@ -494,5 +544,15 @@
 			}
 
 		}
+
+		$('#modalTeam').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+		var recipient = button.data('whatever') // Extract info from data-* attributes
+		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		var modal = $(this)
+		modal.find('.modal-title').text('Nombra tu Equipo')
+		modal.find('.modal-body input').val(recipient)
+		});
 	</script>
-{% endblock content %}
+{% endblock script %}
