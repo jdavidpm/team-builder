@@ -2,9 +2,12 @@
 {% load team_tags %}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 pt-5 mt-5 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary shadow-sm">
-			<h1 class="fs-4 text-white"><i class="fas fa-users mr-4"></i>Equipos</h1>
+	<div class="masthead row d-flex justify-content-center mb-0">
+		<div class="col-11 col-sm-10 mt-n5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<div class="jumbotron bg-secondary shadow-sm text-white text-center">
+				<h1 class="fs-4 text-white"><i class="fas fa-users mr-4"></i>Equipos</h1>
+			</div>
 		</div>
 	</div>
 {% endblock header %}
