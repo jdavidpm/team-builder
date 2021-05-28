@@ -13,7 +13,7 @@
             <div class="d-flex flex-column mr-2 text-justify">
                 <a class="nounderline ml-2 text-white text-wrap font-weight-bold" href="{% url 'users-profile' receiver_user.username %}">
                     Para más detalles sobre {{receiver_user.first_name}} ({{receiver_user.username}}) visita su perfil 
-                    <img class="rounded-circle thumbnail border border-secondary ml-3 mb-4" src="{{ receiver_user.profile.image.url }}"/>
+                    <img class="rounded-circle thumbnail border border-dark ml-3 mb-4" src="{{ receiver_user.profile.image.url }}"/>
                 </a>
                 El correo electronico de {{ receiver_user.first_name }} es: <a class="nounderline text-white ml-4" data-toggle="tooltip" title="Enviar email" href="mailto:{{ receiver_user.email }}">{{ receiver_user.email }}</a>
                 en caso de necesitar un contacto más directo.
@@ -40,7 +40,7 @@
                 <input type="hidden" name="emailFrom" value="{{ user.email }}" />
                 <input type="hidden" name="userTo" value="{{ receiver_user.username }}" />
                 <div class="col-auto text-right">
-                    <button type="submit" class="btn btn-outline-secondary mb-2">Enviar</button>
+                    <button type="submit" class="btn btn-outline-dark mb-2">Enviar</button>
                 </div>
             </form>
         </div>
