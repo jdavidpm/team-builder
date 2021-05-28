@@ -3,7 +3,7 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 jumbotron bg-secondary shadow-sm">
+		<div class="col-11 col-sm-10 jumbotron bg-dark shadow-sm">
 			<h1 class="fs-3 text-white"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
 	</div>
@@ -15,7 +15,7 @@
 				{% csrf_token %}
 				<fieldset class="form-group">
 					<legend class="jumbotron shadow-sm border-bottom mb-4 py-2">
-						<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+						<a class="nounderline text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 								<h3 class="text-dark text-center text-uppercase">
 									Instrucciones
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -36,7 +36,7 @@
 								</ol>
 							Las respuestas serán usadas para el desarrollo de esta plataforma, así que nos estarías haciendo un gran favor al contestarlo de la manera más sincera.  Si quieres saber más del modelo por favor visita: <a href="https://hexaco.org" target="_blank" class="nounderline">https://hexaco.org</a>
 							<div class="d-flex justify-content-end">
-								<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+								<a class="nounderline text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 								</a>
 							</div>
@@ -46,8 +46,8 @@
 					</legend>
 					{% if user.profile.personality_h %}
 						<div class="d-flex flex-nonwrap justify-content-around form-group">
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
 							
 						</div>
 					{% endif %}
@@ -72,7 +72,7 @@
 					</div>
 				</fieldset>
 				<div class="form-group text-right">
-					<button class="btn btn-outline-secondary" type="submit">Generar resultados</button>
+					<button class="btn btn-outline-dark" type="submit">Generar resultados</button>
 				</div>
 			</form>
 		</div>

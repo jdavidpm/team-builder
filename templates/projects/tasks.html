@@ -5,7 +5,7 @@
         {% include "components/tasks_sidebar.html" %}
         <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
-            <h4 class="text-secondary">Tareas 
+            <h4 class="text-dark">Tareas 
                 {% if request.resolver_match.kwargs.filter_by == 'project' %}
                 > Proyectos > {{ filter_object }}
                 {% elif request.resolver_match.kwargs.filter_by == 'team' %}

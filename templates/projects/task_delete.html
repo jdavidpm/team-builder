@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <div class="masthead row justify-content-center">
-    <div class="col-md-8 ml-2 mr-2 pt-3 pb-3 border border-secondary rounded" id="taskDetails">
+    <div class="col-md-8 ml-2 mr-2 pt-3 pb-3 border border-dark rounded" id="taskDetails">
         <p class="h4">¿Estás seguro(a) de que quieres eliminar la tarea "{{task.name}}" del proyecto "{{task.project}}"?</p>
         <form method='POST' action="" class="text-center">
             {% csrf_token %}
