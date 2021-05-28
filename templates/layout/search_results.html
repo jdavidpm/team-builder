@@ -2,89 +2,106 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 mx-4 pb-4 rounded-bottom">
+	<div class="masthead bg-info pt-5 mt-5 mx-4 pb-4 rounded-bottom">
 		<form role="form" action="{% url 'layout-search-results' %}">
-			<div class="form-row align-items-center justify-content-around px-4">
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="sampleSize"><span class="text-white">Muestra</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
-						</div>
-						<select id="sampleSize" name="sampleSize" class="form-control">
-							<option {% if sampleSize == '1'%} selected {% endif %}>1</option>
-							<option {% if sampleSize == '2'%} selected {% endif %}>2</option>
-							<option {% if sampleSize == '3'%} selected {% endif %}>3</option>
-							<option {% if sampleSize == '4'%} selected {% endif %}>4</option>
-							<option {% if sampleSize == '5'%} selected {% endif %}>5</option>
-							<option {% if sampleSize == '6'%} selected {% endif %}>6</option>
-							<option {% if sampleSize == '7'%} selected {% endif %}>7</option>
-							<option {% if sampleSize == '8'%} selected {% endif %}>8</option>
-						</select>
+			<div class="form-row align-items-center justify-content-around px-4 flex-wrap">
+				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
+					<h5 class="text-white text-center">Filtros de Selección</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="sampleSize"><span class="text-white">Muestra</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
+								</div>
+								<select id="sampleSize" name="sampleSize" class="form-control">
+									<option {% if sampleSize == '1'%} selected {% endif %}>1</option>
+									<option {% if sampleSize == '2'%} selected {% endif %}>2</option>
+									<option {% if sampleSize == '3'%} selected {% endif %}>3</option>
+									<option {% if sampleSize == '4'%} selected {% endif %}>4</option>
+									<option {% if sampleSize == '5'%} selected {% endif %}>5</option>
+									<option {% if sampleSize == '6'%} selected {% endif %}>6</option>
+									<option {% if sampleSize == '7'%} selected {% endif %}>7</option>
+									<option {% if sampleSize == '8'%} selected {% endif %}>8</option>
+								</select>
 
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="hasProjects"><span class="text-white">Proyectos</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
+							</div>
 						</div>
-						<select id="hasProjects" name="hasProjects" class="form-control">
-							<option {% if hasProjects == 'Sí' %} selected {% endif %}>Sí</option>
-							<option {% if hasProjects == 'No' %} selected {% endif %}>No</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="hasTeams"><span class="text-white">Equipos</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="hasProjects"><span class="text-white">Proyectos</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
+								</div>
+								<select id="hasProjects" name="hasProjects" class="form-control">
+									<option {% if hasProjects == 'Sí' %} selected {% endif %}>Sí</option>
+									<option {% if hasProjects == 'No' %} selected {% endif %}>No</option>
+								</select>
+							</div>
 						</div>
-						<select id="hasTeams" class="form-control" name="hasTeams">
-							<option {% if hasTeams == 'No'%} selected {% endif %}>No</option>
-							<option {% if hasTeams == 'Sí'%} selected {% endif %}>Sí</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
-						</div>
-						<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="hasTeams"><span class="text-white">Equipos</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+								</div>
+								<select id="hasTeams" class="form-control" name="hasTeams">
+									<option {% if hasTeams == 'No'%} selected {% endif %}>No</option>
+									<option {% if hasTeams == 'Sí'%} selected {% endif %}>Sí</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+
+				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-3 pb-3">
+					<h5 class="text-white text-center">Filtros de Perfil</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+								</div>
+								<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
 						</div>
-						<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+								</div>
+								<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
-						</div>
-						<input type="text" class="form-control" id="fieldsFilter" placeholder="Campos">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="fieldsFilterButton"><i class="fas fa-plus"></i></a></div>
+
+				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-3 pb-3">
+					<h5 class="text-white text-center">Filtros de Perfil</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center mx-0">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
+								</div>
+								<input type="text" class="form-control" id="fieldsFilter" placeholder="Tema">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="fieldsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<input type="hidden" name="q" value="{{ query }}" />
 				<input type="hidden" name="page" value="{{ page_obj.number }}" />
 				<div class="col-auto">
-					<button type="submit" class="btn btn-outline-secondary my-4">Filtrar</button>
+					<button type="submit" class="btn btn-outline-secondary my-4 shadow">Buscar</button>
 				</div>
 			</div>
 			<div>
