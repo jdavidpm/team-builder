@@ -1,5 +1,5 @@
 {% if messages %}
-    <div class="{% if request.path == '/'%} bg-info {% endif %}">
+    <div class="{% if request.path == '/'%} bg-primary {% endif %}">
         {% for message in messages %}
             {% if message.tags == 'error' %}
             <div class="alert alert-danger ">{{ message }}</div>

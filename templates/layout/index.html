@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-<header class="masthead bg-info text-white text-center pt-5 mt-5">
+<header class="masthead bg-primary text-white text-center pt-5 mt-5">
 	{% block messages %}{% include "components/messages.html" %}{% endblock %}
 	{% if user.is_authenticated %}
 		<div class="d-flex align-content-center row justify-content-center mb-5 pb-5">
@@ -12,7 +12,7 @@
 				<h1 class="fs-4 text-uppercase text-secondary">Team Builder</h1>
 				<!-- Masthead Subheading-->
 				<p class="fs-2 font-weight-light mb-0">¡Bienvenid@, <a href="{% url 'users-profile' user.username %}" class="nounderline text-secondary">{{user.first_name}}</a>!</p>
-				<div class="content-section bg-info border-secondary mt-4 d-flex flex-row justify-content-around flex-wrap">
+				<div class="content-section bg-primary border-secondary mt-4 d-flex flex-row justify-content-around flex-wrap">
 					<!--<a href="#" class="text-secondary"><i class="fas fa-calendar-alt fs-4 zoom"></i><p class="font-weight-light fs-1 mt-2 mb-0">Calendario</p></a>-->
 					<a href="{% url 'layout-hexaco-test' %}" class="nounderline btn btn-outline-secondary border-0"><i class="fas fa-dice-d6 fs-4 zoom"></i><p class="font-weight-light fs-1 mt-2 mb-0">Personalidad</p></a>
 					<a href="{% url 'projects-list' %}" class="nounderline btn btn-outline-secondary border-0"><i class="fas fa-lightbulb fs-4 zoom"></i><p class="font-weight-light fs-1 mt-2 mb-0">Proyectos</p></a>

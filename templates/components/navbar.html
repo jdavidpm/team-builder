@@ -5,7 +5,7 @@
 					<i class="fas fa-users fs-3 py-0 px-2 text-white"></i>
 					Team Builder
 				</a>
-				<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-info text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars mr-2"></i>Menu</button>
+				<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars mr-2"></i>Menu</button>
 
 				<div class="collapse navbar-collapse">
 					<div class="navbar-nav mr-auto" tabindex="0"></div>
@@ -66,7 +66,7 @@
 								{% include 'components/search_bar.html' %}
 							</div>
 						{% else %}
-							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-info-circle"></i></span>Acerca de</a></li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/about/' %}active{% endif %}" href="{% url 'layout-about' %}"><span class="px-2"><i class="fas fa-primary-circle"></i></span>Acerca de</a></li>
 							<!--<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/FAQ/' %}active{% endif %}" href="{% url 'layout-faq' %}"><span class="px-2"><i class="fas fa-question-circle"></i></span>Preguntas Frecuentes</a></li>-->
 							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signin/' %}active{% endif %}" href="{% url 'users-signin'%}"><span class="px-2"><i class="fas fa-sign-in-alt"></i></span>Iniciar Sesión</a>
 							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signup/' %}active{% endif %}" href="{% url 'users-signup'%}"><span class="px-2"><i class="fas fa-user-plus"></i></span>Registro</a></li>
