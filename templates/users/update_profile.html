@@ -2,9 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-	<div class="masthead row justify-content-center">
-		<div class="jumbotron shadow-sm col-10 col-sm-8 py-5 px-3">
-			<form method="POST" enctype="multipart/form-data">
+	<div class="masthead row d-flex justify-content-center pt-5 mt-5">
+		<div class="col-11 col-sm-8">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<form method="POST" enctype="multipart/form-data" class="jumbotron shadow-sm">
 				{% csrf_token %}
 				<fieldset class="form-group">
 					<legend class="border-bottom mb-5"><h3>Actualizar Perfil</h3></legend>
@@ -43,14 +44,13 @@
 					</div>
 				</fieldset>
 				<div class="form-group d-flex justify-content-around">
-					<a class="btn btn-outline-secondary nounderline ml-2" href="{% url 'password_reset' %}">Cambiar contraseña </a>
-					<a class="btn btn-outline-secondary nounderline ml-2" href="{% url 'users-update-profile-school' user.username %}">Datos Escolares </a>
-					<button class="btn btn-outline-secondary" type="submit">Guardar</button>
+					<a class="btn btn-outline-dark nounderline ml-2" href="{% url 'password_reset' %}">Cambiar contraseña </a>
+					<a class="btn btn-outline-dark nounderline ml-2" href="{% url 'users-update-profile-school' user.username %}">Datos Escolares </a>
+					<button class="btn btn-outline-dark" type="submit">Guardar</button>
 				</div>
 			</form>
 		</div>
 	</div>
 {% endblock content %}
 {% block script %}
-	{{ p_form.media }}
 {% endblock script %}

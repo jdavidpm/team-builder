@@ -43,7 +43,7 @@ class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		image = forms.ImageField()
-		fields = ['school_register', 'school_role', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'results_private', 'image']
+		fields = ['school_register', 'school_role', 'description', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'results_private', 'image']
 		widgets = {
 			#'distributions' : forms.CheckboxSelectMultiple,
 			#'experience' : forms.CheckboxSelectMultiple,
@@ -57,6 +57,7 @@ class ProfileUpdateForm(forms.ModelForm):
 		labels = {
 			'school_register': ('Matrícula'),
 			'school_role': ('Rol Escolar'),
+			'description': ('Acerca de mi'),
 			'distributions': ('Distros'),
 			'sw_tools': ('Herramientas de Software'),
 			'hw_tools': ('Herramientas de Hardware'),
@@ -77,17 +78,45 @@ class ProfileUpdateForm(forms.ModelForm):
 class StudentProfileForm(forms.ModelForm):
 	class Meta:
 		model = Student
-		exclude = ['user']
+		fields = ['user', 'entry_year', 'entry_semester', 'career']
+		labels = {
+			'user': ('Usuario'),
+			'entry_year': ('Año de Ingreso'),
+			'entry_semester': ('Semestre de Ingreso'),
+			'career': ('Carrera'),
+		}
+	def __init__(self, *args, **kwargs): 
+		super(StudentProfileForm, self).__init__(*args, **kwargs)
+		self.fields['user'].disabled = True
+
+class TeacherProfileForm(forms.ModelForm):
+	class Meta:
+		model = Teacher
+		fields = ['user', 'entry_year', 'entry_semester', 'academy']
+		labels = {
+			'user': ('Usuario'),
+			'entry_year': ('Año de Ingreso'),
+			'entry_semester': ('Semestre de Ingreso'),
+			'academy': ('Academia'),
+		}
+	def __init__(self, *args, **kwargs): 
+		super(TeacherProfileForm, self).__init__(*args, **kwargs)
+		self.fields['user'].disabled = True
+
+class StudentUpdateForm(forms.ModelForm):
+	class Meta:
+		model = Student
+		fields = ['entry_year', 'entry_semester', 'career']
 		labels = {
 			'entry_year': ('Año de Ingreso'),
 			'entry_semester': ('Semestre de Ingreso'),
 			'career': ('Carrera'),
 		}
 
-class TeacherProfileForm(forms.ModelForm):
+class TeacherUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Teacher
-		exclude = ['user']
+		fields = ['entry_year', 'entry_semester', 'academy']
 		labels = {
 			'entry_year': ('Año de Ingreso'),
 			'entry_semester': ('Semestre de Ingreso'),

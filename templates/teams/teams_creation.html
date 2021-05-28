@@ -2,110 +2,122 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 pb-4 rounded-bottom mx-4">
+	<div class="masthead bg-info pt-5 mt-5 pb-4 rounded-bottom mx-4">
 		<form role="form" action="{% url 'teams-creation' %}">
 			<div class="form-row align-items-center justify-content-around px-4">
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="teamSize"><span class="text-white">Tamaño</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
-						</div>
-						<select id="teamSize" name="teamSize" class="form-control">
-							<option {% if teamSize == '1'%} selected {% endif %}>1</option>
-							<option {% if teamSize == '2'%} selected {% endif %}>2</option>
-							<option {% if teamSize == '3'%} selected {% endif %}>3</option>
-							<option {% if teamSize == '4'%} selected {% endif %}>4</option>
-							<option {% if teamSize == '5'%} selected {% endif %}>5</option>
-							<option {% if teamSize == '6'%} selected {% endif %}>6</option>
-							<option {% if teamSize == '7'%} selected {% endif %}>7</option>
-							<option {% if teamSize == '8'%} selected {% endif %}>8</option>
-						</select>
+				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
+					<h5 class="text-white text-center">Selección</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="teamSize"><span class="text-white">Tamaño</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
+								</div>
+								<select id="teamSize" name="teamSize" class="form-control">
+									<option {% if teamSize == '1'%} selected {% endif %}>1</option>
+									<option {% if teamSize == '2'%} selected {% endif %}>2</option>
+									<option {% if teamSize == '3'%} selected {% endif %}>3</option>
+									<option {% if teamSize == '4'%} selected {% endif %}>4</option>
+									<option {% if teamSize == '5'%} selected {% endif %}>5</option>
+									<option {% if teamSize == '6'%} selected {% endif %}>6</option>
+									<option {% if teamSize == '7'%} selected {% endif %}>7</option>
+									<option {% if teamSize == '8'%} selected {% endif %}>8</option>
+								</select>
 
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+							</div>
 						</div>
-						<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
-						</div>
-						<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-laptop-code"></i></div>
-						</div>
-						<input type="text" class="form-control" id="languagesFilter" placeholder="Lenguajes">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="languagesFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-stream"></i></div>
-						</div>
-						<input type="text" class="form-control" id="frameworksFilter" placeholder="Frameworks">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="frameworksFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fab fa-linux"></i></div>
-						</div>
-						<input type="text" class="form-control" id="distributionsFilter" placeholder="Distribuciones">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="distributionsFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-toolbox"></i></div>
-						</div>
-						<input type="text" class="form-control" id="toolsFilter" placeholder="Herramientas">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="toolsFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="sortBy"><span class="text-white">Ordenamiento</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-sort"></i></div>
-						</div>
-						<select id="sortBy" name="sortBy" class="form-control">
-							<option {% if sortBy == 'Personalidad' %} selected {% endif %}>Personalidad</option>
-							<option {% if sortBy == 'Nombre' %} selected {% endif %}>Nombre</option>
-							<option {% if sortBy == 'Ninguna' %} selected {% endif %}>Ninguna</option>
-						</select>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="isCompatible"><span class="text-white">Compatibilidad</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-people-arrows"></i></div>
+								</div>
+								<select id="isCompatible" name="isCompatible" class="form-control">
+									<option {% if isCompatible == 'Personalidad' %} selected {% endif %}>Personalidad</option>
+									<option {% if isCompatible == 'Ninguna' %} selected {% endif %}>Ninguna</option>
+								</select>
 
+							</div>
+						</div>
 					</div>
 				</div>
+
+				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-6 pb-3 d-flex justify-content-center flex-column">
+					<h5 class="text-white text-center">Perfil</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+								</div>
+								<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+								</div>
+								<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-laptop-code"></i></div>
+								</div>
+								<input type="text" class="form-control" id="languagesFilter" placeholder="Lenguajes">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="languagesFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-stream"></i></div>
+								</div>
+								<input type="text" class="form-control" id="frameworksFilter" placeholder="Frameworks">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="frameworksFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fab fa-linux"></i></div>
+								</div>
+								<input type="text" class="form-control" id="distributionsFilter" placeholder="Distribuciones">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="distributionsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-toolbox"></i></div>
+								</div>
+								<input type="text" class="form-control" id="toolsFilter" placeholder="Herramientas">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="toolsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="col-auto">
-					<button type="button" class="btn btn-outline-secondary mx-4" data-toggle="modal" data-target="#modalTeam">Crear Equipo</button>
+					<input type="submit" value="Generar equipo" name="action" class="btn btn-outline-dark mx-4 my-2">
+					<button type="button" class="btn btn-outline-dark mx-4 my-2" data-toggle="modal" data-target="#modalTeam">Crear Equipo</button>
 					<div class="modal fade" id="modalTeam" tabindex="-1" role="dialog" aria-labelledby="modalTeamLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -115,11 +127,11 @@
 									<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								{% if members_suggested %}
+								{% if filtered_members %}
 									<div class="modal-body">
-										<h6 class="text-secondary">
+										<h6 class="text-dark">
 											Integrantes: 
-											{% for mem in members_suggested %}
+											{% for mem in filtered_members %}
 												<span class="text-muted">{{ mem.first_name }}{% if not forloop.last %}, {% endif %}</span>
 											{% endfor %}
 										</h6>
@@ -132,7 +144,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-										<input type="submit" value="Crear" name="action" class="btn btn-primary">
+										<input type="submit" value="Crear" name="action" class="btn btn-info">
 									</div>
 								{% else %}
 									<h6 class="text-danger py-5 mb-5 text-center">Necesitas integrantes</h6>
@@ -140,16 +152,15 @@
 							</div>
 						</div>
 					</div>
-					<!--<input type="submit" value="Formar" name="action" class="btn btn-outline-secondary mx-4">-->
-					<input type="submit" value="Filtrar" name="action" class="btn btn-outline-secondary mx-4">
-					<input type="submit" value="Obtener recomendaciones" name="action" class="btn btn-outline-secondary mx-4">
-					<!--<button type="submit" action="filterMembers" class="btn btn-outline-secondary mb-2">Aplicar</button>-->
+					<!--<input type="submit" value="Formar" name="action" class="btn btn-outline-dark mx-4">-->
+					<!--<input type="submit" value="Filtrar" name="action" class="btn btn-outline-dark mx-4">-->
+					<!--<button type="submit" action="filterMembers" class="btn btn-outline-dark mb-2">Aplicar</button>-->
 				</div>
 			</div>
 			<div>
 				<div id="badgesDiv" class="px-5 mx-5 py-2 d-flex justify-content-around flex-wrap">
 					{% for i in interest_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-heart mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -158,7 +169,7 @@
 						</span>
 					{% endfor %}
 					{% for i in experience_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-briefcase mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -167,7 +178,7 @@
 						</span>
 					{% endfor %}
 					{% for i in language_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-laptop-code mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -176,7 +187,7 @@
 						</span>
 					{% endfor %}
 					{% for i in framework_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-stream mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -185,7 +196,7 @@
 						</span>
 					{% endfor %}
 					{% for i in distribution_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fab fa-linux mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -194,7 +205,7 @@
 						</span>
 					{% endfor %}
 					{% for i in tool_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-toolbox mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -206,23 +217,23 @@
 			</div>
 		</form>
 	</div>
-	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
+	<div class="masthead bg-white text-dark text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
 		{% if message_info %}
 			<span class="text-justify px-5 mx-5 fs-3">{{message_info}}</span>
 		{% endif %}
-		{% for user_i in members_suggested %}
+		{% for user_i in filtered_members %}
 			<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-				<div class="shadow-sm bg-secondary {% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
+				<div class="shadow-sm bg-dark {% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
 					<div class="d-flex justify-content-end pt-0 mt-0 mr-2">
 						<a class="nounderline" href="{% url 'teams-join-invitation' %}?toReceive={{user_i.id}}" data-toggle="tooltip" title="Agregar a un equipo">
 							<i class="fas fa-plus btn btn-outline-light border-0"></i>
 						</a>
 					</div>
 					<a href="{{ user_i.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ user_i.first_name }}">
-						<img class="rounded-circle thumbnail border border-primary" src="{{ user_i.profile.image.url }}"/>
+						<img class="rounded-circle thumbnail border border-info" src="{{ user_i.profile.image.url }}"/>
 						<h3>{{ user_i.first_name }}</h3>
 						{% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %}
-							<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+							<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 								<i class="fas fa-info-circle mr-2"></i>Información
 								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 								<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
@@ -320,7 +331,7 @@
 			if (!document.getElementById("spn_"+interest))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+interest);
 				spanInterest.innerHTML = interest; 
 
@@ -356,7 +367,7 @@
 			if (!document.getElementById("spn_"+experience))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+experience);
 				spanInterest.innerHTML = experience; 
 
@@ -395,7 +406,7 @@
 			if (!document.getElementById("spn_"+language))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+language);
 				spanInterest.innerHTML = language; 
 
@@ -434,7 +445,7 @@
 			if (!document.getElementById("spn_"+framework))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+framework);
 				spanInterest.innerHTML = framework; 
 
@@ -473,7 +484,7 @@
 			if (!document.getElementById("spn_"+distribution))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+distribution);
 				spanInterest.innerHTML = distribution; 
 
@@ -512,7 +523,7 @@
 			if (!document.getElementById("spn_"+tool))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+tool);
 				spanInterest.innerHTML = tool; 
 

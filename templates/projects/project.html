@@ -1,9 +1,12 @@
 {% extends 'layout/base.html'%}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary text-white shadow-sm">
-			<h1 class="fs-4">{{ project.name }}</h1>
+	<div class="masthead row d-flex justify-content-center mb-0">
+		<div class="col-11 col-sm-10 mt-n5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<div class="jumbotron bg-dark shadow-sm text-white text-center">
+				<h1 class="fs-4">{{ project.name }}</h1>
+			</div>
 		</div>
 	</div>
 {% endblock header %}
@@ -11,7 +14,7 @@
 	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap">
 		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm p-2 mb-2">
 			<div class="d-flex p-2" id="card_{{ project.id }}">
-				<span class="mb-0"><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
+				<span class="mb-0"><button class="btn btn-outline-dark border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
 					<h3 class="text-nowrap">
 						Detalles
 						<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -19,16 +22,16 @@
 					</h3>
 				</button></span>
 				<div class="ml-2 fs-2 ml-auto pr-2 pt-2 d-flex justify-content-center flex-wrap">
-					<a class="nounderline btn btn-outline-secondary border-0" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+					<a class="nounderline btn btn-outline-dark border-0" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
 						<i class="fas fa-edit fs-2 pl-1"></i>
 					</a>
-					<a class="nounderline btn btn-outline-secondary border-0" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
+					<a class="nounderline btn btn-outline-dark border-0" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
 						<i class="fas fa-arrow-left fs-2"></i>
 					</a>
 				</div>
 			</div>
 		</div>
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-secondary text-light p-0 mb-0">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-dark text-light p-0 mb-0">
 			<div id="collapse_{{ project.id }}" class="collapse p-2" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
 				<div class="row text-center pl-3">
 						<div class="col-md-12 ml-auto"><p class="lead">

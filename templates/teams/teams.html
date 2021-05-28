@@ -2,9 +2,12 @@
 {% load team_tags %}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 pt-5 mt-5 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary shadow-sm">
-			<h1 class="fs-4 text-white"><i class="fas fa-users mr-4"></i>Equipos</h1>
+	<div class="masthead row d-flex justify-content-center mb-0">
+		<div class="col-11 col-sm-10 mt-n5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<div class="jumbotron bg-dark shadow-sm text-white text-center">
+				<h1 class="fs-4 text-white"><i class="fas fa-users mr-4"></i>Equipos</h1>
+			</div>
 		</div>
 	</div>
 {% endblock header %}
@@ -15,7 +18,7 @@
 				{% for team in request.user.membership_teams.all|sort_by:'id' %}
 					<div class="col-md-12 px-0 mb-0">
 						<div class="jumbotron shadow-sm d-flex p-2 justify-content-between flex-wrap" id="card_{{ team.id }}">
-							<span class="mb-0"><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
+							<span class="mb-0"><button class="btn btn-outline-dark border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
 								<h3 class="text-nowrap">
 									{{ team.name }}
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -23,17 +26,17 @@
 								</h3>
 							</button></span>
 							<div class="ml-2 fs-2 ml-auto pr-2">
-								<a class="nounderline btn btn-outline-secondary border-0" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Detalles">
+								<a class="nounderline btn btn-outline-dark border-0" href="{{ team.get_absolute_url }}" data-toggle="tooltip" title="Detalles">
 									<i class="fs-2 fas fa-window-restore"></i>
 								</a>
 								
-								<a class="nounderline btn btn-outline-secondary border-0" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+								<a class="nounderline btn btn-outline-dark border-0" href="{{ team.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
 									<i class="fs-2 fas fa-edit pl-2"></i>
 								</a>
 							</div>
 						</div>
 						<div id="collapse_{{ team.id }}" class="collapse mt-n4" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
-							<div class="jumbotron shadow-sm border bg-secondary text-light p-0">
+							<div class="jumbotron shadow-sm border bg-dark text-light p-0">
 								<div class="row text-center ml-2">
 									<div class="col-6"><p class="lead">
 										<h6 class="text-muted text-left">Creador</h6>
@@ -53,14 +56,14 @@
 		
 		<div class="col-11 col-sm-11 col-md-5 col-lg-5 col-xl-5">
 			<div class="jumbotron shadow-sm px-4 py-4">
-				<a class="nounderline btn btn-outline-secondary border-0 pb-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
+				<a class="nounderline btn btn-outline-dark border-0 pb-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 					<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
 				</a>
 				<div class="collapse" id="collapseMenu">
 					<ul class="list-group">
-						<li class="list-group-item list-group-item bg-secondary rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'teams-create' %}"><i class="fas fa-plus mr-2"></i>Crear Equipo</a></li>
-						<li class="list-group-item list-group-item bg-secondary rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'projects-list' %}"><i class="fas fa-lightbulb mr-2"></i>Proyectos</a></li>
-						<li class="list-group-item list-group-item bg-secondary rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'projects-tasks' %}"><i class="fas fa-tasks mr-2"></i>Tareas</a></li>
+						<li class="list-group-item list-group-item bg-dark rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'teams-create' %}"><i class="fas fa-plus mr-2"></i>Crear Equipo</a></li>
+						<li class="list-group-item list-group-item bg-dark rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'projects-list' %}"><i class="fas fa-lightbulb mr-2"></i>Proyectos</a></li>
+						<li class="list-group-item list-group-item bg-dark rounded my-2"><a class="nav-link text-white" target="_blank" href="{% url 'projects-tasks' %}"><i class="fas fa-tasks mr-2"></i>Tareas</a></li>
 					</ul>
 				</div>
 			</div>

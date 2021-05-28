@@ -11,13 +11,10 @@
 					{{ u_form|crispy }}
 				</fieldset>
 				<div class="form-group d-flex justify-content-between">
-					<button class="btn btn-outline-secondary" type="submit">Guardar</button>
-					<a class="btn btn-outline-secondary" href="{{ team.get_absolute_url|add:'members/' }}">Agregar integrantes</a>
+					<button class="btn btn-outline-dark" type="submit">Guardar</button>
+					<a class="btn btn-outline-dark" href="{{ team.get_absolute_url|add:'members/' }}">Agregar integrantes</a>
 				</div>
 			</form>
 		</div>
 	</div>
 {% endblock content %}
-{% block script %}
-	{{ u_form.media }}
-{% endblock script %}

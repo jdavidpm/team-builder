@@ -7,7 +7,7 @@ from users.widgets import ToggleWidget
 class TeamUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Team
-		fields = ['name', 'projects', 'private']
+		fields = ['name', 'projects', 'description', 'image', 'private']
 
 		widgets = {
 			'private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
@@ -16,24 +16,29 @@ class TeamUpdateForm(forms.ModelForm):
 		labels = {
 			'name':('Nombre'),
 			'projects':('Proyectos'),
+			'description':('Descripción'),
+			'image':('Fondo'),
 			'private':('Privado')
 			}
 
 class TeamCreateForm(forms.ModelForm):
 	class Meta:
 		model = Team
-		fields = ['founder', 'name', 'projects', 'private']
+		fields = ['founder', 'name', 'projects', 'description', 'image','private']
 		widgets = {
 			'private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
 			}
 		labels = {
 				'founder':('Creador'),
 				'name':('Nombre'),
+				'description':('Descripción'),
+				'image':('Fondo'),
 				'projects':('Proyectos')
 				}
 	def __init__(self, *args, **kwargs): 
 		super(TeamCreateForm, self).__init__(*args, **kwargs)                       
 		self.fields['founder'].disabled = True
+		self.fields['image'].required = False
 
 class TeamMembersForm(forms.ModelForm):
 	class Meta:

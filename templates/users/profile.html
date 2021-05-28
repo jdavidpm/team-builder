@@ -1,10 +1,10 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-	<div class="masthead row d-flex justify-content-center">
-		<div class="col-11 col-sm-11 mt-n5">
-			<div class="jumbotron bg-secondary shadow-sm pt-0 pb-2">
-				{% block messages %}{% include "components/messages.html" %}{% endblock %}
+	<div class="masthead row d-flex justify-content-center mb-0">
+		<div class="col-11 col-sm-10 mt-n5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<div class="jumbotron bg-dark shadow-sm pt-0 pb-2">
 				<div class="pt-2 d-flex justify-content-between">
 					<a class="nounderline" href="{{user.profile.get_absolute_url|add:'update/'}}" data-toggle="tooltip" title="Editar perfil">
 						<i class="fas fa-user-edit btn btn-outline-light border-0 fs-2"></i>
@@ -15,10 +15,10 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="menuProfile">
 							<div class="d-flex flex-column">
-								<a class="dropdown-item text-secondary" target="_blank" href="{% url 'projects-list' %}"><i class="fas fa-lightbulb mr-2"></i>Projectos</a>
-								<a class="dropdown-item text-secondary" target="_blank" href="{% url 'teams-list' %}"><i class="fas fa-users mr-2"></i>Equipos</a>
-								<a class="dropdown-item text-secondary" target="_blank" href="{% url 'projects-tasks' %}"><i class="fas fa-tasks mr-2"></i>Tareas</a>
-								<a class="dropdown-item text-secondary" target="_blank" href="{% url 'teams-join-request' %}"><i class="fas fa-envelope mr-2"></i>Invitaciones</a>
+								<a class="dropdown-item text-dark" target="_blank" href="{% url 'projects-list' %}"><i class="fas fa-lightbulb mr-2"></i>Projectos</a>
+								<a class="dropdown-item text-dark" target="_blank" href="{% url 'teams-list' %}"><i class="fas fa-users mr-2"></i>Equipos</a>
+								<a class="dropdown-item text-dark" target="_blank" href="{% url 'projects-tasks' %}"><i class="fas fa-tasks mr-2"></i>Tareas</a>
+								<a class="dropdown-item text-dark" target="_blank" href="{% url 'teams-join-request' %}"><i class="fas fa-envelope mr-2"></i>Invitaciones</a>
 							</div>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 					{% for field in fields %}
 						<div id="card_{{ forloop.counter }}" class="container tab-pane fade col-md-4">
 							{% for value in field.values %}
-								<h6 class="text-center content-section shadow-sm bg-primary rounded text-white my-1 border-0">{{ value.name }}</h6>
+								<h6 class="text-center content-section shadow-sm bg-info rounded text-white my-1 border-0">{{ value.name }}</h6>
 							{% endfor %}
 						</div>
 					{% endfor %}
@@ -58,9 +58,29 @@
 {% endblock header %}
 
 {% block content %}
-	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
-		<div class="col-md-7"></div>
-		<div class="col-md-3 col-sm-10"></div>
-		<div class="col-md-2"></div>
+	<div class="masthead row d-flex justify-content-center mt-0 pt-0">
+		<div class="col-11 col-sm-10 mt-0">
+			<div class="jumbotron bg-dark shadow-sm text-white pt-4">
+				<h3>Información Personal</h3></br>
+				<h5>Sobre mi</br><span class="font-weight-normal">{{user.profile.description}}</span></h5>
+			</div>
+		</div>
 	</div>
+
+	{% if user.profile.school_role %}
+		<div class="masthead row d-flex justify-content-center mt-0 pt-0">
+			<div class="col-11 col-sm-10 mt-0">
+				<div class="jumbotron bg-dark shadow-sm text-white pt-4">
+					<h3>Información Escolar</h3></br>
+					{% if  user.profile.school_role == 'student' %}
+						<h5><span class="font-weight-normal">Estudiante de la <b>Escuela Súperior de Cómputo</b> desde <b>{{user.student_profile.entry_year}}</b>, entró en el semestre de <b>{% if user.student_profile.entry_semester == 'agosto' %}Agosto - Diciembre {% else %}Enero - Junio{% endif %}</b></span></h5>
+						<h5><span class="font-weight-normal">Dentro de la carrera de</span> <span class="text-capitalize">{{user.student_profile.career}}</span></h5>
+					{% else %}
+						<h5><span class="font-weight-normal">Profesor de la <b>Escuela Súperior de Cómputo</b> desde <b>{{user.teacher_profile.entry_year}}</b>, entró en el semestre de <b>{% if user.teacher_profile.entry_semester == 'agosto' %}Agosto - Diciembre {% else %}Enero - Junio{% endif %}</b></span></h5>
+						<h5><span class="font-weight-normal">Dentro de la academy de</span> <span class="text-capitalize">{{user.teacher_profile.academy}}</span></h5>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endblock content %}

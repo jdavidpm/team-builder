@@ -2,7 +2,7 @@
 {% block content %}
 <div class="masthead row justify-content-center">
     {% include "components/tasks_sidebar.html" %}
-    <div class="col-md-8 ml-2 mr-2 pt-3 pb-3 border border-secondary rounded" id="taskDetails">
+    <div class="col-md-8 ml-2 mr-2 pt-3 pb-3 border border-dark rounded" id="taskDetails">
         {% block messages %}{% include "components/messages.html" %}{% endblock %}
         <form method="POST" action="">
             {% csrf_token %}
@@ -29,7 +29,7 @@
                 <div class="col">{{task_form.assigned_members.label}}:{{task_form.assigned_members}}</div>
                 <div class="col-md-5">
                     {{task_form.due_date.label}}:&nbsp{{task_form.due_date}}
-                    <input type="submit" class="btn btn-primary mt-3  float-right" name="update task" value="Crear tarea">
+                    <input type="submit" class="btn btn-info mt-3  float-right" name="update task" value="Crear tarea">
                 </div>
                 
             </div>

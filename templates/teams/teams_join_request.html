@@ -2,56 +2,60 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 pt-5 mt-5 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-secondary shadow-sm">
+		<div class="col-11 col-sm-8 jumbotron bg-dark shadow-sm">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
-			<h1 class="fs-4 text-white"><i class="fas fa-envelope mr-4"></i>Invitaciones</h1>
+			<h1 class="fs-3 text-white"><i class="fas fa-envelope mr-4"></i>Invitaciones</h1>
 		</div>
 	</div>
 {% endblock header %}
 
 {% block content %}
-    <div class="d-flex flex-row justify-content-around flex-wrap text-secondary px-2">
-        <div class="bg-grayish rounded col-11 col-sm-5 mx-2 p-4 mb-4">
-            <h3 class="border-bottom mb-4 pb-2">Invitaciones Recibidas</h3>
-            {% for received in user.received_invitations.all %}            
-                <div class="d-flex flex-column border-bottom px-4">
-                        <form id='respondForm{{forloop.counter}}' class="d-flex flex-row align-items-center flex-wrap my-4">
-                            {% if received.to_user in received.team.members.all%}
-                                <label class="d-flex align-items-center mr-2"><h6>Ya estás en el equipo {{ received.team }}</h6></label>  
-                                <input type="hidden" name="teamRespond" value="{{ received.team }}" />
-                                <input type="submit" value="Salir" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-secondary mt-n1">
-                            {% else %}
-                                <div class="input-group mb-2 ml-2 col-12 col-sm-12 d-flex flex-column">
-                                    <h6>{{received}}</h6>
-                                    <div class="d-flex flex-row">
-                                        <label for="respondRequest" class="align-items-center"><h6>Responder</h6></label>             
-                                        <select id="respondRequest" name="respondRequest" class="form-control col-6 col-sm-6 ml-4">
-                                            <option {% if respondRequest == 'Aceptar' %} selected {% endif %}>Aceptar</option>
-                                            <option {% if respondRequest == 'Rechazar' %} selected {% endif %}>Rechazar</option>
-                                        </select>
+    <div class="d-flex justify-content-center">
+        <div class="col-12 col-sm-8 d-flex justify-content-center flex-wrap flex-sm-nowrap">
+            <div class="bg-grayish rounded col-11 col-sm-6 mx-4 py-2 px-0 mb-4">
+                <h3 class="border-bottom mb-4 pb-2 mx-4">Invitaciones Recibidas</h3>
+                {% for received in user.received_invitations.all %}            
+                    <div class="d-flex flex-column border-bottom px-2">
+                            <form id='respondForm{{forloop.counter}}' class="d-flex flex-row align-items-center flex-wrap my-4">
+                                {% if received.to_user in received.team.members.all%}
+                                    <label class="d-flex align-items-center mr-2"><h6>Ya estás en el equipo {{ received.team }}</h6></label>  
+                                    <input type="hidden" name="teamRespond" value="{{ received.team }}" />
+                                    <input type="submit" value="Salir" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-dark mt-n1">
+                                {% else %}
+                                    <div class="input-group mb-2 ml-0 col-12 col-sm-12 d-flex flex-column">
+                                        <h6>{{received}}</h6>
+                                        <div class="d-flex flex-row">
+                                            <label for="respondRequest" class="align-items-center"><h6>Responder</h6></label>             
+                                            <select id="respondRequest" name="respondRequest" class="form-control col-6 col-sm-6 ml-4">
+                                                <option {% if respondRequest == 'Aceptar' %} selected {% endif %}>Aceptar</option>
+                                                <option {% if respondRequest == 'Rechazar' %} selected {% endif %}>Rechazar</option>
+                                            </select>
+                                        </div>
+                                    <input type="hidden" name="teamRespond" value="{{ received.team }}" />
+                                    <input type="submit" value="Responder" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-dark mt-3">
                                     </div>
-                                <input type="hidden" name="teamRespond" value="{{ received.team }}" />
-                                <input type="submit" value="Responder" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-secondary mt-3">
-                                </div>
-                            {% endif %}
-                        </form>
-                 </div>
-            {% endfor %}
-        </div>
-        <div class="bg-grayish rounded col-11 col-sm-5 mx-2 p-4 mb-4">
-            <h3 class="border-bottom mb-4 pb-2">Invitaciones Enviadas</h3>
-            {% for team in user.membership_teams.all %}
-                {% for sent in team.team_invitations.all %}
-                    <h6 class="mx-4 border-bottom pb-2 text-justify">
-                        {% if sent.to_user in sent.team.members.all%}
-                            {{sent.to_user}} aún aceptó a tu:
-                        {% else %}
-                            {{sent.to_user}} aún no ha respondido a tu:
-                        {% endif %}
-                        <span class="text-muted">invitación a unirte en el equipo {{sent.team}}</span>
-                    </h6>
+                                {% endif %}
+                            </form>
+                    </div>
                 {% endfor %}
-            {% endfor %}
+            </div>
+            <div class="bg-grayish rounded col-11 col-sm-6 mx-4 py-2 px-0 mb-4">
+                <h3 class="border-bottom mb-4 pb-2 mx-4">Invitaciones Enviadas</h3>
+                {% for team in user.membership_teams.all %}
+                    {% for sent in team.team_invitations.all %}
+                        <div class="d-flex flex-column border-bottom px-2">
+                            <h6 class="mx-4 pb-2">
+                                {% if sent.to_user in sent.team.members.all%}
+                                    {{sent.to_user}} ya aceptó a tu:
+                                {% else %}
+                                    {{sent.to_user}} aún no ha respondido o visto tu:
+                                {% endif %}
+                                <span class="text-muted">invitación a unirte en el equipo {{sent.team}}</span>
+                            </h6>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock content %}

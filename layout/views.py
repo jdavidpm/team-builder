@@ -109,18 +109,27 @@ def search_results(request):
 	profile_results, team_results, project_results = [], [], []
 	if len(interest_dict):
 		for i in interest_dict:
-			profile_query_qs = profile_query_qs | Q(interests=Field.objects.filter(name__icontains=i)[0])
-		profile_results = Profile.objects.filter(profile_query_qs)
+			field_query = None
+			if len(Field.objects.filter(name__icontains=i)):
+				field_query = Field.objects.filter(name__icontains=i)
+				profile_query_qs = profile_query_qs | Q(interests=field_query[0])
+				profile_results = Profile.objects.filter(profile_query_qs)
 	
 	if len(experience_dict):
 		for i in experience_dict:
-			profile_query_qs = profile_query_qs | Q(experience=Field.objects.filter(name__icontains=i)[0])
-		profile_results = Profile.objects.filter(profile_query_qs)
+			field_query = None
+			if len(Field.objects.filter(name__icontains=i)):
+				field_query = Field.objects.filter(name__icontains=i)
+				profile_query_qs = profile_query_qs | Q(experience=field_query[0])
+				profile_results = Profile.objects.filter(profile_query_qs)
 	
 	if len(field_dict):
 		for i in field_dict:
-			project_query_qs = project_query_qs | Q(fields=Field.objects.filter(name__icontains=i)[0])
-		project_results = Project.objects.filter(project_query_qs)
+			field_query = None
+			if len(Field.objects.filter(name__icontains=i)):
+				field_query = Field.objects.filter(name__icontains=i)
+				project_query_qs = project_query_qs | Q(fields=field_query[0])
+				project_results = Project.objects.filter(project_query_qs)
 
 
 	profile_results = User.objects.filter(Q(first_name__icontains=query) | Q(profile__in=profile_results)).distinct()

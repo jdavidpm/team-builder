@@ -2,95 +2,112 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 mx-4 pb-4 rounded-bottom">
+	<div class="masthead bg-info pt-5 mt-5 mx-4 pb-4 rounded-bottom">
 		<form role="form" action="{% url 'layout-search-results' %}">
-			<div class="form-row align-items-center justify-content-around px-4">
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="sampleSize"><span class="text-white">Muestra</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
-						</div>
-						<select id="sampleSize" name="sampleSize" class="form-control">
-							<option {% if sampleSize == '1'%} selected {% endif %}>1</option>
-							<option {% if sampleSize == '2'%} selected {% endif %}>2</option>
-							<option {% if sampleSize == '3'%} selected {% endif %}>3</option>
-							<option {% if sampleSize == '4'%} selected {% endif %}>4</option>
-							<option {% if sampleSize == '5'%} selected {% endif %}>5</option>
-							<option {% if sampleSize == '6'%} selected {% endif %}>6</option>
-							<option {% if sampleSize == '7'%} selected {% endif %}>7</option>
-							<option {% if sampleSize == '8'%} selected {% endif %}>8</option>
-						</select>
+			<div class="form-row align-items-center justify-content-around px-4 flex-wrap">
+				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
+					<h5 class="text-white text-center">Selección</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="sampleSize"><span class="text-white">Muestra</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
+								</div>
+								<select id="sampleSize" name="sampleSize" class="form-control">
+									<option {% if sampleSize == '1'%} selected {% endif %}>1</option>
+									<option {% if sampleSize == '2'%} selected {% endif %}>2</option>
+									<option {% if sampleSize == '3'%} selected {% endif %}>3</option>
+									<option {% if sampleSize == '4'%} selected {% endif %}>4</option>
+									<option {% if sampleSize == '5'%} selected {% endif %}>5</option>
+									<option {% if sampleSize == '6'%} selected {% endif %}>6</option>
+									<option {% if sampleSize == '7'%} selected {% endif %}>7</option>
+									<option {% if sampleSize == '8'%} selected {% endif %}>8</option>
+								</select>
 
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="hasProjects"><span class="text-white">Proyectos</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
+							</div>
 						</div>
-						<select id="hasProjects" name="hasProjects" class="form-control">
-							<option {% if hasProjects == 'Sí' %} selected {% endif %}>Sí</option>
-							<option {% if hasProjects == 'No' %} selected {% endif %}>No</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="hasTeams"><span class="text-white">Equipos</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="hasProjects"><span class="text-white">Proyectos</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-lightbulb"></i></div>
+								</div>
+								<select id="hasProjects" name="hasProjects" class="form-control">
+									<option {% if hasProjects == 'Sí' %} selected {% endif %}>Sí</option>
+									<option {% if hasProjects == 'No' %} selected {% endif %}>No</option>
+								</select>
+							</div>
 						</div>
-						<select id="hasTeams" class="form-control" name="hasTeams">
-							<option {% if hasTeams == 'No'%} selected {% endif %}>No</option>
-							<option {% if hasTeams == 'Sí'%} selected {% endif %}>Sí</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
-						</div>
-						<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="hasTeams"><span class="text-white">Equipos</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-users"></i></div>
+								</div>
+								<select id="hasTeams" class="form-control" name="hasTeams">
+									<option {% if hasTeams == 'No'%} selected {% endif %}>No</option>
+									<option {% if hasTeams == 'Sí'%} selected {% endif %}>Sí</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+
+				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-3 pb-3">
+					<h5 class="text-white text-center">Perfil</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+								</div>
+								<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
 						</div>
-						<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+								</div>
+								<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
-						</div>
-						<input type="text" class="form-control" id="fieldsFilter" placeholder="Campos">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="fieldsFilterButton"><i class="fas fa-plus"></i></a></div>
+
+				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-3 pb-3">
+					<h5 class="text-white text-center">Perfil</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center mx-0">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-clipboard-list"></i></div>
+								</div>
+								<input type="text" class="form-control" id="fieldsFilter" placeholder="Tema">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="fieldsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<input type="hidden" name="q" value="{{ query }}" />
 				<input type="hidden" name="page" value="{{ page_obj.number }}" />
 				<div class="col-auto">
-					<button type="submit" class="btn btn-outline-secondary my-4">Filtrar</button>
+					<button type="submit" class="btn btn-outline-dark my-4 shadow">Buscar</button>
 				</div>
 			</div>
 			<div>
 				<div id="badgesDiv" class="px-5 mx-5 py-2 d-flex justify-content-around flex-wrap">
 					{% for i in interest_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-heart mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -99,7 +116,7 @@
 						</span>
 					{% endfor %}
 					{% for i in experience_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-briefcase mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -108,7 +125,7 @@
 						</span>
 					{% endfor %}
 					{% for i in field_dict %}
-						<span class="badge badge-pill badge-secondary d-flex align-items-center pl-3" id="spn_{{i}}">
+						<span class="badge badge-pill badge-dark d-flex align-items-center pl-3" id="spn_{{i}}">
 							<i class="fas fa-clipboard-list mr-2"></i>{{i}}
 							<button type="button" class="close ml-2 mb-1 text-danger" id="btn_{{i}}" aria-label="Close">
 								<span id="hid_{{i}}">&times;</span>
@@ -120,24 +137,24 @@
 			</div>
 		</form>
 	</div>
-	<div class="masthead bg-white text-secondary text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
+	<div class="masthead bg-white text-dark text-center pt-5 mt-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
 		{% if message_info %}
 			<span class="text-justify px-5 fs-3">{{message_info}}</span>
 		{% endif %}
 		{% for obj in page_obj %}
 			{% if obj|get_class == "User" %}
 				<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-					<div class="shadow-sm bg-secondary {% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
+					<div class="shadow-sm bg-dark {% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
 						<div class="d-flex justify-content-end pt-0 mt-0 mr-2">
 							<a class="nounderline" href="{% url 'teams-join-invitation' %}?toReceive={{obj.id}}" data-toggle="tooltip" title="Agregar a un equipo">
 								<i class="fas fa-plus btn btn-outline-light border-0"></i>
 							</a>
 						</div>
 						<a href="{{ obj.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ obj.first_name }}">
-							<img class="rounded-circle thumbnail border border-primary" src="{{ obj.profile.image.url }}"/>
+							<img class="rounded-circle thumbnail border border-info" src="{{ obj.profile.image.url }}"/>
 							<h3>{{ obj.first_name }}</h3>
 							{% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %}
-								<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+								<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 									<i class="fas fa-info-circle mr-2"></i>Información
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
@@ -210,10 +227,10 @@
 			{% endif %}
 			{% if obj|get_class == "Project" %}
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-					<div class="bg-secondary rounded py-4">
+					<div class="bg-dark rounded py-4">
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
-						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
-							<i class="fas fa-info-circle mr-2"></i>Información
+						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
+							<i class="fas fa-info-circle mr-2"></i>información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 							</h3>
@@ -230,10 +247,10 @@
 			{% endif %}
 			{% if obj|get_class == "Team" %}
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-					<div class="bg-secondary rounded py-4">
+					<div class="bg-dark rounded py-4">
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
-						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
-							<i class="fas fa-info-circle mr-2"></i>Información
+						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
+							<i class="fas fa-info-circle mr-2"></i>información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 							</h3>
@@ -249,21 +266,21 @@
 		{% endfor %}
 	</div>
 
-	<!--<div class="pagination d-flex justify-content-center my-4">
+	<div class="pagination d-flex justify-content-center my-4">
 		<span class="step-links">
 			{% if page_obj.has_previous %}
-				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page=1">&laquo; Primera</a>
-				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.previous_page_number }}">Anterior</a>
+				<a class="btn btn-outline-dark" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page=1">&laquo; Primera</a>
+				<a class="btn btn-outline-dark" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.previous_page_number }}">Anterior</a>
 			{% endif %}
 			<span class="current font-italic">
 				Pág. {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
 			</span>
 			{% if page_obj.has_next %}
-				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.next_page_number }}">Siguiente</a>
-				<a class="btn btn-outline-secondary" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+				<a class="btn btn-outline-dark" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.next_page_number }}">Siguiente</a>
+				<a class="btn btn-outline-dark" href="?sampleSize={{sampleSize}}&hasProjects={{hasProjects}}&hasTeams={{hasTeams}}&q={{query}}&page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
 			{% endif %}
 		</span>
-	</div>-->
+	</div>
 
 	<script type="text/javascript">
 		document.getElementById("interestsFilterButton").onclick = addInterest;
@@ -280,7 +297,7 @@
 			if (!document.getElementById("spn_"+interest))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+interest);
 				spanInterest.innerHTML = interest; 
 
@@ -321,7 +338,7 @@
 			if (!document.getElementById("spn_"+experience))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+experience);
 				spanInterest.innerHTML = experience; 
 
@@ -360,7 +377,7 @@
 			if (!document.getElementById("spn_"+field))
 			{
 				spanInterest = document.createElement("span");
-				spanInterest.setAttribute("class", "badge badge-pill badge-secondary d-flex align-items-center pl-3");
+				spanInterest.setAttribute("class", "badge badge-pill badge-dark d-flex align-items-center pl-3");
 				spanInterest.setAttribute("id", "spn_"+field);
 				spanInterest.innerHTML = field; 
 
