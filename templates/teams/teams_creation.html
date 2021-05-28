@@ -2,107 +2,119 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 pb-4 rounded-bottom mx-4">
+	<div class="masthead bg-info pt-5 mt-5 pb-4 rounded-bottom mx-4">
 		<form role="form" action="{% url 'teams-creation' %}">
 			<div class="form-row align-items-center justify-content-around px-4">
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="teamSize"><span class="text-white">Tamaño</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
-						</div>
-						<select id="teamSize" name="teamSize" class="form-control">
-							<option {% if teamSize == '1'%} selected {% endif %}>1</option>
-							<option {% if teamSize == '2'%} selected {% endif %}>2</option>
-							<option {% if teamSize == '3'%} selected {% endif %}>3</option>
-							<option {% if teamSize == '4'%} selected {% endif %}>4</option>
-							<option {% if teamSize == '5'%} selected {% endif %}>5</option>
-							<option {% if teamSize == '6'%} selected {% endif %}>6</option>
-							<option {% if teamSize == '7'%} selected {% endif %}>7</option>
-							<option {% if teamSize == '8'%} selected {% endif %}>8</option>
-						</select>
+				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
+					<h5 class="text-white text-center">Selección</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="teamSize"><span class="text-white">Tamaño</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-hashtag"></i></div>
+								</div>
+								<select id="teamSize" name="teamSize" class="form-control">
+									<option {% if teamSize == '1'%} selected {% endif %}>1</option>
+									<option {% if teamSize == '2'%} selected {% endif %}>2</option>
+									<option {% if teamSize == '3'%} selected {% endif %}>3</option>
+									<option {% if teamSize == '4'%} selected {% endif %}>4</option>
+									<option {% if teamSize == '5'%} selected {% endif %}>5</option>
+									<option {% if teamSize == '6'%} selected {% endif %}>6</option>
+									<option {% if teamSize == '7'%} selected {% endif %}>7</option>
+									<option {% if teamSize == '8'%} selected {% endif %}>8</option>
+								</select>
 
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+							</div>
 						</div>
-						<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
-						</div>
-						<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-laptop-code"></i></div>
-						</div>
-						<input type="text" class="form-control" id="languagesFilter" placeholder="Lenguajes">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="languagesFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-stream"></i></div>
-						</div>
-						<input type="text" class="form-control" id="frameworksFilter" placeholder="Frameworks">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="frameworksFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fab fa-linux"></i></div>
-						</div>
-						<input type="text" class="form-control" id="distributionsFilter" placeholder="Distribuciones">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="distributionsFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-toolbox"></i></div>
-						</div>
-						<input type="text" class="form-control" id="toolsFilter" placeholder="Herramientas">
-						<div class="input-group-append">
-							<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="toolsFilterButton"><i class="fas fa-plus"></i></a></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-auto d-flex flex-row align-items-center">
-					<label for="isCompatible"><span class="text-white">Compatibilidad</span></label>
-					<div class="input-group mb-2 ml-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-people-arrows"></i></div>
-						</div>
-						<select id="isCompatible" name="isCompatible" class="form-control">
-							<option {% if isCompatible == 'Personalidad' %} selected {% endif %}>Personalidad</option>
-							<option {% if isCompatible == 'Ninguna' %} selected {% endif %}>Ninguna</option>
-						</select>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<label for="isCompatible"><span class="text-white">Compatibilidad</span></label>
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-people-arrows"></i></div>
+								</div>
+								<select id="isCompatible" name="isCompatible" class="form-control">
+									<option {% if isCompatible == 'Personalidad' %} selected {% endif %}>Personalidad</option>
+									<option {% if isCompatible == 'Ninguna' %} selected {% endif %}>Ninguna</option>
+								</select>
 
+							</div>
+						</div>
 					</div>
 				</div>
+
+				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-6 pb-3 d-flex justify-content-center flex-column">
+					<h5 class="text-white text-center">Perfil</h5>
+					<div class="d-flex justify-content-around flex-wrap">
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-heart"></i></div>
+								</div>
+								<input type="text" class="form-control" id="interestsFilter" placeholder="Intereses">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="interestsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-briefcase"></i></div>
+								</div>
+								<input type="text" class="form-control" id="experiencesFilter" placeholder="Experiencia">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="experiencesFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-laptop-code"></i></div>
+								</div>
+								<input type="text" class="form-control" id="languagesFilter" placeholder="Lenguajes">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="languagesFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-stream"></i></div>
+								</div>
+								<input type="text" class="form-control" id="frameworksFilter" placeholder="Frameworks">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="frameworksFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fab fa-linux"></i></div>
+								</div>
+								<input type="text" class="form-control" id="distributionsFilter" placeholder="Distribuciones">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="distributionsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto d-flex flex-row align-items-center">
+							<div class="input-group mb-2 ml-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-toolbox"></i></div>
+								</div>
+								<input type="text" class="form-control" id="toolsFilter" placeholder="Herramientas">
+								<div class="input-group-append">
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-secondary"><a id="toolsFilterButton"><i class="fas fa-plus"></i></a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="col-auto">
 					<input type="submit" value="Generar equipo" name="action" class="btn btn-outline-secondary mx-4 my-2">
 					<button type="button" class="btn btn-outline-secondary mx-4 my-2" data-toggle="modal" data-target="#modalTeam">Crear Equipo</button>
@@ -132,7 +144,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-										<input type="submit" value="Crear" name="action" class="btn btn-primary">
+										<input type="submit" value="Crear" name="action" class="btn btn-info">
 									</div>
 								{% else %}
 									<h6 class="text-danger py-5 mb-5 text-center">Necesitas integrantes</h6>
@@ -218,10 +230,10 @@
 						</a>
 					</div>
 					<a href="{{ user_i.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ user_i.first_name }}">
-						<img class="rounded-circle thumbnail border border-primary" src="{{ user_i.profile.image.url }}"/>
+						<img class="rounded-circle thumbnail border border-info" src="{{ user_i.profile.image.url }}"/>
 						<h3>{{ user_i.first_name }}</h3>
 						{% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %}
-							<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+							<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 								<i class="fas fa-info-circle mr-2"></i>Información
 								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 								<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->

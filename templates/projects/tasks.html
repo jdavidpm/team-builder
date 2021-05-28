@@ -22,12 +22,12 @@
                     </li>
                 </ul>
                 {% if request.resolver_match.kwargs.filter_by == 'project' %}
-                <a class="btn btn-primary mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
+                <a class="btn btn-info mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
                     <i class="fas fa-plus text-white"></i>
                 </a>
                 {% else %}
                 <span class="text-muted my-auto">Selecciona un proyecto para agregar una tarea &nbsp&nbsp</span>
-                <a class="btn btn-primary mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
+                <a class="btn btn-info mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
                     data-toggle="tooltip">
                     <i class="fas fa-plus text-white"></i>
                 </a>

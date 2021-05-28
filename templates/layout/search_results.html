@@ -6,7 +6,7 @@
 		<form role="form" action="{% url 'layout-search-results' %}">
 			<div class="form-row align-items-center justify-content-around px-4 flex-wrap">
 				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
-					<h5 class="text-white text-center">Filtros de Selección</h5>
+					<h5 class="text-white text-center">Selección</h5>
 					<div class="d-flex justify-content-around flex-wrap">
 						<div class="col-auto d-flex flex-row align-items-center">
 							<label for="sampleSize"><span class="text-white">Muestra</span></label>
@@ -55,7 +55,7 @@
 				</div>
 
 				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-3 pb-3">
-					<h5 class="text-white text-center">Filtros de Perfil</h5>
+					<h5 class="text-white text-center">Perfil</h5>
 					<div class="d-flex justify-content-around flex-wrap">
 						<div class="col-auto d-flex flex-row align-items-center">
 							<div class="input-group mb-2 ml-2">
@@ -83,7 +83,7 @@
 				</div>
 
 				<div class="border border-secondary border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-3 pb-3">
-					<h5 class="text-white text-center">Filtros de Perfil</h5>
+					<h5 class="text-white text-center">Perfil</h5>
 					<div class="d-flex justify-content-around flex-wrap">
 						<div class="col-auto d-flex flex-row align-items-center mx-0">
 							<div class="input-group mb-2 ml-2">
@@ -151,10 +151,10 @@
 							</a>
 						</div>
 						<a href="{{ obj.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ obj.first_name }}">
-							<img class="rounded-circle thumbnail border border-primary" src="{{ obj.profile.image.url }}"/>
+							<img class="rounded-circle thumbnail border border-info" src="{{ obj.profile.image.url }}"/>
 							<h3>{{ obj.first_name }}</h3>
 							{% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %}
-								<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+								<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 									<i class="fas fa-info-circle mr-2"></i>Información
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
@@ -229,7 +229,7 @@
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="bg-secondary rounded py-4">
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
-						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
+						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
 							<i class="fas fa-info-circle mr-2"></i>Información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
@@ -249,7 +249,7 @@
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="bg-secondary rounded py-4">
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
-						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
+						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
 							<i class="fas fa-info-circle mr-2"></i>Información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
