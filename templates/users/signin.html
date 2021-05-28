@@ -3,30 +3,32 @@
 
 {% block header %}
 	<div class="masthead d-flex justify-content-center row">
-		<div class="jumbotron shadow-sm col-10 col-md-6 col-sm-8 p-3">
+		<div class="col-10 col-sm-5 mt-n5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
-			<form method="POST">
-				{% csrf_token %}
-				<fieldset class="form-group">
-					<legend class="border-bottom mb-5"><h3>Iniciar Sesión</h3></legend>
-					<div class="mx-3">
-						{{ form|as_crispy_errors }}
-						{{ form.username |as_crispy_field}}
-						<small class="form-text text-muted mt-n2 mb-2">También puedes usar tu correo electrónico para iniciar sesión.</small>
-						{{ form.password |as_crispy_field}}
+			<div class="jumbotron shadow-sm p-3">
+				<form method="POST">
+					{% csrf_token %}
+					<fieldset class="form-group">
+						<legend class="border-bottom mb-5"><h3>Iniciar Sesión</h3></legend>
+						<div class="mx-3">
+							{{ form|as_crispy_errors }}
+							{{ form.username |as_crispy_field}}
+							<small class="form-text text-muted mt-n2 mb-2">También puedes usar tu correo electrónico para iniciar sesión.</small>
+							{{ form.password |as_crispy_field}}
+						</div>
+					</fieldset>
+					<div class="form-group mx-3">
+						<button class="btn btn-outline-dark" type="submit">Iniciar</button>
+						<small class="text-muted">
+							<a class="nounderline ml-2" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+						</small>
 					</div>
-				</fieldset>
-				<div class="form-group mx-3">
-					<button class="btn btn-outline-dark" type="submit">Iniciar</button>
+				</form>
+				<div class="border-top pt-3">
 					<small class="text-muted">
-						<a class="nounderline ml-2" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+						¿No tienes cuenta? <a class="nounderline ml-2" href="{% url 'users-signup' %}">Registrate Ahora</a>
 					</small>
 				</div>
-			</form>
-			<div class="border-top pt-3">
-				<small class="text-muted">
-					¿No tienes cuenta? <a class="nounderline ml-2" href="{% url 'users-signup' %}">Registrate Ahora</a>
-				</small>
 			</div>
 		</div>
 	</div>
