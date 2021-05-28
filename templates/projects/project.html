@@ -1,7 +1,7 @@
 {% extends 'layout/base.html'%}
 
 {% block header %}
-	<div class="masthead row d-flex justify-content-center mb-0">
+	<div class="masthead row d-flex justify-content-center mb-0 px-sm-5 pb-0">
 		<div class="col-11 col-sm-10 mt-n5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<div class="jumbotron bg-dark shadow-sm text-white text-center">
@@ -11,8 +11,8 @@
 	</div>
 {% endblock header %}
 {% block content %}
-	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap">
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm p-2 mb-2">
+	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap px-sm-5">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm p-2 mb-2 border border-dark">
 			<div class="d-flex p-2" id="card_{{ project.id }}">
 				<span class="mb-0"><button class="btn btn-outline-dark border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
 					<h3 class="text-nowrap">

@@ -2,19 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 jumbotron bg-dark shadow-sm">
+	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">
+		<div class="col-11 col-sm-8 jumbotron bg-dark shadow-sm">
 			<h1 class="fs-3 text-white"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
 	</div>
 {% endblock header %}
 {% block content %}
 	<div class="masthead d-flex justify-content-center row pt-0">
-		<div class="col-11 col-sm-10">
+		<div class="col-11 col-sm-8">
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
-					<legend class="jumbotron shadow-sm border-bottom mb-4 py-2">
+					<legend class="jumbotron border border-dark shadow-sm border-bottom mb-4 py-2">
 						<a class="nounderline text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 								<h3 class="text-dark text-center text-uppercase">
 									Instrucciones
@@ -51,15 +51,14 @@
 							
 						</div>
 					{% endif %}
-					<div class="jumbotron shadow-sm mt-2">
+					<div class="jumbotron border border-dark shadow-sm mt-2">
 						{% block messages %}{% include "components/messages.html" %}{% endblock %}
 						{% for field in form %}
-							<div class="d-flex flex-column mb-4">
+							<div class="d-flex flex-column mb-5 border border-top-0 rounded-bottom">
 								{{ form|as_crispy_errors }}
 								<label for="{{ field.id_for_label }}" class="mx-5"><h5>{{field.label_tag}}</h5></label>
 								<div class="d-inline-flex justify-content-around"> 
 									{% for radio in field %}
-										
 										<label class="containerRadio zoom">
 											<h6 class="fs-1 mt-1">{{ radio.choice_label }}</h6>
 											{{ radio.tag }}

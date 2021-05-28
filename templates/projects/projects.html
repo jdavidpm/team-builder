@@ -1,7 +1,7 @@
 {% extends 'layout/base.html'%}
 
 {% block header %}
-	<div class="masthead row d-flex justify-content-center mb-0">
+	<div class="masthead row d-flex justify-content-center mb-0 px-sm-5">
 		<div class="col-11 col-sm-10 mt-n5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<div class="jumbotron bg-dark shadow-sm text-white text-center">
@@ -11,12 +11,12 @@
 	</div>
 {% endblock header %}
 {% block content %}
-	<div class="masthead row mt-4 pt-4 d-flex justify-content-center">
+	<div class="masthead row mt-4 pt-4 d-flex justify-content-center px-sm-5">
 		<div class="col-11 col-sm-11 col-md-5 col-lg-5 col-xl-5">
 			<div id="accordion">
 				{% for project in request.user.created_projects.all %}
 					<div class="col-md-12 px-0 mb-0">
-						<div class="jumbotron shadow-sm d-flex p-2 justify-content-between flex-wrap" id="card_{{ project.id }}">
+						<div class="jumbotron border border-dark shadow-sm d-flex p-2 justify-content-between flex-wrap" id="card_{{ project.id }}">
 							<span class="mb-0"><button class="btn btn-outline-dark border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
 								<h3 class="text-nowrap">
 									{{ project.name }}
@@ -52,8 +52,8 @@
 			</div>
 		</div>
 		<div class="col-11 col-sm-11 col-md-5 col-lg-5 col-xl-5">
-			<div class="jumbotron shadow-sm px-4 py-4">
-				<a class="nounderline btn btn-outline-dark border-0 pb-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
+			<div class="jumbotron shadow-sm px-4 py-4 border border-dark">
+				<a class="nounderline btn btn-outline-dark border-0 pb-0 mb-2" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 					<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
 				</a>
 				<div class="collapse" id="collapseMenu">

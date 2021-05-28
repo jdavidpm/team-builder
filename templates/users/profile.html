@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-	<div class="masthead row d-flex justify-content-center mb-0">
+	<div class="masthead mx-5 row d-flex justify-content-center mb-0">
 		<div class="col-11 col-sm-10 mt-n5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<div class="jumbotron bg-dark shadow-sm pt-0 pb-2">
@@ -58,7 +58,7 @@
 {% endblock header %}
 
 {% block content %}
-	<div class="masthead row d-flex justify-content-center mt-0 pt-0">
+	<div class="masthead mx-5 row d-flex justify-content-center mt-0 pt-0">
 		<div class="col-11 col-sm-10 mt-0">
 			<div class="jumbotron bg-dark shadow-sm text-white pt-4">
 				<h3>Información Personal</h3></br>
@@ -68,7 +68,7 @@
 	</div>
 
 	{% if user.profile.school_role %}
-		<div class="masthead row d-flex justify-content-center mt-0 pt-0">
+		<div class="masthead mx-5 row d-flex justify-content-center mt-0 pt-0">
 			<div class="col-11 col-sm-10 mt-0">
 				<div class="jumbotron bg-dark shadow-sm text-white pt-4">
 					<h3>Información Escolar</h3></br>

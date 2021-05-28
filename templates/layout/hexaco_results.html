@@ -5,7 +5,7 @@
 		<div class="col-12 col-md-10 col-sm-10 col-lg-10">
 			<h1 class="fs-3 jumbotron bg-dark text-white shadow-sm px-2 text-wrap"><i class="fas fa-dice-d6 mr-2"></i>Resultados de Personalidad HEXACO</h1>
 			<div class="d-flex justify-content-between align-items-start flex-wrap">
-				<canvas id="chart" width="550" height="{{height}}" class="jumbotron shadow-sm col-12 col-sm-12 col-md-8 p-0 mx-0"></canvas>
+				<canvas id="chart" width="550" height="{{height}}" class="jumbotron shadow-sm border border-dark col-12 col-sm-12 col-md-8 p-0 mx-0"></canvas>
 				<div class="text-left mb-2 col-12 col-sm-12 col-md-4">
 					<a class="nounderline btn btn-outline-dark border-0" data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseMenu">
 						<h3 class="text-left"><i class="fas fa-bars mr-2"></i>Menu</h3>
@@ -22,11 +22,6 @@
 		</div>
 	</div>
 {% endblock header %}
-
-{% block content %}
-	<div class="text-center mb-0 pb-0 d-flex justify-content-center">
-	</div>
-{% endblock content %}
 
 {% block script %}
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -2,7 +2,7 @@
 
 {% block header %}
 	<div class="masthead row d-flex justify-content-center mb-0">
-		<div class="col-11 col-sm-10 mt-n5">
+		<div class="col-11 col-sm-8 mt-n5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<div class="jumbotron bg-dark shadow-sm text-white text-center">
 				<h1 class="fs-4">{{ team.name }}</h1>
@@ -11,8 +11,8 @@
 	</div>
 {% endblock header %}
 {% block content %}
-	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap">
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron p-2 mb-2 shadow-sm">
+	<div id="accordion" class="masthead pt-2 d-flex justify-content-center flex-wrap">
+		<div class="col-11 col-sm-8 jumbotron p-2 mb-2 shadow-sm border border-dark">
 			<div class="d-flex p-2" id="card_{{ team.id }}">
 				<span><button class="btn btn-outline-dark border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ team.id }}" aria-expanded="false" aria-controls="collapse_{{team.id}}">
 					<h3 class="text-nowrap">
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron bg-dark text-light p-0 mb-0 shadow-sm">
+		<div class="col-11 col-sm-8 jumbotron bg-dark text-light p-0 mb-0 shadow-sm">
 			<div id="collapse_{{ team.id }}" class="collapse p-2" aria-labelledby="card_{{ team.id }}" data-parent="#accordion">
 				<div class="row text-center pl-3">
 						<div class="col-md-12 ml-auto"><p class="lead">

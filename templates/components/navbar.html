@@ -27,7 +27,7 @@
 								</div>
 							</li>
 							{% include 'components/search_bar.html' %}
-							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2 fs-2"></i></a></li>
+							<!--<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2 fs-2"></i></a></li>-->
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fs-2 fas fa-sign-out-alt"></i></a></li>
 						{% else %}
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
