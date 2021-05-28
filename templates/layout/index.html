@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-<header class="masthead bg-primary text-white text-center pt-5 mt-5">
+<header class="masthead bg-info text-white text-center pt-5 mt-5">
 	{% block messages %}{% include "components/messages.html" %}{% endblock %}
 	{% if user.is_authenticated %}
 		<div class="d-flex align-content-center row justify-content-center mb-5 pb-5">

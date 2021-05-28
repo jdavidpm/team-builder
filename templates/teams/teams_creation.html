@@ -2,7 +2,7 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 pb-4 rounded-bottom mx-4">
+	<div class="masthead bg-info pt-5 mt-5 pb-4 rounded-bottom mx-4">
 		<form role="form" action="{% url 'teams-creation' %}">
 			<div class="form-row align-items-center justify-content-around px-4">
 				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
@@ -144,7 +144,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-										<input type="submit" value="Crear" name="action" class="btn btn-primary">
+										<input type="submit" value="Crear" name="action" class="btn btn-info">
 									</div>
 								{% else %}
 									<h6 class="text-danger py-5 mb-5 text-center">Necesitas integrantes</h6>
@@ -230,10 +230,10 @@
 						</a>
 					</div>
 					<a href="{{ user_i.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ user_i.first_name }}">
-						<img class="rounded-circle thumbnail border border-primary" src="{{ user_i.profile.image.url }}"/>
+						<img class="rounded-circle thumbnail border border-info" src="{{ user_i.profile.image.url }}"/>
 						<h3>{{ user_i.first_name }}</h3>
 						{% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %}
-							<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+							<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 								<i class="fas fa-info-circle mr-2"></i>Información
 								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 								<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->

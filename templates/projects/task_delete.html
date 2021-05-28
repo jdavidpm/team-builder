@@ -5,7 +5,7 @@
         <p class="h4">¿Estás seguro(a) de que quieres eliminar la tarea "{{task.name}}" del proyecto "{{task.project}}"?</p>
         <form method='POST' action="" class="text-center">
             {% csrf_token %}
-            <a class="btn btn-primary" href="{% url 'projects-update_task' task.id %}">Cancelar</a>
+            <a class="btn btn-info" href="{% url 'projects-update_task' task.id %}">Cancelar</a>
             <input class="btn btn-danger" type="submit" name='Confirm' value="Eliminar Tarea">
         </form>
     </div>

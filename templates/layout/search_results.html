@@ -2,7 +2,7 @@
 {% load team_tags %}
 
 {% block content %}
-	<div class="masthead bg-primary pt-5 mt-5 mx-4 pb-4 rounded-bottom">
+	<div class="masthead bg-info pt-5 mt-5 mx-4 pb-4 rounded-bottom">
 		<form role="form" action="{% url 'layout-search-results' %}">
 			<div class="form-row align-items-center justify-content-around px-4 flex-wrap">
 				<div class="border border-dark border-top-0 rounded-bottom mx-2 my-2 col-11 col-sm-5 pb-3 d-flex justify-content-center flex-column">
@@ -151,11 +151,11 @@
 							</a>
 						</div>
 						<a href="{{ obj.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ obj.first_name }}">
-							<img class="rounded-circle thumbnail border border-primary" src="{{ obj.profile.image.url }}"/>
+							<img class="rounded-circle thumbnail border border-info" src="{{ obj.profile.image.url }}"/>
 							<h3>{{ obj.first_name }}</h3>
 							{% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %}
-								<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
-									<i class="fas fa-primary-circle mr-2"></i>primaryrmación
+								<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
+									<i class="fas fa-info-circle mr-2"></i>Información
 									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 									</h3>
@@ -229,8 +229,8 @@
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="bg-dark rounded py-4">
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
-						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
-							<i class="fas fa-primary-circle mr-2"></i>primaryrmación
+						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
+							<i class="fas fa-info-circle mr-2"></i>información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 							</h3>
@@ -249,8 +249,8 @@
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="bg-dark rounded py-4">
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
-						<a class="btn btn-outline-primary border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
-							<i class="fas fa-primary-circle mr-2"></i>primaryrmación
+						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
+							<i class="fas fa-info-circle mr-2"></i>información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
 							<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
 							</h3>
