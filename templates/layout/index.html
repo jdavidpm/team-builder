@@ -36,7 +36,9 @@
 					<div class="divider-custom-line"></div>
 				</div>
 				<!-- Masthead Subheading-->
-				<p class="masthead-subheading font-weight-light mb-5 pb-5">Equipos de Trabajo - Organización - Compatibilidad</p>
+				<p class="masthead-subheading font-weight-light mb-2 pb-3">Equipos de Trabajo - Organización - Compatibilidad</p>
+				<a href="{% url 'users-signin' %}" class="btn btn-outline-light mx-4 my-2 fs-2"><i class="fas fa-sign-in-alt pr-2"></i>Inicia Sesión</a>
+				<a href="{% url 'users-signup' %}" class="btn btn-outline-light mx-4 my-2 fs-2"><i class="fas fa-user-plus pr-2"></i>Registrate</a>
 			</div>
 		</div>
 	{% endif %}
