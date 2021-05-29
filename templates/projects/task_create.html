@@ -2,7 +2,7 @@
 {% block content %}
 <div class="masthead row justify-content-center">
     {% include "components/tasks_sidebar.html" %}
-    <div class="col-md-8 ml-2 mr-2 pt-3 pb-3 border border-dark rounded" id="taskDetails">
+    <div class="col-10 col-md-8 ml-2 mr-2 pt-3 pb-3 border border-dark rounded" id="taskDetails">
         {% block messages %}{% include "components/messages.html" %}{% endblock %}
         <form method="POST" action="">
             {% csrf_token %}

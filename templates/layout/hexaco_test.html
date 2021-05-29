@@ -16,10 +16,10 @@
 				{% if user.profile.personality_h %}
 					<div class="border border-dark p-4 rounded mb-4">
 						<h4 class="text-center text-dark pb-4">¡Ya cuentas con resultados! Puedes verlos o realizar el test de nuevo.</h4>
-						<div class="d-flex flex-nonwrap justify-content-around form-group">
-							<button onclick="toShowHide();" class="shadow btn btn-outline-dark" type="submit">Mostrar/Ocultar test (<i class="fas fa-redo-alt"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
+						<div class="d-flex flex-sm-nonwrap flex-wrap justify-content-around form-group">
+							<button onclick="toShowHide();" class="shadow my-2 btn btn-outline-dark" type="submit">Mostrar/Ocultar test (<i class="fas fa-redo-alt"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow my-2 btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow my-2 btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
 							
 						</div>
 					</div>
