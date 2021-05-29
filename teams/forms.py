@@ -1,8 +1,10 @@
 from django import forms
+from django.contrib.auth.models import User
 from users.models import Team
 from json import loads
 from urllib import request
 from users.widgets import ToggleWidget
+from django.db.models import Q
 
 class TeamUpdateForm(forms.ModelForm):
 	class Meta:
@@ -44,7 +46,14 @@ class TeamMembersForm(forms.ModelForm):
 	class Meta:
 		model = Team
 		fields = ['members']
-		labels = {'members':('Integrantes')}	
+		labels = {'members':('Integrantes')}
+	def __init__ (self, *args, **kwargs):
+		current_user = kwargs.pop('current_user')
+		query = Q()
+		for membership in current_user.membership_teams.all():
+			query = query | Q(membership_teams=membership)
+		super(TeamMembersForm, self).__init__(*args, **kwargs)
+		self.fields["members"].queryset = User.objects.filter(query).distinct()
 
 
 data = None
