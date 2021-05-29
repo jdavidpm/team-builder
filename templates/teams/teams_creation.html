@@ -71,22 +71,22 @@
 						<div class="col-auto d-flex flex-row align-items-center">
 							<div class="input-group mb-2 ml-2">
 								<div class="input-group-prepend">
-									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-laptop-code"></i></div>
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-stream"></i></div>
 								</div>
-								<input type="text" class="form-control" id="languagesFilter" placeholder="Lenguajes">
+								<input type="text" class="form-control" id="frameworksFilter" placeholder="Frameworks">
 								<div class="input-group-append">
-									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="languagesFilterButton"><i class="fas fa-plus"></i></a></div>
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="frameworksFilterButton"><i class="fas fa-plus"></i></a></div>
 								</div>
 							</div>
 						</div>
 						<div class="col-auto d-flex flex-row align-items-center">
 							<div class="input-group mb-2 ml-2">
 								<div class="input-group-prepend">
-									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-stream"></i></div>
+									<div class="input-group-text text-muted font-weight-bold"><i class="fas fa-laptop-code"></i></div>
 								</div>
-								<input type="text" class="form-control" id="frameworksFilter" placeholder="Frameworks">
+								<input type="text" class="form-control" id="languagesFilter" placeholder="Lenguajes">
 								<div class="input-group-append">
-									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="frameworksFilterButton"><i class="fas fa-plus"></i></a></div>
+									<div class="input-group-text text-muted font-weight-bold btn btn-outline-dark"><a id="languagesFilterButton"><i class="fas fa-plus"></i></a></div>
 								</div>
 							</div>
 						</div>
@@ -217,8 +217,8 @@
 			</div>
 		</form>
 	</div>
+	<div class="mx-4 mt-4">{% block messages %}{% include "components/messages.html" %}{% endblock %}</div>
 	<div class="masthead bg-white text-dark text-center py-5 mb-5 d-flex flex-wrap align-items-around justify-content-center flex-wrap">
-		{% block messages %}{% include "components/messages.html" %}{% endblock %}
 		{% if message_info %}
 			<span class="text-justify px-5 mx-5 fs-3">{{message_info}}</span>
 		{% endif %}

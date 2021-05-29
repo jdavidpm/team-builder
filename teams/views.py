@@ -93,6 +93,7 @@ def team_update_members(request, id):
 def team_evaluate(request, id):
 	dict_processes = {'p1':0, 'p2':0, 'p3':0, 'p4':0, 'p5':0, 'p6':0, 'p7':0}
 	processes_questions_count = {'p1':0, 'p2':0, 'p3':0, 'p4':0, 'p5':0, 'p6':0, 'p7':0}
+	average_eval_bool = False
 	
 	if request.method=='POST':
 		form = TeamEvaluationForm(request.POST)
@@ -124,15 +125,19 @@ def team_evaluate(request, id):
 				eval['avg'] = eval['sum'] / total_evaluations
 				general_avg_sum += eval['avg']
 			team.average_eval = general_avg_sum / len(dict_processes)
+			average_eval_bool = True
 			team.save()
 
 			# -------- missing confirmation message here to frontend before returning --------
 
 			return redirect('teams-item', id=id)
 	else:
+		team = get_object_or_404(Team, pk=id)
+		if team.average_eval:
+			average_eval_bool = True
 		form = TeamEvaluationForm()
 		
-	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form})
+	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form, 'average_eval_bool': average_eval_bool})
 
 def teams_join_invitation(request):
 	id_receiver = request.GET.get('toReceive')
@@ -353,7 +358,7 @@ def teams_creation(request):
 			filtered_members = Profile.objects.filter(profile_query_qs)
 		else:
 			message_info = 'Tu búsqueda no dió ningún resultado.'
-		filtered_members = User.objects.filter(Q(profile__in=filtered_members)).distinct()
+		filtered_members = User.objects.filter(Q(profile__in=filtered_members)).distinct().exclude(profile=request.user.profile)
     
 		if action == 'Generar equipo' and is_compatible == 'Personalidad':
 			rules_list = gen_association_rules() # a list of dicts
@@ -452,6 +457,7 @@ def teams_creation(request):
 				new_team = Team(founder=request.user, name=new_team_name)
 				new_team.save()
 				for new_member in filtered_members[:int(team_size)]:
+					if new_member == request.user: continue
 					send_email_invite('Equipo creado usando Team Builder', 'Equipo creado automaticamente usando Team Builder', request.user.email, [new_member.email], False, new_team.name, request.user.first_name)
 					create_invitation(new_member, request.user, new_team)
 				#new_team.members.set(filtered_members[:int(team_size)])

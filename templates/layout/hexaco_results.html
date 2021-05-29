@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-around flex-wrap">	
+	<div class="masthead text-center mt-n5 mb-0 pb-0 d-flex justify-content-around flex-wrap">	
 		<div class="col-12 col-md-10 col-sm-10 col-lg-10">
 			<h1 class="fs-3 jumbotron bg-dark text-white shadow-sm px-2 text-wrap"><i class="fas fa-dice-d6 mr-2"></i>Resultados de Personalidad HEXACO</h1>
 			<div class="d-flex justify-content-between align-items-start flex-wrap">
@@ -12,9 +12,9 @@
 					</a>
 					<div class="collapse text-left py-2" id="collapseMenu">
 						<div class="d-flex flex-column">
-							<a class="my-4 btn btn-outline-dark shadow nounderline" target="_blank" href="{% url 'layout-hexaco-test' %}"><i class="fas fa-plus mr-2"></i>Volver a realizar</a>
-							<a class="my-4 btn btn-outline-dark shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=polarArea"><i class="fas fa-chart-pie mr-2"></i>Gráfico Radar</a>
-							<a class="my-4 btn btn-outline-dark shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=bar"><i class="fas fa-chart-bar mr-2"></i>Gráfico Barras</a>
+							<a class="my-4 btn btn-outline-info shadow nounderline" target="_blank" href="{% url 'layout-hexaco-test' %}"><i class="fas fa-plus mr-2"></i>Volver a realizar</a>
+							<a class="my-4 btn btn-outline-info shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=polarArea"><i class="fas fa-chart-pie mr-2"></i>Gráfico Radar</a>
+							<a class="my-4 btn btn-outline-info shadow nounderline" href="{% url 'layout-hexaco-results' %}?type=bar"><i class="fas fa-chart-bar mr-2"></i>Gráfico Barras</a>
 						</div>
 					</div>
 				</div>
