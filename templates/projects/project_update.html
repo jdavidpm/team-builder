@@ -10,7 +10,8 @@
 					<legend class="border-bottom mb-5"><h3>Actualizar Proyecto</h3></legend>
 					{{ u_form|crispy }}
 				</fieldset>
-				<div class="form-group d-flex justify-content-end">
+				<div class="form-group d-flex justify-content-between">
+					<a href="{% url 'projects-resource-add' %}?id={{project_id}}" class="btn btn-outline-dark">Agregar Recursos</a>
 					<button class="btn btn-outline-dark" type="submit">Guardar</button>
 				</div>
 			</form>

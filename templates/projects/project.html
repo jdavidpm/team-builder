@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-dark text-light p-0 mb-0">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-dark text-light p-0 mb-0 mt-4">
 			<div id="collapse_{{ project.id }}" class="collapse p-2" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
 				<div class="row text-center pl-3">
 						<div class="col-md-12 ml-auto"><p class="lead">
@@ -54,6 +54,18 @@
 							<h5 class="text-muted text-left">Campos</h5>
 							{% for field in project.fields.all %}
 								<h5 class="text-left">{{field}}</h5>
+							{% endfor %}
+						</p></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-dark text-light p-0 mt-4">
+			<div id="collapse_{{ project.id }}" class="collapse p-2" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
+				<div class="row text-center pl-3">
+					<div class="col-md-12 ml-auto"><p class="lead">
+							<h4 class="text-muted text-left">Recursos</h4>
+							{% for resource in resources_url %}
+								<h5 class="text-left">{{resource.name}} - (<a href="{{resource.url}}">{{resource.url|truncatechars:20}}</a>) desde {{resource.service}}</h5>
 							{% endfor %}
 						</p></div>
 				</div>
