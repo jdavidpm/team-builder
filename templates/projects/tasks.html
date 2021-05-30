@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
     <div class="masthead row col-12 col-sm-12 d-flex justify-content-center pt-5">
-        {% block messages %}{% include "components/messages.html" %}{% endblock %}
         {% include "components/tasks_sidebar.html" %}
         <div class="bg-grayish border border-dark rounded py-2 col-10 col-md-7 mt-5 pt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
             <h4 class="text-dark">Tareas 
                 {% if request.resolver_match.kwargs.filter_by == 'project' %}
                 > Proyectos > {{ filter_object }}
