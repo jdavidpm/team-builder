@@ -26,7 +26,7 @@ SECRET_KEY = environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', 'localhost', 'teambuilder.codes', '192.168.1.81']
+ALLOWED_HOSTS = ['app-server.westus.cloudapp.azure.com', 'localhost', 'teambuilder.codes', '192.168.1.81', 'www.teambuilder.codes']
 
 # Application definition
 
