@@ -1,6 +1,6 @@
 from django import forms
+from users.models import Chat, ChatMessage, Message, Team
 from django.contrib.auth.models import User
-from users.models import Team
 from json import loads
 from urllib import request
 from users.widgets import ToggleWidget
@@ -72,3 +72,36 @@ class TeamEvaluationForm(forms.Form):
 		super(TeamEvaluationForm, self).__init__(*args, **kwargs)
 		for d in data:
 			self.fields['statement_%s' % d['statement_id']] = forms.ChoiceField(label= d['statement_text'], choices=CHOICES_STATEMENT, widget=forms.RadioSelect)
+
+
+class NewMessageForm(forms.ModelForm):
+	def __init__(self,*args,**kwargs):
+		super(NewMessageForm,self).__init__(*args,**kwargs)
+		self.fields['from_user'].disabled = True
+		self.fields['to_user'].disabled = True
+		self.fields['read'].disabled = True
+		self.fields['date'].disabled = True
+		
+	class Meta:
+		model = Message
+		fields = '__all__'
+
+
+class NewChatMessageForm(forms.ModelForm):
+	def __init__(self,*args,**kwargs):
+		super(NewChatMessageForm,self).__init__(*args,**kwargs)
+		self.fields['from_user'].disabled = True
+		self.fields['read'].disabled = True
+		self.fields['chat'].disabled = True
+		
+	class Meta:
+		model = ChatMessage
+		fields = '__all__'
+
+
+class NewChatForm(forms.ModelForm):
+		
+	class Meta:
+		model = Chat
+		fields = '__all__'
+		labels = {'team':('Selecciona el equipo')}

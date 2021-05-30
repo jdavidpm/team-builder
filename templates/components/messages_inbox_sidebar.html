@@ -1,0 +1,20 @@
+<div class="col-md-3 col-sm-10 mt-5">
+    <div class="jumbotron">
+        Ver:
+        <div class="list-group mb-2">
+            <a id="allTeams" href="{% url 'teams-chat-list' %}"
+            class="list-group-item list-group-item-action border-dark
+            {% if 'chat' in request.path %} active {% endif %} h6">
+            Chats de equipos
+            </a>
+        </div>
+        <div class="list-group mb-2">
+            <a id="allTeams" href="{% url 'teams-chat-inbox' %}"
+            class="list-group-item list-group-item-action border-dark
+            {% if 'message' in request.path %} active {% endif %} h6">
+            Mensajes privados
+            </a>
+
+        </div>
+    </div>
+</div>

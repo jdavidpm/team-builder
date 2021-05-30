@@ -1,0 +1,45 @@
+<div class="col-md-3 col-sm-10 mt-5">
+    <div class="jumbotron">
+        <div class="list-group mb-2">
+            <a id="allTeams" href="{% url 'teams-chat-inbox' %}"
+                class="list-group-item list-group-item-action border-dark h6">
+                Ir a bandeja de entrada
+            </a>
+        </div>
+        Sugerir integrantes de:
+        <div class="list-group mb-2">
+            {% if request.resolver_match.kwargs.team_id %}
+            <a id="allTeams" href="{% url 'teams-chat-new' %}"
+            class="list-group-item list-group-item-action border-dark h6">
+            Todos los equipos
+            </a>
+            {% else %}
+            <a id="allTeams" href="{% url 'teams-chat-new' %}"
+            class="list-group-item list-group-item-action border-dark active h6">
+            Todos los equipos
+            </a>
+            {% endif %}
+        </div>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action text-center bg-secondary text-white"
+                data-toggle="collapse" href="#teamsList">
+                Equipos
+            </a>
+            <div class="collapse show" id="teamsList">
+                {% if teams %}
+                {% for team in teams %}
+                    {% if request.resolver_match.kwargs.team_id != team.id %}
+                <a href="{% url 'teams-chat-new' team.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem pt-1 pb-1">{{ team }}</a>
+                    {% else %}
+                <a href="{% url 'teams-chat-new' team.id %}"
+                    class="list-group-item list-group-item-action navbarTaskItem active pt-1 pb-1">{{ team }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                <p class="text-center mt-2">No estás en ningún equipo</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

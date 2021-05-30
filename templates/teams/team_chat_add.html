@@ -1,0 +1,32 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+        {% include "components/messages_inbox_sidebar.html" %}
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
+            <div class="text-secondary h4 mb-4">Nuevo chat de equipo</div>
+            {% if available_teams %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form}}
+                <div class="form-row mt-2">
+                <input type="submit" value="Crear" class="btn btn-primary mx-3">
+                <a href="{% url 'teams-chat-list' %}" class="btn btn-danger">Cancelar</a>
+                </div>
+            </form>
+            {% else %}
+            No hay equipos disponibles para un nuevo chat
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+
+<script>
+    var input = document.getElementById("id_team");
+    input.classList.add("form-control");
+</script>
+
+{% endblock script%}

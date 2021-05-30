@@ -1,15 +1,22 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from datetime import datetime
+from users.widgets import PictureWidget
+from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect, resolve_url
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from users.models import Team, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation
-from .forms import TeamUpdateForm, TeamCreateForm, TeamMembersForm, TeamEvaluationForm
+from django.http import HttpResponse, HttpResponseNotFound
+from users.models import Message, Chat, Team, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation
+from django.utils import timezone
+from .forms import *
 from django.db.models import Q
 from json import loads
 from urllib import request
 from .utils import *
 from apriori_python import apriori
 import tabulate
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 data = None
 with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/json/team_performance.json") as url:
@@ -90,6 +97,174 @@ def team_update_members(request, id):
 	else:
 		return redirect('teams-list')
 		
+
+@login_required
+def teams_chat_inbox(request, team_id=None):
+	user_teams = request.user.membership_teams.all()
+	received_messages = request.user.received_messages.all().order_by('-date')
+	sent_messages = request.user.sent_messages.all().order_by('-date')
+	team = None
+	if team_id:
+		team = get_object_or_404(Team, pk=team_id)
+		received_messages = [message for message in received_messages if message.from_user in team.members.all()]
+		sent_messages = [message for message in sent_messages if message.to_user in team.members.all()]
+	context = {
+		'teams': user_teams,
+		'received': received_messages,
+		'sent': sent_messages,
+		'team': team,
+		'timezone_now': timezone.now(),
+	}
+	return render(request, 'teams/team_messages_inbox.html', context)
+
+
+@login_required
+def teams_chat_item(request, message_id):
+	user_teams = request.user.membership_teams.all()
+	message = get_object_or_404(Message, pk=message_id)
+	if message.to_user != request.user and message.from_user != request.user:
+		return HttpResponseNotFound()
+	context = {
+		'teams': user_teams,
+		'timezone_now': timezone.now(),
+		'message': message
+	}
+	message.read = True
+	message.save()
+	return render(request, 'teams/team_messages_item.html', context)
+
+
+@login_required
+def teams_chat_service(request, chat_id):
+	chat = get_object_or_404(Chat, pk=chat_id)
+	if chat.team not in request.user.membership_teams.all():
+		return HttpResponseNotFound()
+	messages = chat.chatmessage_set.all()
+	messages_list = []
+	for message in messages:
+		messages_list.append({
+			'from_user': message.from_user.first_name,
+			'text': message.text,
+			'date': message.date
+		})
+	json_messages = json.dumps(messages_list, cls=DjangoJSONEncoder)
+	return HttpResponse(json_messages)
+
+
+@login_required
+def teams_chat_list(request):
+	teams = request.user.membership_teams.all()
+	chats = []
+	for team in teams:
+		if hasattr(team, 'chat'):
+			chats.append(team.chat)
+	context = {
+		'chats': chats
+	}
+	return render(request, 'teams/team_chat_list.html', context)
+
+
+@login_required
+def teams_chat_add(request):
+	teams = request.user.membership_teams.filter(chat__isnull=True)
+
+	form = NewChatForm()
+	form.fields['team'].queryset = teams
+	if request.method == 'POST':
+		form = NewChatForm(request.POST)
+		if form.is_valid():
+			form.save()
+			print("Nuevo chat creado")
+			messages.success(request, f'¡Nuevo chat creado!')
+			return HttpResponseRedirect(reverse('teams-chat-list'))
+		else:
+			messages.error(request, f'Error al crear el chat')
+			return HttpResponseRedirect(reverse('teams-chat-list'))
+	
+	context = {
+		'form': form,
+		'available_teams': teams
+	}
+	return render(request, 'teams/team_chat_add.html', context)
+
+
+@login_required
+def teams_chat_conversation(request, chat_id):
+	chat = get_object_or_404(Chat, pk=chat_id)
+
+	if chat.team not in request.user.membership_teams.all():
+		return HttpResponseNotFound()
+	form = NewChatMessageForm(initial={'from_user': request.user.id, 'read': False, 'chat': chat.id})
+	if request.method == 'POST':
+		form = NewChatMessageForm(request.POST, initial={'from_user': request.user.id, 'read': False, 'chat': chat.id})
+		if form.is_valid():
+			form.save()
+			print("mensaje guardado")
+			# messages.success(request, f'¡Mensaje enviado!')
+			return HttpResponse(status=200)
+		else:
+			messages.error(request, f'Error al enviar el mensaje')
+			return HttpResponseRedirect(reverse('teams-chat-conversation', args=[chat.id]))
+
+	context = {
+		'form': form,
+		'chat': chat
+	}
+	return render(request, 'teams/team_chat_conversation.html', context)
+
+
+@login_required
+def teams_chat_new(request, team_id=0):
+	user_teams = request.user.membership_teams.all()
+	all_members = set()
+	for team in user_teams:
+		all_members |= (set([member for member in team.members.all() if member != request.user]))
+	members = set()
+	if team_id:
+		team = get_object_or_404(Team, pk=team_id)
+		members = set([member for member in team.members.all() if member != request.user])
+	else:
+		members = all_members
+	form = NewMessageForm(initial={'from_user': request.user.id, 'read': False, 'date': datetime.now()})
+	if request.method=='POST':
+		try:
+			to_user = get_object_or_404(User, pk=request.POST['toUser'])
+		except:
+			messages.error(request, f'Error al enviar el mensaje')
+			return render(request, 'teams/team_messages_send.html', {
+				'message_form': form,
+				'teams': user_teams,
+				'members': members   
+			})
+		if to_user not in all_members:
+			print("not in user_te")
+			messages.error(request, f'Error al enviar el mensaje')
+			return render(request, 'teams/team_messages_send.html', {
+				'message_form': form,
+				'teams': user_teams,
+				'members': members   
+			})
+		form = NewMessageForm(request.POST, initial={'from_user': request.user.id, 'read': False, 'to_user': to_user.id, 'date': datetime.now()})
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'¡El mensaje enviado!')
+			return HttpResponseRedirect(reverse('teams-chat-inbox'))
+		else:
+			print(form.errors)
+			messages.error(request, f'Error al enviar el mensaje')
+			return render(request, 'teams/team_messages_send.html', {
+				'message_form': form,
+				'teams': user_teams,
+				'members': members   
+			})
+	context = {
+		'message_form': form,
+		'teams': user_teams,
+		'members': members
+	}
+	return render(request, 'teams/team_messages_send.html', context)
+
+
 def team_evaluate(request, id):
 	dict_processes = {'p1':0, 'p2':0, 'p3':0, 'p4':0, 'p5':0, 'p6':0, 'p7':0}
 	processes_questions_count = {'p1':0, 'p2':0, 'p3':0, 'p4':0, 'p5':0, 'p6':0, 'p7':0}
