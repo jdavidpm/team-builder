@@ -1,0 +1,104 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+        {% include "components/messages_inbox_sidebar.html" %}
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
+            <div class="row h4 mb-4">
+                <a href="{% url 'teams-chat-list' %}" class="btn btn-dark ml-2"><i class='fas fa-arrow-left'></i></a>
+                <span class="ml-3 my-auto"> Chat de Equipo: {{ chat.team }}</span>
+            </div>
+            <div id="chatConversation" class="ml-0 px-2 py-2" style="overflow-y: scroll; height:300px;">     
+            </div>
+            <hr>
+            <form method="POST" action="" id="my-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col mb-2">
+                    {{ form.text }}
+                    </div>
+                    <div class="col-md-3">
+                        <input type="submit" value="Enviar" class="btn btn-info">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var chat = {{ chat.id }};
+        var objDiv = document.getElementById("chatConversation");
+        const Url='/teams/chats/' + chat + '/service';
+        scroll = true
+        var message = document.getElementById("id_text");
+        message.classList.add("form-control");
+        message.setAttribute("rows", 1)
+        message.placeholder = "Nuevo mensaje";
+        $("#chatConversation").scroll(function (e) {
+            e.preventDefault();
+            var elem = $(this);            
+            if (elem.scrollTop() > 0 && 
+                    (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())) {
+                scroll = true;
+            } else {
+                scroll = false;
+            }
+        });
+
+        function getMessages() {
+            $.get(Url, function(data, status){
+                //console.log(`${data}`);
+                var jsondata = JSON.parse(data);
+                //onsole.log(jsondata.length);
+                all_messages_html = ""
+                if (jsondata.length == 0) {
+                    //console.log('no messages')
+                    $( "#chatConversation" ).html('<p class="h5 text-center mt-5">No hay mensajes en este chat todavía</p>');
+                    return 0;
+                }
+
+                for(var i = 0; i < jsondata.length; i++) {
+                    var obj = jsondata[i];
+                    d = new Date(obj.date);
+                    //console.log(obj.text);
+                    all_messages_html += `<div class='bg-white my-2 px-2 border rounded'>
+                    <p class='text-muted my-0'><small>` + d.toLocaleString() + `</small></p>
+                    <p class='my-0'><small><i>De: ` + obj.from_user + `</i></small></p>
+                    <p class='my-0'><b>` + obj.text + `</b></p>
+                    </div>`;
+                }
+                $( "#chatConversation" ).html( all_messages_html );
+                if (scroll) {
+                    console.log("scroll true")
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                }
+            });
+        }
+        getMessages();
+
+        var intervalId = window.setInterval(function(){
+            getMessages();
+        }, 3000);
+
+        $("#my-form").submit(function(e) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    document.getElementById('id_text').value = "";
+                    getMessages();
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                }
+            });
+        });
+    </script>
+{% endblock script%}

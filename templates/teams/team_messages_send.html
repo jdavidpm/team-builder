@@ -1,0 +1,52 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+        {% include "components/messages_send_sidebar.html" %}
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5 pt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
+            <h4 class="text-dark">Nuevo mensaje Privado
+            </h4>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input list="suggestionList" id="forUser" class="form-control mb-3" placeholder="Para" required>
+                <datalist id="suggestionList">
+                    {% for member in members %}
+                    <option data-value="{{ member.id }}">{{ member }}</option>
+                    {% endfor %}
+                </datalist>
+                <input type="hidden" name="toUser" id="forUser-hidden">
+                {{ message_form.text }}
+                <input type="submit" value="Enviar" class="btn btn-info mt-2">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+<script>
+    var message = document.getElementById("id_text");
+    message.classList.add("form-control");
+    message.placeholder = "Mensaje";
+
+    document.querySelector('input[list]').addEventListener('input', function(e) {
+    var input = e.target,
+        list = input.getAttribute('list'),
+        options = document.querySelectorAll('#' + list + ' option'),
+        hiddenInput = document.getElementById(input.getAttribute('id') + '-hidden'),
+        inputValue = input.value;
+
+    hiddenInput.value = inputValue;
+
+    for(var i = 0; i < options.length; i++) {
+        var option = options[i];
+
+        if(option.innerText === inputValue) {
+            hiddenInput.value = option.getAttribute('data-value');
+            console.log(hiddenInput.value)
+            break;
+        }
+    }
+});
+</script>
+{% endblock script%}

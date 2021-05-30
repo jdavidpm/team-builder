@@ -98,12 +98,15 @@ def search_results(request):
 
 	interest_dict = []
 	{interest_dict.append(v) for q, v in request.GET.items() if q.startswith('interest_')}
+	dict_inte = {q:v for q, v in request.GET.items() if q.startswith('interest_')}
 
 	experience_dict = []
 	{experience_dict.append(v) for q, v in request.GET.items() if q.startswith('experience_')}
+	dict_expe = {q:v for q, v in request.GET.items() if q.startswith('experience_')}
 
 	field_dict = []
 	{field_dict.append(v) for q, v in request.GET.items() if q.startswith('field_')}
+	dict_fiel = {q:v for q, v in request.GET.items() if q.startswith('field_')}
 
 	profile_query_qs, project_query_qs = Q(), Q()
 	profile_results, team_results, project_results = [], [], []
@@ -143,11 +146,17 @@ def search_results(request):
 	paginator = Paginator(total_results, int(sampleSize) if sampleSize else 5)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
+
 	if not len(page_obj):
 		message_info = 'Tu búsqueda no dió ningún resultado.'
 
-
-
+	str_page = '&'
+	for i in dict_inte.keys():
+		str_page += (i + '=' + dict_inte[i] + '&') 
+	for i in dict_expe.keys():
+		str_page += (i + '=' + dict_expe[i] + '&')
+	for i in dict_fiel.keys():
+		str_page += (i + '=' + dict_fiel[i] + '&') 
 	context = {
 		'title': 'Resultados de búsqueda',
 		'page_obj': page_obj,
@@ -158,6 +167,7 @@ def search_results(request):
 		'interest_dict': interest_dict,
 		'experience_dict': experience_dict,
 		'field_dict': field_dict,
-		'message_info': message_info
+		'message_info': message_info,
+		'url_rest': str_page[:-1]
 	}
 	return render(request, 'layout/search_results.html', context)

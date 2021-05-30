@@ -2,13 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-	<div class="masthead d-flex justify-content-center row">
+	<div class="masthead d-flex justify-content-center row mt-n5">
 		<div class="jumbotron shadow-sm col-10 col-md-6 col-sm-10 p-3">
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset class="form-group">
 					<legend class="border-bottom mb-5"><h3>Registro</h3></legend>
 					<div class="d-flex flex-wrap">
+						{% for field in u_form.visible_fields|slice:"2:4" %}
+							<div class="mt-n4 col-md-6">
+								{{ field.errors }}
+								<label for="{{ field.id_for_label }}"></label>
+								{{ field |as_crispy_field }}
+							</div>
+						{% endfor %}
 						{% for field in u_form.visible_fields|slice:":2" %}
 							<div class="mt-n4 col-md-6">
 								{{ field.errors }}
@@ -16,7 +23,7 @@
 								{{ field |as_crispy_field }}
 							</div>
 						{% endfor %}
-						{% for field in u_form.visible_fields|slice:"2:" %}
+						{% for field in u_form.visible_fields|slice:"4:" %}
 							<div class="mt-n4 col-md-12">
 								{{ field.errors }}
 								<label for="{{ field.id_for_label }}"></label>

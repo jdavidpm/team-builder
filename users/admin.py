@@ -14,6 +14,7 @@ admin.site.register(Teacher)
 admin.site.register(Academy)
 admin.site.register(Subject)
 admin.site.register(Project)
+admin.site.register(ResourceURL)
 
 class MembersInlineAdmin(admin.TabularInline):
     model = Team.members.through
@@ -27,6 +28,9 @@ admin.site.register(Membership)
 admin.site.register(TeamEvaluation)
 admin.site.register(JoinRequest)
 admin.site.register(JoinInvitation)
+admin.site.register(Message)
+admin.site.register(Chat)
+admin.site.register(ChatMessage)
 admin.site.register(ProjectActivity)
 admin.site.register(Task)
 admin.site.register(TaskActivity)

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from users.models import Task, Team, Project, User
+from users.models import Task, Team, Project, User, ResourceURL
 from django.utils import timezone
-from .forms import ProjectUpdateForm, ProjectCreateForm, TaskForm, NewTaskForm
+from .forms import ProjectUpdateForm, ProjectCreateForm, TaskForm, NewTaskForm, ResourceURLForm
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 
@@ -13,12 +13,18 @@ def projects_list(request):
 
 @login_required
 def project_item(request, id):
-	project = request.user.created_projects.all().filter(id=id)
-	if len(project):
-		project = project[0]
-		return render(request, 'projects/project.html', {'title': 'Proyecto - ' + str(project.name), 'project': project})
-	else:
-		return redirect('projects-list')
+    project = request.user.created_projects.all().filter(id=id)
+    if len(project):
+        project = project[0]
+        resources_url = ResourceURL.objects.filter(project=project)
+        context = {
+            'title': 'Proyecto - ' + str(project.name), 
+            'project': project,
+            'resources_url': resources_url
+        }
+        return render(request, 'projects/project.html', context)
+    else:
+        return redirect('projects-list')
 
 @login_required
 def project_update(request, id):
@@ -36,7 +42,8 @@ def project_update(request, id):
 			u_form = ProjectUpdateForm(instance=project)
 		context = {
 			'u_form': u_form,
-			'title': 'Proyecto - ' + str(project.name)
+			'title': 'Proyecto - ' + str(project.name),
+            'project_id': id
 		}
 		return render(request, 'projects/project_update.html', context)
 	else:
@@ -209,3 +216,19 @@ def deleteTask(request, pk):
         return HttpResponseRedirect(reverse('projects-tasks'))
     context = {'task': task}
     return render(request, 'projects/task_delete.html', context)
+
+def projects_resource_add(request):
+    project = request.user.created_projects.all().filter(id=request.GET.get('id'))
+    if request.method == 'POST':
+        form = ResourceURLForm(request.POST, initial={'project': project})
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'¡El recurso fue creado con éxito!')
+            return redirect('projects-list')
+    else:
+        form = ResourceURLForm(initial={'project': project})
+    context = {
+        'title': 'Agregar Recurso',
+        'form': form
+    }
+    return render(request, 'projects/projects_resource_add.html', context)

@@ -8,6 +8,17 @@ import datetime
 
 User.__str__ = lambda user_instance: user_instance.first_name + " " + user_instance.last_name
 
+
+class Message(models.Model):
+	from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+	to_user = models.ForeignKey(User, models.CASCADE, related_name='received_messages')
+	text = models.TextField(null=False, blank=False)
+	date = models.DateTimeField(default=datetime.datetime.now())
+	read = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.text
+
 class Question(models.Model):
 	CATEGORY_CHOICES = {
 		('personality', 'Personalidad'),
@@ -269,6 +280,13 @@ class Project(models.Model):
 	def get_absolute_url(self):
 		return reverse('projects-item', kwargs={'id':self.id})
 
+class ResourceURL(models.Model):
+	name = models.CharField(max_length=64, null=False, blank=False)
+	url = models.URLField(max_length=200)
+	service = models.CharField(max_length=64, null=False, blank=False)
+	project = models.ManyToManyField(Project, blank=True)
+	def __str__(self):
+		return f'{self.name}'
 
 class Team(models.Model):
 
@@ -327,6 +345,24 @@ class Team(models.Model):
 	def get_absolute_url(self):
 		return reverse('teams-item', kwargs={'id':self.id})
 	
+
+class Chat(models.Model):
+	team = models.OneToOneField(Team, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return f'{self.team} chat'
+
+
+class ChatMessage(models.Model):
+	chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+	from_user = models.ForeignKey(User, on_delete=models.CASCADE)
+	text = models.TextField()
+	date = models.DateTimeField(auto_now=True)
+	read = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.text
+
 
 class TeamEvaluation(models.Model):
 	team = models.ForeignKey(Team, on_delete=models.CASCADE)

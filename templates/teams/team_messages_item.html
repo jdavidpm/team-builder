@@ -1,0 +1,38 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+        {% include "components/messages_inbox_sidebar.html" %}
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
+            <div class="row h4">
+            <a href="{% url 'teams-chat-inbox' %}" class="btn btn-dark ml-2"><i class='fas fa-arrow-left'></i></a>
+            <span class="text-dark my-auto ml-4">Mensaje
+            </span>
+            </div>
+            <p>
+                {% if request.user == message.from_user %}
+                Para: {{ message.to_user }}
+                {% else %}
+                De: {{ message.from_user }}
+                {% endif %}
+                <span class="text-muted ml-2">
+                    {% if request.user == message.from_user %}
+                    | Enviado 
+                    {% else %}
+                    | Recibido 
+                    {% endif %}
+                    
+                    {% if message.date|date:"j-m-Y" == timezone_now|date:"j-m-Y" %}
+                        Hoy a las {{ message.date|date:"H:i" }}
+                    {% else %}
+                        {{ message.date|date:"l" }} {{ message.date }}
+                    {% endif %}
+                </span>
+            </p>
+            <div class="ml-0 mb-2">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,9 +1,9 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+    <div class="masthead row col-12 col-sm-12 d-flex justify-content-center pt-5">
         {% include "components/tasks_sidebar.html" %}
-        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+        <div class="bg-grayish border border-dark rounded py-2 col-10 col-md-7 mt-5 pt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
             <h4 class="text-dark">Tareas 
                 {% if request.resolver_match.kwargs.filter_by == 'project' %}
@@ -48,7 +48,7 @@
                         {% include "components/tasks_card.html" with tasks_type='Completadas' cardid='u3' tasks_list=completed_tasks.user %}
                     {% endif %}
                 {% else %}
-                    <p class="h4 text-center">No hay tareas aquí</p>
+                    <p class="h4 text-center mt-5 pt-5">No hay tareas aquí</p>
                 {% endif %}
             </div>
             <div id="allTasks" style="display: none">
@@ -66,7 +66,7 @@
                         {% include "components/tasks_card.html" with tasks_type='Completadas' cardid='a3' tasks_list=completed_tasks.everyoneOnTeam %}
                     {% endif %}
                 {% else %}
-                    <p class="h4 text-center">No hay tareas aquí</p>
+                    <p class="h4 text-center mt-5 pt-5">No hay tareas aquí</p>
                 {% endif %}
             </div>
         </div>

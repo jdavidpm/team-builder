@@ -1,0 +1,85 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+        {% include "components/messages_inbox_sidebar.html" %}
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5 pt-5" id="tasksContent">
+            {% block messages %}{% include "components/messages.html" %}{% endblock %}
+            <span class="text-dark h4">Mensajes Privados
+                {% if request.resolver_match.kwargs.team_id %}
+                > {{ team }}
+                {% endif %}
+            </span>
+            <div class="row mx-1 my-2 d-flex flex-column">
+                {% if teams %}
+                <a id="allTeams" href="{% url 'teams-chat-new' %}" class="btn btn-dark h6 float-right mt-2 text-wrap">
+                    <i class='fas fa-plus' ></i>
+                    Crear Nuevo Mensaje Privado
+                </a>
+                {% endif %}
+                <ul class="col nav nav-pills">
+                    <li class="nav-item">
+                    <a class="nav-link h6 active" id="showReceived" href="#">Recibidos</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link h6" id="showSent" href="#">Enviados</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="received" style="display: block">
+                {% if received %}
+                <div class="list-group mb-2">
+                    {% for message in received %}
+                    <div class="taskdiv pl-0 pr-0 row content-section mx-2 border mt-0 mb-0 border-dark taskbox">
+                        <a class="tasklink" href="{% url 'teams-chat-item' message.id %}"></a>
+                        <div class="col-4">
+                            <p class="mb-0 {% if not message.read %}font-weight-bold{% endif %}">De: {{ message.from_user.first_name }}</p>
+                        </div>
+                        <div class="col-4">
+                            <i class="mb-0 {% if not message.read %}font-weight-bold{% endif %}">{{ message.text|truncatechars:20 }}</i>
+                        </div>
+                        <div class="col-4 float-right small my-auto">
+                            {% if message.date|date:"j-m-Y" == timezone_now|date:"j-m-Y" %}
+                            <p class="mb-0 {% if not message.read %}font-weight-bold{% endif %}">Hoy a las {{ message.date|date:"H:i" }}</p>
+                            {% else %}
+                            <p class="mb-0 {% if not message.read %}font-weight-bold{% endif %}">{{ message.date }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <p class="h4 text-center">No hay mensajes recibidos</p>
+                {% endif %}
+            </div>
+            <div id="sent" style="display: none">
+                {% if sent %}
+                {% for message in sent %}
+                <div class="taskdiv pl-0 pr-0 row content-section mx-2 border mt-0 mb-0 border-dark taskbox">
+                    <a class="tasklink" href="{% url 'teams-chat-item' message.id %}"></a>
+                    <div class="col-4">
+                        <p class="mb-0">Para: {{ message.to_user.first_name }}</p>
+                    </div>
+                    <div class="col-4">
+                        <i class="mb-0">{{ message.text|truncatechars:20 }}</i>
+                    </div>
+                    <div class="col-4 float-right small my-auto">
+                        {% if message.date|date:"j-m-Y" == timezone_now|date:"j-m-Y" %}
+                        <p class="mb-0">Hoy a las {{ message.date|date:"H:i" }}</p>
+                        {% else %}
+                        <p class="mb-0">{{ message.date }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                    <p class="h4 text-center">No hay mensajes enviados</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/switchMessageBox.js' %}"></script>
+{% endblock script%}
