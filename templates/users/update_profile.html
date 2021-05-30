@@ -3,7 +3,7 @@
 
 {% block content %}
 	<div class="masthead row d-flex justify-content-center pt-5 mt-5">
-		<div class="col-11 col-sm-8">
+		<div class="col-11 col-sm-6">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<form method="POST" enctype="multipart/form-data" class="jumbotron shadow-sm">
 				{% csrf_token %}
@@ -26,7 +26,14 @@
 							</div>
 						{% endfor %}
 						{% for field in u_form.visible_fields|slice:"-1:" %}
-							<div class="mt-n4 col-md-12">
+							<div class="mt-n4 col-md-6">
+								{{ field.errors }}
+								<label for="{{ field.id_for_label }}"></label>
+								{{ field |as_crispy_field }}
+							</div>
+						{% endfor %}
+						{% for field in p_form.visible_fields|slice:"1:2" %}
+							<div class="mt-n4 col-md-6">
 								{{ field.errors }}
 								<label for="{{ field.id_for_label }}"></label>
 								{{ field |as_crispy_field }}
@@ -34,7 +41,7 @@
 						{% endfor %}
 					</div>
 					<div class="mx-4">
-						{% for field in p_form.visible_fields|slice:"1:" %}
+						{% for field in p_form.visible_fields|slice:"2:" %}
 							<div class="mt-n4">
 								{{ field.errors }}
 								<label for="{{ field.id_for_label }}"></label>
@@ -44,14 +51,13 @@
 					</div>
 				</fieldset>
 				<div class="form-group d-flex justify-content-around">
-					<a class="btn btn-outline-secondary nounderline ml-2" href="{% url 'password_reset' %}">Cambiar contraseña </a>
-					<a class="btn btn-outline-secondary nounderline ml-2" href="{% url 'users-update-profile-school' user.username %}">Datos Escolares </a>
-					<button class="btn btn-outline-secondary" type="submit">Guardar</button>
+					<a class="btn btn-outline-dark nounderline ml-2" href="{% url 'password_reset' %}">Cambiar contraseña </a>
+					<a class="btn btn-outline-dark nounderline ml-2" href="{% url 'users-update-profile-school' user.username %}">Datos Escolares </a>
+					<button class="btn btn-outline-dark" type="submit">Guardar</button>
 				</div>
 			</form>
 		</div>
 	</div>
 {% endblock content %}
 {% block script %}
-	{{ p_form.media }}
 {% endblock script %}

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-	<div class="masthead row justify-content-center">
+	<div class="masthead row justify-content-center mt-n5">
 		<div class="jumbotron shadow-sm col-10 col-sm-7 py-4 px-4">
 			<form method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
@@ -12,12 +12,9 @@
 					<span class="text-center">{{ t_form|crispy }}</span>
 				</fieldset>
 				<div class="form-group text-right">
-					<button class="btn btn-outline-secondary" type="submit">Crear</button>
+					<button class="btn btn-outline-dark" type="submit">Crear</button>
 				</div>
 			</form>
 		</div>
 	</div>
 {% endblock content %}
-{% block script %}
-	{{ c_form.media }}
-{% endblock script %}

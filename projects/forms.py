@@ -1,5 +1,5 @@
 from django import forms
-from users.models import Project, Task
+from users.models import Project, Task, ResourceURL
 from users.widgets import ToggleWidget
 
 class ProjectUpdateForm(forms.ModelForm):
@@ -39,6 +39,20 @@ class ProjectCreateForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs): 
 		super(ProjectCreateForm, self).__init__(*args, **kwargs)                       
 		self.fields['author'].disabled = True
+
+class ResourceURLForm(forms.ModelForm):
+	class Meta:
+		model = ResourceURL
+		fields = ['project', 'name', 'url', 'service']
+		labels = {
+			'project': ('Proyecto'),
+			'name': ('Nombre'),
+			'url': ('Enlace'),
+			'service': ('Servicio'),
+		}
+	def __init__(self, *args, **kwargs):
+		super(ResourceURLForm, self).__init__(*args, **kwargs)
+		self.fields['project'].disabled = True
 
 class DateTimeInput(forms.DateTimeInput):
 	input_type = 'datetime-local'

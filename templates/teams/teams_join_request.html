@@ -2,7 +2,7 @@
 
 {% block header %}
 	<div class="masthead text-center mb-0 pb-0 pt-5 mt-5 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-8 jumbotron bg-secondary shadow-sm">
+		<div class="col-11 col-sm-8 jumbotron bg-dark shadow-sm">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<h1 class="fs-3 text-white"><i class="fas fa-envelope mr-4"></i>Invitaciones</h1>
 		</div>
@@ -20,7 +20,7 @@
                                 {% if received.to_user in received.team.members.all%}
                                     <label class="d-flex align-items-center mr-2"><h6>Ya estás en el equipo {{ received.team }}</h6></label>  
                                     <input type="hidden" name="teamRespond" value="{{ received.team }}" />
-                                    <input type="submit" value="Salir" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-secondary mt-n1">
+                                    <input type="submit" value="Salir" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-dark mt-n1">
                                 {% else %}
                                     <div class="input-group mb-2 ml-0 col-12 col-sm-12 d-flex flex-column">
                                         <h6>{{received}}</h6>
@@ -32,7 +32,7 @@
                                             </select>
                                         </div>
                                     <input type="hidden" name="teamRespond" value="{{ received.team }}" />
-                                    <input type="submit" value="Responder" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-secondary mt-3">
+                                    <input type="submit" value="Responder" name="action" id='respondForm{{forloop.counter}}' class="btn btn-outline-dark mt-3">
                                     </div>
                                 {% endif %}
                             </form>

@@ -1,20 +1,20 @@
 {% extends 'layout/base.html'%}
 
 {% block header %}
-	<div class="masthead row d-flex justify-content-center mb-0">
+	<div class="masthead row d-flex justify-content-center mb-0 px-sm-5 pb-0">
 		<div class="col-11 col-sm-10 mt-n5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
-			<div class="jumbotron bg-secondary shadow-sm text-white text-center">
+			<div class="jumbotron bg-dark shadow-sm text-white text-center">
 				<h1 class="fs-4">{{ project.name }}</h1>
 			</div>
 		</div>
 	</div>
 {% endblock header %}
 {% block content %}
-	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap">
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm p-2 mb-2">
+	<div id="accordion" class="masthead pt-4 d-flex justify-content-center flex-wrap px-sm-5">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm p-2 mb-2 border border-dark">
 			<div class="d-flex p-2" id="card_{{ project.id }}">
-				<span class="mb-0"><button class="btn btn-outline-secondary border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
+				<span class="mb-0"><button class="btn btn-outline-dark border-0 collapsed nounderline" data-toggle="collapse" data-target="#collapse_{{ project.id }}" aria-expanded="false" aria-controls="collapse_{{project.id}}">
 					<h3 class="text-nowrap">
 						Detalles
 						<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -22,16 +22,16 @@
 					</h3>
 				</button></span>
 				<div class="ml-2 fs-2 ml-auto pr-2 pt-2 d-flex justify-content-center flex-wrap">
-					<a class="nounderline btn btn-outline-secondary border-0" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
+					<a class="nounderline btn btn-outline-dark border-0" href="{{ project.get_absolute_url|add:'update/' }}" data-toggle="tooltip" title="Editar">
 						<i class="fas fa-edit fs-2 pl-1"></i>
 					</a>
-					<a class="nounderline btn btn-outline-secondary border-0" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
+					<a class="nounderline btn btn-outline-dark border-0" href="{% url 'projects-list' %}" data-toggle="tooltip" title="Regresar a todos">
 						<i class="fas fa-arrow-left fs-2"></i>
 					</a>
 				</div>
 			</div>
 		</div>
-		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-secondary text-light p-0 mb-0">
+		<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-dark text-light p-0 mb-0 mt-4">
 			<div id="collapse_{{ project.id }}" class="collapse p-2" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
 				<div class="row text-center pl-3">
 						<div class="col-md-12 ml-auto"><p class="lead">
@@ -59,5 +59,19 @@
 				</div>
 			</div>
 		</div>
+		{% if resources_url %}
+			<div class="col-11 col-sm-10 col-md-10 col-lg-10 col-xl-10 jumbotron shadow-sm bg-dark text-light p-0 mt-4">
+				<div id="collapse_{{ project.id }}" class="collapse p-2" aria-labelledby="card_{{ project.id }}" data-parent="#accordion">
+					<div class="row text-center pl-3">
+						<div class="col-md-12 ml-auto"><p class="lead">
+								<h4 class="text-muted text-left">Recursos</h4>
+								{% for resource in resources_url %}
+									<h5 class="text-left">{{resource.name}} - (<a href="{{resource.url}}">{{resource.url|truncatechars:20}}</a>) desde {{resource.service}}</h5>
+								{% endfor %}
+							</p></div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
 	</div>
 {% endblock content %}

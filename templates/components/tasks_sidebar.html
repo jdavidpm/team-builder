@@ -1,6 +1,6 @@
-<div class="col-md-3 col-sm-10 mt-5">
-    <div class="jumbotron">
-        <div class="list-group mb-2">
+<div class="col-10 col-sm-3 mt-5 pt-3">
+    <div class="jumbotron border border-dark">
+        <div class="list-group mb-4">
             {% if request.resolver_match.kwargs.filter_by or request.resolver_match.kwargs.pk or request.resolver_match.kwargs.project_id %}
             <a id="allTasksLink" href="{% url 'projects-tasks' %}"
                 class="list-group-item list-group-item-action border-dark h6">
@@ -11,8 +11,8 @@
                 Tareas de todos mis equipos y proyectos
             </a>
         </div>
-        <div class="list-group mb-2">
-            <a class="list-group-item list-group-item-action text-center bg-secondary text-white"
+        <div class="list-group mb-4">
+            <a class="list-group-item list-group-item-action text-center bg-dark text-white"
                 data-toggle="collapse" href="#projectsList">
                 Proyectos
             </a>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="list-group">
-            <a class="list-group-item list-group-item-action text-center bg-secondary text-white"
+            <a class="list-group-item list-group-item-action text-center bg-dark text-white"
                 data-toggle="collapse" href="#teamsList">
                 Equipos
             </a>

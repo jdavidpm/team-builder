@@ -14,6 +14,7 @@ admin.site.register(Teacher)
 admin.site.register(Academy)
 admin.site.register(Subject)
 admin.site.register(Project)
+admin.site.register(ResourceURL)
 
 class MembersInlineAdmin(admin.TabularInline):
     model = Team.members.through

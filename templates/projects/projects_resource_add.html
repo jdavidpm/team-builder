@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+	<div class="masthead d-flex justify-content-center row">
+		<div class="col-10 col-sm-5 mt-n5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+			<div class="jumbotron shadow-sm p-3">
+				<form method="POST">
+					{% csrf_token %}
+					<fieldset class="form-group">
+						<legend class="border-bottom mb-5"><h3>Agregar Recurso</h3></legend>
+						<div class="mx-3">
+							{{ form|crispy }}
+						</div>
+					</fieldset>
+					<div class="form-group mx-3">
+						<button class="btn btn-outline-dark" type="submit">Agregar</button>
+					</div>
+				</form>
+				<div class="border-top pt-3"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,148 @@
+:root {
+  --skylu: #2e9cca;
+}
+
+.table-skylu,
+.table-skylu > th,
+.table-skylu > td {
+  background-color: #c3e6cb;
+}
+.table-skylu th,
+.table-skylu td,
+.table-skylu thead th,
+.table-skylu tbody + tbody {
+  border-color: #8fd19e;
+}
+
+.table-hover .table-skylu:hover {
+  background-color: #b1dfbb;
+}
+.table-hover .table-skylu:hover > td,
+.table-hover .table-skylu:hover > th {
+  background-color: #b1dfbb;
+}
+
+
+
+.btn-skylu {
+  color: #fff;
+  background-color: #2e9cca;
+  border-color: #2e9cca;
+}
+.btn-skylu:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+.btn-skylu:focus, .btn-skylu.focus {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+}
+.btn-skylu.disabled, .btn-skylu:disabled {
+  color: #fff;
+  background-color: #2e9cca;
+  border-color: #2e9cca;
+}
+.btn-skylu:not(:disabled):not(.disabled):active, .btn-skylu:not(:disabled):not(.disabled).active, .show > .btn-skylu.dropdown-toggle {
+  color: #fff;
+  background-color: #1e7e34;
+  border-color: #1c7430;
+}
+.btn-skylu:not(:disabled):not(.disabled):active:focus, .btn-skylu:not(:disabled):not(.disabled).active:focus, .show > .btn-skylu.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+}
+
+
+
+.btn-outline-skylu {
+  color: #2e9cca;
+  border-color: #2e9cca;
+}
+.btn-outline-skylu:hover {
+  color: #fff;
+  background-color: #2e9cca;
+  border-color: #2e9cca;
+}
+.btn-outline-skylu:focus, .btn-outline-skylu.focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+}
+.btn-outline-skylu.disabled, .btn-outline-skylu:disabled {
+  color: #2e9cca;
+  background-color: transparent;
+}
+.btn-outline-skylu:not(:disabled):not(.disabled):active, .btn-outline-skylu:not(:disabled):not(.disabled).active, .show > .btn-outline-skylu.dropdown-toggle {
+  color: #fff;
+  background-color: #2e9cca;
+  border-color: #2e9cca;
+}
+.btn-outline-skylu:not(:disabled):not(.disabled):active:focus, .btn-outline-skylu:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-skylu.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+}
+
+.badge-skylu {
+  color: #fff;
+  background-color: #2e9cca;
+}
+a.badge-skylu:hover, a.badge-skylu:focus {
+  color: #fff;
+  background-color: #1e7e34;
+}
+a.badge-skylu:focus, a.badge-skylu.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+}
+
+
+.alert-skylu {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.alert-skylu hr {
+  border-top-color: #b1dfbb;
+}
+.alert-skylu .alert-link {
+  color: #0b2e13;
+}
+
+
+.list-group-item-skylu {
+  color: #155724;
+  background-color: #c3e6cb;
+}
+.list-group-item-skylu.list-group-item-action:hover, .list-group-item-skylu.list-group-item-action:focus {
+  color: #155724;
+  background-color: #b1dfbb;
+}
+.list-group-item-skylu.list-group-item-action.active {
+  color: #fff;
+  background-color: #155724;
+  border-color: #155724;
+}
+
+
+.bg-skylu {
+  background-color: #2e9cca !important;
+}
+
+a.bg-skylu:hover, a.bg-skylu:focus,
+button.bg-skylu:hover,
+button.bg-skylu:focus {
+  background-color: #1e7e34 !important;
+}
+
+
+.border-skylu {
+  border-color: #2e9cca !important;
+}
+
+
+.text-skylu {
+  color: #2e9cca !important;
+}
+
+a.text-skylu:hover, a.text-skylu:focus {
+  color: #19692c !important;
+}

@@ -1,11 +1,11 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-    <div class="masthead row col-12 d-flex justify-content-center pt-5">
+    <div class="masthead row col-12 col-sm-12 d-flex justify-content-center pt-5">
+        {% block messages %}{% include "components/messages.html" %}{% endblock %}
         {% include "components/tasks_sidebar.html" %}
-        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
-            {% block messages %}{% include "components/messages.html" %}{% endblock %}
-            <h4 class="text-secondary">Tareas 
+        <div class="bg-grayish border border-dark rounded py-2 col-10 col-md-7 mt-5 pt-5" id="tasksContent">
+            <h4 class="text-dark">Tareas 
                 {% if request.resolver_match.kwargs.filter_by == 'project' %}
                 > Proyectos > {{ filter_object }}
                 {% elif request.resolver_match.kwargs.filter_by == 'team' %}
@@ -22,12 +22,12 @@
                     </li>
                 </ul>
                 {% if request.resolver_match.kwargs.filter_by == 'project' %}
-                <a class="btn btn-primary mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
+                <a class="btn btn-info mr-4 float-right" href="{% url 'projects-create_task' filter_object.id %}">
                     <i class="fas fa-plus text-white"></i>
                 </a>
                 {% else %}
                 <span class="text-muted my-auto">Selecciona un proyecto para agregar una tarea &nbsp&nbsp</span>
-                <a class="btn btn-primary mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
+                <a class="btn btn-info mr-4 float-right disabled" too href="{% url 'projects-create_task' 0 %}"
                     data-toggle="tooltip">
                     <i class="fas fa-plus text-white"></i>
                 </a>
@@ -48,7 +48,7 @@
                         {% include "components/tasks_card.html" with tasks_type='Completadas' cardid='u3' tasks_list=completed_tasks.user %}
                     {% endif %}
                 {% else %}
-                    <p class="h4 text-center">No hay tareas aquí</p>
+                    <p class="h4 text-center mt-5 pt-5">No hay tareas aquí</p>
                 {% endif %}
             </div>
             <div id="allTasks" style="display: none">
@@ -66,7 +66,7 @@
                         {% include "components/tasks_card.html" with tasks_type='Completadas' cardid='a3' tasks_list=completed_tasks.everyoneOnTeam %}
                     {% endif %}
                 {% else %}
-                    <p class="h4 text-center">No hay tareas aquí</p>
+                    <p class="h4 text-center mt-5 pt-5">No hay tareas aquí</p>
                 {% endif %}
             </div>
         </div>

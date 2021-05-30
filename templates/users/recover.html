@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-	<div class="masthead d-flex justify-content-center row">
+	<div class="masthead d-flex justify-content-center row mt-n5">
 		<div class="jumbotron shadow-sm col-10 col-sm-6 p-5">
 			{% block messages %}{% include "components/messages.html" %}{% endblock %}
 			<form method="POST">
@@ -12,7 +12,7 @@
 					{{ form|crispy }}
 				</fieldset>
 				<div class="form-group d-flex justify-content-end">
-					<button class="btn btn-outline-secondary" type="submit">Solicita reinicio de contraseña</button>
+					<button class="btn btn-outline-dark" type="submit">Solicita reinicio de contraseña</button>
 				</div>
 			</form>
 		</div>

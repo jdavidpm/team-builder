@@ -280,6 +280,13 @@ class Project(models.Model):
 	def get_absolute_url(self):
 		return reverse('projects-item', kwargs={'id':self.id})
 
+class ResourceURL(models.Model):
+	name = models.CharField(max_length=64, null=False, blank=False)
+	url = models.URLField(max_length=200)
+	service = models.CharField(max_length=64, null=False, blank=False)
+	project = models.ManyToManyField(Project, blank=True)
+	def __str__(self):
+		return f'{self.name}'
 
 class Team(models.Model):
 

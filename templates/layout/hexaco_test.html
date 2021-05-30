@@ -2,79 +2,101 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-	<div class="masthead text-center mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">	
-		<div class="col-11 col-sm-10 jumbotron bg-secondary shadow-sm">
+	<div class="masthead text-center mt-n5 mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">
+		<div class="col-11 col-sm-8 jumbotron bg-dark shadow-sm">
 			<h1 class="fs-3 text-white"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
 	</div>
 {% endblock header %}
 {% block content %}
 	<div class="masthead d-flex justify-content-center row pt-0">
-		<div class="col-11 col-sm-10">
+		<div class="col-11 col-sm-8">
 			<form method="POST">
 				{% csrf_token %}
-				<fieldset class="form-group">
-					<legend class="jumbotron shadow-sm border-bottom mb-4 py-2">
-						<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-								<h3 class="text-dark text-center text-uppercase">
-									Instrucciones
-									<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
-									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
-								</h3>
-						</a>
-						<div class="collapse px-5 pt-4" id="collapseExample">
-							
-						<p class="text-justify font-weight-normal">
-							El siguiente test fue formulado de un inventario de preguntas tomado del <b>Modelo de Personalidad HEXACO.</b></br></br>
-							Más que preguntas, el test es una serie de afirmaciones sobre ti. Lee cada una de estas afirmaciones y decide en qué medida estás de acuerdo y cual no. </br></br> Selecciona la respuesta en la sección que se encuentra debajo de la afirmación, toma en cuenta la siguiente escala:
-								<ol>
-									<li class="font-weight-bold">Muy en desacuerdo</li>
-									<li class="font-weight-bold">En desacuerdo</li>
-									<li class="font-weight-bold">Neutral</li>
-									<li class="font-weight-bold">De acuerdo</li>
-									<li class="font-weight-bold">Totalmente de acuerdo</li>
-								</ol>
-							Las respuestas serán usadas para el desarrollo de esta plataforma, así que nos estarías haciendo un gran favor al contestarlo de la manera más sincera.  Si quieres saber más del modelo por favor visita: <a href="https://hexaco.org" target="_blank" class="nounderline">https://hexaco.org</a>
-							<div class="d-flex justify-content-end">
-								<a class="nounderline text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
-									<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
-								</a>
-							</div>
-						</p>
+				{% if user.profile.personality_h %}
+					<div class="border border-dark p-4 rounded mb-4">
+						<h4 class="text-center text-dark pb-4">¡Ya cuentas con resultados! Puedes verlos o realizar el test de nuevo.</h4>
+						<div class="d-flex flex-sm-nonwrap flex-wrap justify-content-around form-group">
+							<button onclick="toShowHide();" class="shadow my-2 btn btn-outline-dark" type="submit">Mostrar/Ocultar test (<i class="fas fa-redo-alt"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow my-2 btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
+							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow my-2 btn btn-outline-dark" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
 							
 						</div>
-					</legend>
-					{% if user.profile.personality_h %}
-						<div class="d-flex flex-nonwrap justify-content-around form-group">
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=bar'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-bar"></i>)</button>
-							<button onclick="location.href='{% url 'layout-hexaco-results' %}?type=polarArea'" class="shadow btn btn-outline-secondary" type="submit">Ver resultados (<i class="fas fa-chart-pie"></i>)</button>
-							
-						</div>
-					{% endif %}
-					<div class="jumbotron shadow-sm mt-2">
-						{% block messages %}{% include "components/messages.html" %}{% endblock %}
-						{% for field in form %}
-							<div class="d-flex flex-column mb-4">
-								{{ form|as_crispy_errors }}
-								<label for="{{ field.id_for_label }}" class="mx-5"><h5>{{field.label_tag}}</h5></label>
-								<div class="d-inline-flex justify-content-around"> 
-									{% for radio in field %}
-										
-										<label class="containerRadio zoom">
-											<h6 class="fs-1 mt-1">{{ radio.choice_label }}</h6>
-											{{ radio.tag }}
-											<span class="checkmark"></span>
-										</label>
-									{% endfor %}
-								</div>
-							</div>
-						{% endfor %}
 					</div>
-				</fieldset>
-				<div class="form-group text-right">
-					<button class="btn btn-outline-secondary" type="submit">Generar resultados</button>
+				{% endif %}
+				<div id="hexTest" {% if user.profile.personality_h %}style="display: none;"{% endif %}>
+					<fieldset class="form-group">
+						<legend class="jumbotron border border-dark shadow-sm mb-4 py-2">
+							<a class="nounderline text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+									<h3 class="text-dark text-center text-uppercase">
+										Instrucciones
+										<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
+										<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+									</h3>
+							</a>
+							<div class="collapse px-5 pt-4" id="collapseExample">
+								
+							<p class="text-justify font-weight-normal">
+								El siguiente test fue formulado de un inventario de preguntas tomado del <b>Modelo de Personalidad HEXACO.</b></br></br>
+								Más que preguntas, el test es una serie de afirmaciones sobre ti. Lee cada una de estas afirmaciones y decide en qué medida estás de acuerdo y cual no. </br></br> Selecciona la respuesta en la sección que se encuentra debajo de la afirmación, toma en cuenta la siguiente escala:
+									<ol>
+										<li class="font-weight-bold">Muy en desacuerdo</li>
+										<li class="font-weight-bold">En desacuerdo</li>
+										<li class="font-weight-bold">Neutral</li>
+										<li class="font-weight-bold">De acuerdo</li>
+										<li class="font-weight-bold">Totalmente de acuerdo</li>
+									</ol>
+								Las respuestas serán usadas para el desarrollo de esta plataforma, así que nos estarías haciendo un gran favor al contestarlo de la manera más sincera.  Si quieres saber más del modelo por favor visita: <a href="https://hexaco.org" target="_blank" class="nounderline">https://hexaco.org</a>
+								<div class="d-flex justify-content-end">
+									<a class="nounderline text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+										<i class="ml-2 fas fa-chevron-up text-expanded"></i><!--Less-->
+									</a>
+								</div>
+							</p>
+								
+							</div>
+						</legend>
+						<div class="jumbotron border border-dark shadow-sm mt-2">
+							{% block messages %}{% include "components/messages.html" %}{% endblock %}
+							{% for field in form %}
+								<div class="d-flex flex-column mb-5 border border-top-0 rounded-bottom">
+									{{ form|as_crispy_errors }}
+									<label for="{{ field.id_for_label }}" class="mx-5"><h5>{{field.label_tag}}</h5></label>
+									<div class="d-inline-flex justify-content-around"> 
+										{% for radio in field %}
+											<label class="containerRadio zoom">
+												<h6 class="fs-1 mt-1">{{ radio.choice_label }}</h6>
+												{{ radio.tag }}
+												<span class="checkmark"></span>
+											</label>
+										{% endfor %}
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</fieldset>
+					<div class="form-group text-right">
+						<button class="btn btn-outline-dark" type="submit">Generar resultados</button>
+					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 {% endblock content %}
+
+{% block script %}
+	<script>
+		function toShowHide()
+		{
+			var x = document.getElementById("hexTest");
+			if (x.style.display === "none")
+			{
+				x.style.display = "block";
+			}
+			else
+			{
+				x.style.display = "none";
+			}
+		}
+	</script>
+{% endblock script %}
