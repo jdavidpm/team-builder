@@ -3,9 +3,9 @@
 {% block content %}
     <div class="masthead row col-12 d-flex justify-content-center pt-5">
         {% include "components/messages_send_sidebar.html" %}
-        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5 pt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
-            <h4 class="text-secondary">Nuevo mensaje Privado
+            <h4 class="text-dark">Nuevo mensaje Privado
             </h4>
             <form method="POST" action="">
                 {% csrf_token %}
@@ -17,7 +17,7 @@
                 </datalist>
                 <input type="hidden" name="toUser" id="forUser-hidden">
                 {{ message_form.text }}
-                <input type="submit" value="Enviar" class="btn btn-primary mt-2">
+                <input type="submit" value="Enviar" class="btn btn-info mt-2">
             </form>
         </div>
     </div>

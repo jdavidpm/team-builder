@@ -3,26 +3,26 @@
 {% block content %}
     <div class="masthead row col-12 d-flex justify-content-center pt-5">
         {% include "components/messages_inbox_sidebar.html" %}
-        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5 pt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
-            <div class="text-secondary h4 mb-4">Chats de equipos
+            <div class="text-dark h4 mb-4">Chats de equipos
                 <a id="allTeams" href="{% url 'teams-chat-add' %}"
-                class="btn btn-secondary h6 float-right">
+                class="btn btn-dark h6 float-right">
                 <i class='fas fa-plus' ></i>
                 Crear Nuevo Chat
                 </a>
             </div>
             {% if chats %}
-            {% for chat in chats %}
-            <div class="taskdiv content-section mx-2 border my-2 border-dark rounded taskbox">
-                <a class="tasklink" href="{% url 'teams-chat-conversation' chat.id %}"></a>
-                <div>
-                    <p class="h6 mb-0">{{ chat.team }}</p>
+                {% for chat in chats %}
+                <div class="taskdiv content-section mx-2 border mb-2 mt-5 border-dark rounded taskbox">
+                    <a class="tasklink" href="{% url 'teams-chat-conversation' chat.id %}"></a>
+                    <div>
+                        <p class="h6 mb-0">{{ chat.team }}</p>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
-            <p class="h5 text-center mt-5">No tienes ningún chat de equipo todavía</p>
+                <p class="h5 text-center mt-5">No tienes ningún chat de equipo todavía</p>
             {% endif %}
         </div>
     </div>

@@ -6,7 +6,7 @@
         <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
             <div class="row h4 mb-4">
-                <a href="{% url 'teams-chat-list' %}" class="btn btn-secondary ml-2"><i class='fas fa-arrow-left'></i></a>
+                <a href="{% url 'teams-chat-list' %}" class="btn btn-dark ml-2"><i class='fas fa-arrow-left'></i></a>
                 <span class="ml-3 my-auto"> Chat de Equipo: {{ chat.team }}</span>
             </div>
             <div id="chatConversation" class="ml-0 px-2 py-2" style="overflow-y: scroll; height:300px;">     
@@ -19,7 +19,7 @@
                     {{ form.text }}
                     </div>
                     <div class="col-md-3">
-                        <input type="submit" value="Enviar" class="btn btn-primary">
+                        <input type="submit" value="Enviar" class="btn btn-info">
                     </div>
                 </div>
             </form>

@@ -3,15 +3,15 @@
 {% block content %}
     <div class="masthead row col-12 d-flex justify-content-center pt-5">
         {% include "components/messages_inbox_sidebar.html" %}
-        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5" id="tasksContent">
+        <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5 pt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
-            <div class="text-secondary h4 mb-4">Nuevo chat de equipo</div>
+            <div class="text-dark h4 mb-4">Nuevo chat de equipo</div>
             {% if available_teams %}
             <form method="POST" action="">
                 {% csrf_token %}
                 {{form}}
                 <div class="form-row mt-2">
-                <input type="submit" value="Crear" class="btn btn-primary mx-3">
+                <input type="submit" value="Crear" class="btn btn-info mx-3">
                 <a href="{% url 'teams-chat-list' %}" class="btn btn-danger">Cancelar</a>
                 </div>
             </form>
