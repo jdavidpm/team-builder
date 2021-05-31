@@ -18,15 +18,17 @@
 							</div>
 						</div>
 					</div>
-					{% if not foreign_user.profile.results_private %}
-						<a class="nounderline" href="{% url 'layout-hexaco-compare' foreign_user.username %}" data-toggle="tooltip" title="Comparar personalidad con...">
-							<i class="fas fa-ruler btn btn-outline-light border-0 fs-2"></i>
+					<div>
+						{% if not foreign_user.profile.results_private %}
+							<a class="nounderline" href="{% url 'layout-hexaco-compare' foreign_user.username %}" data-toggle="tooltip" title="Comparar personalidad con...">
+								<i class="fas fa-ruler btn btn-outline-light border-0 fs-2"></i>
+							</a>
+						{% endif %}
+						<a class="nounderline" href="{% url 'teams-chat-new' %}" data-toggle="tooltip" title="Mensaje privado con...">
+							<i class="fas fa-comment btn btn-outline-light border-0 fs-2"></i>
 						</a>
-					{% endif %}
-					<a class="nounderline" href="{% url 'teams-chat-new' %}" data-toggle="tooltip" title="Mensaje privado con...">
-						<i class="fas fa-comment btn btn-outline-light border-0 fs-2"></i>
-					</a>
-				</div>				
+					</div>
+				</div>			
 				<div class="media">
 					<div class="media-body text-center text-light">
 						<img class="rounded-circle account-img img-thumbnail" src="{{ foreign_user.profile.image.url }}"/>

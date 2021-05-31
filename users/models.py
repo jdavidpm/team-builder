@@ -132,8 +132,7 @@ class Profile(models.Model):
 	interests = models.ManyToManyField(Field, related_name='interested_profiles', blank=True)
 	languages = models.ManyToManyField(Language, blank=True)
 	frameworks = models.ManyToManyField(Framework, blank=True)
-	sw_tools = models.ManyToManyField(Tool, related_name='sw_profiles', blank=True)
-	hw_tools = models.ManyToManyField(Tool, related_name='hw_profiles', blank=True)
+	tools = models.ManyToManyField(Tool, related_name='sw_profiles', blank=True)
 	distributions = models.ManyToManyField(Distribution, blank=True)
 
 

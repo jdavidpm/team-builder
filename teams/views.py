@@ -527,8 +527,7 @@ def teams_creation(request):
 			for i in tool_dict:
 				query = Tool.objects.filter(name__icontains=i)
 				if query:
-					profile_query_qs = profile_query_qs | Q(sw_tools=query[0])
-					profile_query_qs = profile_query_qs | Q(hw_tools=query[0])
+					profile_query_qs = profile_query_qs | Q(tools=query[0])
 		if len(profile_query_qs):
 			filtered_members = Profile.objects.filter(profile_query_qs)
 		else:

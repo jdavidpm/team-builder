@@ -43,7 +43,7 @@ class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		image = forms.ImageField()
-		fields = ['school_register', 'school_role', 'description', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'sw_tools', 'hw_tools', 'results_private', 'image']
+		fields = ['school_register', 'school_role', 'description', 'distributions', 'experience', 'interests', 'languages', 'frameworks', 'tools', 'results_private', 'image']
 		widgets = {
 			#'distributions' : forms.CheckboxSelectMultiple,
 			#'experience' : forms.CheckboxSelectMultiple,
@@ -59,8 +59,7 @@ class ProfileUpdateForm(forms.ModelForm):
 			'school_role': ('Rol Escolar'),
 			'description': ('Acerca de mi'),
 			'distributions': ('Distros'),
-			'sw_tools': ('Herramientas de Software'),
-			'hw_tools': ('Herramientas de Hardware'),
+			'tools': ('Herramientas'),
 			'experience': ('Experiencia'),
 			'interests': ('Intereses'),
 			'languages': ('Lenguajes de Programación'),

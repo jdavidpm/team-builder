@@ -224,7 +224,7 @@
 		{% endif %}
 		{% for user_i in filtered_members %}
 			<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
-				<div class="shadow-sm bg-dark {% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
+				<div class="shadow-sm bg-dark {% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
 					<div class="d-flex justify-content-between pt-0 mt-0 mx-2">
 						<a class="nounderline" href="{% url 'teams-chat-new' %}" data-toggle="tooltip" title="Mandar mensaje">
 							<i class="fas fa-comment btn btn-outline-light border-0"></i>
@@ -236,7 +236,7 @@
 					<a href="{{ user_i.profile.get_absolute_url }}" class="nounderline text-white" data-toggle="tooltip" data-placement="bottom" title="Ir a perfil de {{ user_i.first_name }}">
 						<img class="rounded-circle thumbnail border border-info" src="{{ user_i.profile.image.url }}"/>
 						<h3>{{ user_i.first_name }}</h3>
-						{% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.sw_tools.all or user_i.profile.hw_tools.all %}
+						{% if user_i.profile.experience.all or user_i.profile.interests.all or user_i.profile.languages.all or user_i.profile.frameworks.all or user_i.profile.tools.all %}
 							<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_profile_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_profile_{{forloop.counter}}">
 								<i class="fas fa-info-circle mr-2"></i>Información
 								<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -280,18 +280,10 @@
 							{% endfor %}
 						</div>
 						{% endif %}
-						{% if user_i.profile.sw_tools.all %}
+						{% if user_i.profile.tools.all %}
 						<div class="mb-3 px-2">
 							<h5>Herramientas SW</h5>
-							{% for exp in user_i.profile.sw_tools.all %}
-								<p class="my-0">{{ exp }}</p>
-							{% endfor %}
-						</div>
-						{% endif %}
-						{% if user_i.profile.hw_tools.all %}
-						<div class="mb-3 px-2">
-							<h5>Herramientas HW</h5>
-							{% for exp in user_i.profile.hw_tools.all %}
+							{% for exp in user_i.profile.tools.all %}
 								<p class="my-0">{{ exp }}</p>
 							{% endfor %}
 						</div>
