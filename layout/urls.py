@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='layout-index'),
+    path('loaderio-4e678146c7228bcfb2f2028d48831e29/', views.token_load, name='token-load'),
     path('FAQ/', views.faq, name='layout-faq'),
     path('about/', views.about, name='layout-about'),
     path('notifications/', views.notifications, name='layout-notifications'),

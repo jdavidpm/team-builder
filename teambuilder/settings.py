@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'teambuilder.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ssiet',
+        'NAME': 'ssiet_production',
         'USER': environ['DB_USER'],
 	    'PASSWORD': 'ssiet',
 	    'HOST': 'localhost',

@@ -171,3 +171,5 @@ def search_results(request):
 		'url_rest': str_page[:-1]
 	}
 	return render(request, 'layout/search_results.html', context)
+def token_load(request):
+	return render(request, 'layout/loaderio-4e678146c7228bcfb2f2028d48831e29.html')
