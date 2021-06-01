@@ -530,13 +530,15 @@ def teams_creation(request):
 					profile_query_qs = profile_query_qs | Q(tools=query[0])
 		if len(profile_query_qs):
 			filtered_members = Profile.objects.filter(profile_query_qs)
+			message_info = False
 		else:
 			message_info = 'Tu búsqueda no dió ningún resultado.'
 		filtered_members = User.objects.filter(Q(profile__in=filtered_members)).distinct().exclude(profile=request.user.profile)
     
 		if action == 'Generar equipo' and is_compatible == 'Personalidad':
 			rules_list = gen_association_rules() # a list of dicts
-			
+			if not len(interest_dict) and not len(experience_dict) and not len(language_dict) and not len(framework_dict) and not len(distribution_dict) and not len(tool_dict): #in case of not using filter
+				filtered_members = User.objects.all().distinct().exclude(profile=request.user.profile)
 			if len(rules_list) > 0:
 				rules_list = sorted(rules_list, key = lambda i: (i['lift'], i['confidence'], i['support']))[::-1]
 				header = rules_list[0].keys()
@@ -622,7 +624,7 @@ def teams_creation(request):
 					recommended_members.pop(index)
 				print("ordered recomended")
 				print(recommended_members) # descending ordered members list (most recommended first)
-				
+				message_info = False
 			else:
 				message_info = "Lo sentimos, no hay recomendaciones"
 		if action == 'Crear':
@@ -650,7 +652,7 @@ def teams_creation(request):
 		'framework_dict': framework_dict,
 		'distribution_dict': distribution_dict,
 		'tool_dict': tool_dict,
-		'filtered_members': filtered_members[:int(team_size if team_size else 0)] if is_compatible == 'Ninguna' else recommended_members,
+		'filtered_members': filtered_members[:int(team_size if team_size else 0)] if is_compatible == 'Ninguna' else recommended_members[:int(team_size if team_size else 0)],
 		'teamSize': team_size,
 		'isCompatible': is_compatible
 	}
