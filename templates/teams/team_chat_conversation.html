@@ -53,7 +53,9 @@
             $.get(Url, function(data, status){
                 //console.log(`${data}`);
                 var jsondata = JSON.parse(data);
-                //onsole.log(jsondata.length);
+                jsondata.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date);
+                });
                 all_messages_html = ""
                 if (jsondata.length == 0) {
                     //console.log('no messages')
