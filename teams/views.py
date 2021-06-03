@@ -583,10 +583,10 @@ def teams_creation(request):
 						elif user_facet in rule['consecuent']:
 							# print(user_facet, " in ", rule['consecuent'])
 							target_facets.extend([facet for facet in list(rule['antecedent']) if facet not in target_facets])
-				print("target facets: ", target_facets)
+				# print("target facets: ", target_facets)
 
 				
-				# print('filtered_members: ', filtered_members)
+				# print(filtered_members)
 				for member in filtered_members:
 					member_personalities = []
 					selected_member_personalities = []
@@ -615,15 +615,15 @@ def teams_creation(request):
 				ids = []
 				duplicates = []
 				recommended_members = sorted(recommended_members, key = lambda i: abs(i['selected_facet']['threshold']))[::-1]
-				rep_recommended_members = [ member_dict['member'] for member_dict in recommended_members]
-				for i, member in enumerate(rep_recommended_members):
+				recommended_members = [ member_dict['member'] for member_dict in recommended_members]
+				for i, member in enumerate(recommended_members):
 					if member.id in ids:
 						duplicates.append(i)
 					ids.append(member.id)
-				# print('duplicates: ', duplicates)
-				recommended_members = [member for i, member in enumerate(rep_recommended_members) if i not in duplicates]
-				# print("ordered recomended")
-				# print(recommended_members) # descending ordered members list (most recommended first)
+				for index in duplicates:
+					recommended_members.pop(index)
+				print("ordered recomended")
+				print(recommended_members) # descending ordered members list (most recommended first)
 				message_info = False
 			else:
 				message_info = "Lo sentimos, no hay recomendaciones"

@@ -146,9 +146,11 @@
 				<div class="col-10 col-sm-3 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="shadow-sm bg-dark {% if obj.profile.experience.all or obj.profile.interests.all or obj.profile.languages.all or obj.profile.frameworks.all or obj.profile.sw_tools.all or obj.profile.hw_tools.all %} rounded-top {% else %} rounded {% endif %} py-2">
 						<div class="d-flex justify-content-between pt-0 mt-0 mx-2">
-							<a class="nounderline" href="{% url 'teams-chat-new' %}" data-toggle="tooltip" title="Mandar mensaje">
-								<i class="fas fa-comment btn btn-outline-light border-0"></i>
-							</a>
+							{% if is_acquaintance %}
+								<a class="nounderline" href="{% url 'teams-chat-new' %}" data-toggle="tooltip" title="Mandar mensaje">
+									<i class="fas fa-comment btn btn-outline-light border-0"></i>
+								</a>
+							{% endif %}
 							<a class="nounderline" href="{% url 'teams-join-invitation' %}?toReceive={{obj.id}}" data-toggle="tooltip" title="Agregar a un equipo">
 								<i class="fas fa-plus btn btn-outline-light border-0"></i>
 							</a>

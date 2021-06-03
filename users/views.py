@@ -81,10 +81,22 @@ def profile(request, username):
 	else:
 		users = User.objects.all().exclude(username=username)
 		foreign_user = User.objects.filter(username=username).first()
+		user_network = request.user.membership_teams.all()
+		is_acquaintance = False
+		for t in user_network:
+			if foreign_user in t.members.all():
+				is_acquaintance = True
 		for field in foreign_user.profile._meta.many_to_many:
 			if bool(getattr(foreign_user.profile, field.name).all()):
 				fields.append({'name': names[field.name][0], 'values': getattr(foreign_user.profile, field.name).all(), 'icon': names[field.name][1]})
-		return render(request, 'users/foreign_profile.html', {'title': foreign_user.first_name, 'foreign_user': foreign_user, 'fields': fields, 'users': users})
+		context = {
+			'is_acquaintance': is_acquaintance,
+			'title': foreign_user.first_name,
+			'foreign_user': foreign_user,
+			'fields': fields,
+			'users': users
+		}
+		return render(request, 'users/foreign_profile.html', context)
 
 @login_required
 def update_profile(request, username):
