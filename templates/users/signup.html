@@ -11,7 +11,6 @@
 					<div class="d-flex flex-wrap">
 						{% for field in u_form.visible_fields|slice:"2:4" %}
 							<div class="mt-n4 col-md-6">
-								{{ field.errors }}
 								<label for="{{ field.id_for_label }}"></label>
 								{{ field |as_crispy_field }}
 							</div>
