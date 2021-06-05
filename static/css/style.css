@@ -2,3 +2,23 @@
     outline: none !important;
     box-shadow: none;
  }
+
+#notifications-body {
+    background: #eee
+}
+
+.list-group li {
+    margin-bottom: 12px
+}
+
+.list li {
+    padding: 10px;
+    border: 1px solid #e3dada;
+    margin-top: 12px;
+    border-radius: 5px;
+    background: rgb(255, 255, 255)
+}
+
+.date-time {
+    font-size: 12px
+}

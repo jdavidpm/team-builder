@@ -46,6 +46,34 @@
 		<script type="text/javascript" src="https://jdavidpm.github.io/my-static-files/external-plugins/validetta/validetta.min.js"></script>
 		<script type="text/javascript" src="https://jdavidpm.github.io/my-static-files/external-plugins/validetta/validettaLang-es-ES.js"></script>
 		<script src="{% static 'js/init.js' %}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			const notifUrl="{% url 'users-notifications' %}";
+			$.get(notifUrl, function(data, status){
+                var jsondata = JSON.parse(data);
+				//console.log("there are " + jsondata['unread_notifications'] + " unread notifications")
+				var icons_html;
+				var unread_notifications = jsondata['unread_notifications'];
+				if (unread_notifications > 0) {
+					$("#notifications-item").addClass('fa-stack');
+					if (unread_notifications == 1) {
+						$("#notifications-item").attr('title', 'tienes 1 notificación nueva');
+					} else {
+						$("#notifications-item").attr('title', 'tienes '+unread_notifications+' notificaciones nuevas');
+					}
+					if (unread_notifications < 10) {
+						icons_html = "<i class='fas fa-bell px-2 fs-2 fa-stack-1x'></i><i class='fa-stack-1x text-secondary text-center'>"+unread_notifications+"</i>"
+					} else {
+						icons_html = "<i class='fas fa-bell px-2 fs-2 fa-stack-1x'></i><i class='fa-stack-1x text-secondary text-center'><small>9+</small></i>"
+					}	
+				} else {
+					$("#notifications-item").attr('title', 'no tienes notificaciones nuevas');
+					icons_html = "<i class='far fa-bell px-2 fs-2'></i>"
+				}
+				$("#notifications-link").html(icons_html);
+				$("#notifications-sm-span").html(" | <i>"+unread_notifications+" nueva(s)</i>");
+            });
+		</script>
 		{% block script %}{% endblock script %}
 	</body>
 </html>

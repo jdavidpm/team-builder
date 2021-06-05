@@ -27,9 +27,6 @@ def faq(request):
 def about(request):
 	return render(request, 'layout/about.html', {'title': 'Acerca de'})
 
-def notifications(request):
-	return render(request, 'layout/notifications.html', {'title': 'Notificaciones'})
-
 def tools(request):
 	return render(request, 'layout/tools.html', {'title': 'Herramientas'})
 

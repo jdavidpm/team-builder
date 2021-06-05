@@ -526,16 +526,18 @@ class TaskActivity(models.Model):
 		return f'{self.date}: {self.user} {self.description}'
 
 class Notification(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
 	category = models.CharField(max_length=30)
-	notification_text = models.CharField(max_length=100)
-	date = models.DateTimeField(auto_now=True)
+	text = models.CharField(max_length=100)
+	date = models.DateTimeField(auto_now_add=True)
 	join_invitation = models.ForeignKey(JoinInvitation, on_delete=models.CASCADE, null=True, blank=True)
 	join_request = models.ForeignKey(JoinRequest, on_delete=models.CASCADE, null=True, blank=True)
 	task_activity = models.ForeignKey(TaskActivity, on_delete=models.CASCADE, null=True, blank=True)
+	new = models.BooleanField(default=True)
+	seen = models.BooleanField(default=False)
 
 	def __str__(self):
-		return f'{self.date}: {self.notification_text}'
+		return f'{self.date}: {self.text}'
 
 
 class Association(models.Model):

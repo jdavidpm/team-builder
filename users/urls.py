@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 from .forms import SignInFrom
 
 urlpatterns = [
+    path('notifications/service', views.notifications, name='users-notifications'),
+    path('notifications/', views.notifications_list, name='users-notifications-list'),
     path('profile/<str:username>/', views.profile, name='users-profile'),
     path('signup/', views.signup, name='users-signup'),
     path('activate/<uidb64>/<token>/', views.activate, name='users-activate'),

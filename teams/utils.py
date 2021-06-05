@@ -1,5 +1,7 @@
+from datetime import date
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from users.models import JoinInvitation, JoinRequest
+from users.models import JoinInvitation, JoinRequest, Notification, Team
 
 def send_email_invite(subject, message, email_from, email_to, fail, team, founder):
 	return send_mail('Acabas de recibir una invitación - ' + subject,
@@ -7,12 +9,16 @@ def send_email_invite(subject, message, email_from, email_to, fail, team, founde
 
 def create_invitation(user_to, from_user, team_to):
 	new_invitation = JoinInvitation(to_user=user_to, team=team_to)
-	new_request = JoinRequest(team=team_to, user=from_user)
 	new_invitation.save()
-	new_request.save()
+	new_notification = Notification(
+		user = user_to,
+		category = "Invitación de equipo",
+		text = f'{from_user} te ha invitado a unirte a su equipo: "{team_to}".',
+		join_invitation = new_invitation
+	)
+	new_notification.save()
+	
 
 def delete_invitation(to_user, team_from):
     old_invitation = JoinInvitation.objects.filter(to_user=to_user, team=team_from)
-    old_request = JoinRequest.objects.filter(team=team_from, user=to_user)
     old_invitation.delete()
-    old_request.delete()

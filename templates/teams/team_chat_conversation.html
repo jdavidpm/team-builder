@@ -28,11 +28,11 @@
 {% endblock content %}
 
 {% block script %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         var chat = {{ chat.id }};
         var objDiv = document.getElementById("chatConversation");
-        const Url='/teams/chats/' + chat + '/service';
+        const Url = "{% url 'teams-chat-service' chat.id %}";
+        //const Url='/teams/chats/' + chat + '/service';
         scroll = true
         var message = document.getElementById("id_text");
         message.classList.add("form-control");

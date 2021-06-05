@@ -1,0 +1,41 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div id="notifications-body" class="pt-5">
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div><span class="h4">Notificaciones</span></div>
+				{% if notifications %}
+				<div class="mt-3">
+					<ul class="list list-inline">
+						{% for notification in notifications %}
+						<div class="taskdiv">
+						{% if notification.task_activity %}
+						<a class="tasklink" href="#"></a>
+						{% endif %}
+						{% if notification.join_invitation %}
+						<a class="tasklink" href="{% url 'teams-join-request' %}"></a>
+						{% endif %}
+						<li class="d-flex justify-content-between">
+							<div class=" d-flex flex-row align-items-center ">
+								<div class="ml-2">
+									<p class="{% if notification.new %} h5 {% endif %} mb-0">{{ notification.category }}</p>
+									<p>{{ notification.text }}</p>
+									<div class="d-flex flex-row mt-1 text-black-50 date-time">
+										<div><i class="fa fa-calendar-o"></i><span class="ml-2">{{ notification.date }}</span></div>
+									</div>
+								</div>
+							</div>
+						</li>
+						</div>
+						{% endfor %}
+					</ul>
+				</div>
+				{% else %}
+				<p class="text-center h4">No hay Notificaciones</h3>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
