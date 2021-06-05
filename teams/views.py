@@ -339,7 +339,7 @@ def teams_join_invitation_done(request):
 	}
 	return render(request, 'teams/teams_join_invitation_done.html', context)
 
-def teams_join_request(request):
+def teams_invitations_list(request):
 	team_respond = request.GET.get('teamRespond')
 	respond_request = request.GET.get('respondRequest')
 	action = request.GET.get('action')
