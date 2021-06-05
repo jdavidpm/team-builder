@@ -199,8 +199,6 @@ def teams_chat_conversation(request, chat_id):
 		form = NewChatMessageForm(request.POST, initial={'from_user': request.user.id, 'read': False, 'chat': chat.id})
 		if form.is_valid():
 			form.save()
-			print("mensaje guardado")
-			# messages.success(request, f'¡Mensaje enviado!')
 			return HttpResponse(status=200)
 		else:
 			messages.error(request, f'Error al enviar el mensaje')
@@ -237,7 +235,6 @@ def teams_chat_new(request, team_id=0):
 				'members': members   
 			})
 		if to_user not in all_members:
-			print("not in user_te")
 			messages.error(request, f'Error al enviar el mensaje')
 			return render(request, 'teams/team_messages_send.html', {
 				'message_form': form,

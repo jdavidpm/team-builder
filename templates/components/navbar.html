@@ -31,7 +31,9 @@
 								</div>
 							</li>
 							{% include 'components/search_bar.html' %}
-							<!--<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2 fs-2"></i></a></li>-->
+							<li id="notifications-item" class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom">
+								<a id="notifications-link" class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'users-notifications-list' %}"></a>
+							</li>
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fs-2 fas fa-sign-out-alt"></i></a></li>
 						{% else %}
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
@@ -50,7 +52,8 @@
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav d-flex align-items-start">
 						<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Página principal"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/' %}active{% endif %}" href="{% url 'layout-index' %}"><i class="fas fa-home px-2"></i>Inicio</a></li>
-						{% if user.is_authenticated %}						
+						{% if user.is_authenticated %}
+							<li class="mb-2 nav-item mx-0 mx-lg-1"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'users-notifications-list' %}"><i class="fas fa-bell px-2"></i>Notificaciones<span id="notifications-sm-span"></span></a></li>						
 							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Mi perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fas fa-user-circle"></i>Perfil</a></li>
 							<li class="mb-2 nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
 								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fas fa-tools"></i>Herramientas</a>
@@ -65,7 +68,6 @@
 								</div>
 							</li>
 							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Manda un mensaje a todo un equipo"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/teams/chats/' %}active{% endif %}" href="{% url 'teams-chat-list' %}"><i class="fas fa-comments px-2"></i>Mensajes Grupales</a></li>
-							<!--<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="No tienes notificaciones nuevas"><a class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'layout-notifications' %}"><i class="fas fa-bell px-2"></i>Notificaciones</a></li>-->
 							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
 							<div class="mb-2 col-12 align-self-end">
 								{% include 'components/search_bar.html' %}

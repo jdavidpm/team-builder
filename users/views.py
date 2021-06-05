@@ -13,6 +13,9 @@ from .utils import *
 from django.conf import settings
 from django.utils.encoding import force_bytes, force_text
 from django.template.loader import render_to_string
+from django.core.serializers.json import DjangoJSONEncoder
+from django.http import HttpResponse
+import json
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):
 	actual_decorator = user_passes_test(
@@ -172,3 +175,21 @@ def update_profile_school(request, username):
 		's_form': s_form,
 	}
 	return render(request, 'users/update_profile_school.html', context)
+
+def notifications(request):
+	notifications = request.user.notifications.all()
+	unread_notifications = [n for n in notifications if not n.seen]
+	json_messages = json.dumps({'unread_notifications': len(unread_notifications)}, cls=DjangoJSONEncoder)
+	return HttpResponse(json_messages)
+
+def notifications_list(request):
+	notifications = request.user.notifications.all().order_by('-date')
+	print(notifications)
+	for notif in notifications:
+		if notif.new:
+			if notif.seen:
+				notif.new = False
+			else:
+				notif.seen = True
+			notif.save()
+	return render(request, 'users/notifications_list.html', {'notifications': notifications})
