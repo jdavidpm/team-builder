@@ -1,7 +1,7 @@
 from datetime import date
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from users.models import JoinInvitation, JoinRequest, Notification, Team
+from users.models import JoinInvitation, Notification
 
 def send_email_invite(subject, message, email_from, email_to, fail, team, founder):
 	return send_mail('Acabas de recibir una invitación - ' + subject,

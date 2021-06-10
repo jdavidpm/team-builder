@@ -532,7 +532,7 @@ def teams_creation(request):
 			message_info = 'Tu búsqueda no dió ningún resultado.'
 		filtered_members = User.objects.filter(Q(profile__in=filtered_members)).distinct().exclude(profile=request.user.profile)
     
-		if action == 'Generar equipo' and is_compatible == 'Personalidad':
+		if (action == 'Generar equipo' or action == 'Crear') and is_compatible == 'Personalidad':
 			rules_list = gen_association_rules() # a list of dicts
 			if not len(interest_dict) and not len(experience_dict) and not len(language_dict) and not len(framework_dict) and not len(distribution_dict) and not len(tool_dict): #in case of not using filter
 				filtered_members = User.objects.all().distinct().exclude(profile=request.user.profile)
@@ -629,9 +629,10 @@ def teams_creation(request):
 			if not Team.objects.filter(name=new_team_name):	
 				new_team = Team(founder=request.user, name=new_team_name)
 				new_team.save()
-				for new_member in filtered_members[:int(team_size)]:
+				print(recommended_members)
+				for new_member in recommended_members[:int(team_size)] if is_compatible == 'Personalidad' else filtered_members[:int(team_size)]:
 					if new_member == request.user: continue
-					send_email_invite('Equipo creado usando Team Builder', 'Equipo creado automaticamente usando Team Builder', request.user.email, [new_member.email], False, new_team.name, request.user.first_name)
+					send_email_invite('Equipo creado usando Team Builder', 'Equipo creado automaticamente usando Team Builder', request.user.email, [new_member.email if new_member.email else 'test@gmail.com'], False, new_team.name, request.user.first_name)
 					create_invitation(new_member, request.user, new_team)
 				#new_team.members.set(filtered_members[:int(team_size)])
 				new_team.members.add(request.user)
