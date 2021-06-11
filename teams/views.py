@@ -363,6 +363,20 @@ def teams_invitations_list(request):
 	team_respond = request.GET.get('teamRespond')
 	respond_request = request.GET.get('respondRequest')
 	action = request.GET.get('action')
+	team_confirm = request.GET.get('teamConfirm')
+	user_confirm = request.GET.get('userConfirm')
+	context = {
+		'title': 'Solicitudes e Invitaciones',
+	}
+	if team_confirm:
+		team_instance = Team.objects.filter(id=team_confirm)[0]
+		user_instance = User.objects.filter(id=user_confirm)[0]
+		if action == 'Confirmar':
+			if respond_request == 'Aceptar':
+				team_instance.members.set(list(team_instance.members.all()) + [user_instance])
+			else:
+				request_done_already = JoinRequest.objects.filter(team=team_instance, user=user_instance)
+				request_done_already.delete()
 	if team_respond:
 		team_instance = Team.objects.filter(name=team_respond)[0]
 		if action == 'Responder':
@@ -372,7 +386,7 @@ def teams_invitations_list(request):
 				delete_invitation(request.user, team_instance)
 		elif action == 'Salir':
 			team_instance.members.remove(request.user)
-	return render(request, 'teams/teams_join_list.html')
+	return render(request, 'teams/teams_join_list.html', context)
 
 # association rules functions (there might be a better place to put all this stuff)
 TEAMS_SAMPLE_FRACTION = 0.3 #(top TEAMS_SAMPLE_FRACTION % in performance evaluation)
