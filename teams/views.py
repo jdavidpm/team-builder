@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseNotFound
-from users.models import Message, Chat, Team, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation
+from users.models import Message, Chat, Team, Profile, Field, Tool, Framework, Language, Distribution, TeamEvaluation, JoinRequest
 from django.utils import timezone
 from .forms import *
 from django.db.models import Q
@@ -311,6 +311,26 @@ def team_evaluate(request, id):
 		
 	return render(request, 'teams/team_evaluate.html', {'title': 'Auto-evaluación de desempeño de equipo', 'form': form, 'average_eval_bool': average_eval_bool})
 
+def teams_join_request(request):
+	team_to_join = Team.objects.filter(id=int(request.GET.get('teamToJoin')))[0]
+	request_done_already = JoinRequest.objects.filter(team=team_to_join, user=request.user)
+	if len(request_done_already):
+		request_done_already.delete()
+		context = {
+			'title': 'Solicitud eliminada',
+			'type_alert': 'success',
+			'message_alert': 'Elimistaste tu solicitud'
+		}
+	else:
+		new_request = JoinRequest(team=team_to_join, user=request.user)
+		new_request.save()
+		context = {
+			'title': 'Tu solicitud de acaba de enviar',
+			'type_alert': 'success',
+			'message_alert': 'Tu solicitud de acaba de enviar con éxito, espera a que te respondan'
+		}
+	return render(request, 'teams/teams_join_request.html', context)
+
 def teams_join_invitation(request):
 	id_receiver = request.GET.get('toReceive')
 	receiver_user = User.objects.filter(id=id_receiver)[0]
@@ -352,7 +372,7 @@ def teams_invitations_list(request):
 				delete_invitation(request.user, team_instance)
 		elif action == 'Salir':
 			team_instance.members.remove(request.user)
-	return render(request, 'teams/teams_join_request.html')
+	return render(request, 'teams/teams_join_list.html')
 
 # association rules functions (there might be a better place to put all this stuff)
 TEAMS_SAMPLE_FRACTION = 0.3 #(top TEAMS_SAMPLE_FRACTION % in performance evaluation)

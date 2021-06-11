@@ -20,5 +20,5 @@ def create_invitation(user_to, from_user, team_to):
 	
 
 def delete_invitation(to_user, team_from):
-    old_invitation = JoinInvitation.objects.filter(to_user=to_user, team=team_from)
-    old_invitation.delete()
+	old_invitation = JoinInvitation.objects.filter(to_user=to_user, team=team_from)
+	old_invitation.delete()

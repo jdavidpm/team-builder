@@ -450,7 +450,7 @@ class JoinRequest(models.Model):
 	date = models.DateTimeField(auto_now=True, null=False)
 	
 	def __str__(self):
-    		return f'Invitación de {self.user.username} para unirse al equipo {self.team.name}'
+		return f'Solicitud de {self.user.username} para unirse al equipo {self.team.name}'
 
 
 class JoinInvitation(models.Model):
