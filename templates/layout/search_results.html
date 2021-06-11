@@ -253,6 +253,11 @@
 			{% if obj|get_class == "Team" %}
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="bg-dark rounded py-4">
+						<div class="d-flex justify-content-end pt-0 pb-2 mt-0 mx-2">
+							<a class="nounderline" href="{% url 'teams-join-invitation' %}?toReceive={{obj.id}}" data-toggle="tooltip" title="Solicitar unirme">
+								<i class="fas fa-user-plus btn btn-outline-light border-0"></i>
+							</a>
+						</div>
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
 						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
 							<i class="fas fa-info-circle mr-2"></i>información

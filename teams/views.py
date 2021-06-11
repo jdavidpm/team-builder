@@ -41,14 +41,14 @@ def team_update(request, id):
 	if len(team):
 		team = team[0]
 		if request.method == 'POST':
-			u_form = TeamUpdateForm(request.POST, instance=team)
+			u_form = TeamUpdateForm(request.POST, instance=team, current_user=request.user)
 			
 			if u_form.is_valid():
 				u_form.save()
 				messages.success(request, f'¡El equipo fue actualizada con éxito!')
 				return redirect('teams-item', id=team.id)
 		else:
-			u_form = TeamUpdateForm(instance=team)
+			u_form = TeamUpdateForm(instance=team, current_user=request.user)
 		context = {
 			'u_form': u_form,
 			'title': 'Actualizar Equipo - ' + str(team.name)
@@ -580,10 +580,10 @@ def teams_creation(request):
 						elif user_facet in rule['consecuent']:
 							# print(user_facet, " in ", rule['consecuent'])
 							target_facets.extend([facet for facet in list(rule['antecedent']) if facet not in target_facets])
-				# print("target facets: ", target_facets)
+				print("target facets: ", target_facets)
 
 				
-				# print(filtered_members)
+				print('filtered_members: ', filtered_members)
 				for member in filtered_members:
 					member_personalities = []
 					selected_member_personalities = []
@@ -612,15 +612,12 @@ def teams_creation(request):
 				ids = []
 				duplicates = []
 				recommended_members = sorted(recommended_members, key = lambda i: abs(i['selected_facet']['threshold']))[::-1]
-				recommended_members = [ member_dict['member'] for member_dict in recommended_members]
-				for i, member in enumerate(recommended_members):
+				rep_recommended_members = [ member_dict['member'] for member_dict in recommended_members]
+				for i, member in enumerate(rep_recommended_members):
 					if member.id in ids:
 						duplicates.append(i)
 					ids.append(member.id)
-				for index in duplicates:
-					recommended_members.pop(index)
-				print("ordered recomended")
-				print(recommended_members) # descending ordered members list (most recommended first)
+				recommended_members = [member for i, member in enumerate(rep_recommended_members) if i not in duplicates]
 				message_info = False
 			else:
 				message_info = "Lo sentimos, no hay recomendaciones"

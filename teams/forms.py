@@ -1,27 +1,10 @@
 from django import forms
-from users.models import Chat, ChatMessage, Message, Team
+from users.models import Chat, ChatMessage, Message, Team, Project
 from django.contrib.auth.models import User
 from json import loads
 from urllib import request
 from users.widgets import ToggleWidget
 from django.db.models import Q
-
-class TeamUpdateForm(forms.ModelForm):
-	class Meta:
-		model = Team
-		fields = ['name', 'projects', 'description', 'image', 'private']
-
-		widgets = {
-			'private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
-			}
-
-		labels = {
-			'name':('Nombre'),
-			'projects':('Proyectos'),
-			'description':('Descripción'),
-			'image':('Fondo'),
-			'private':('Privado')
-			}
 
 class TeamCreateForm(forms.ModelForm):
 	class Meta:
@@ -41,6 +24,27 @@ class TeamCreateForm(forms.ModelForm):
 		super(TeamCreateForm, self).__init__(*args, **kwargs)                       
 		self.fields['founder'].disabled = True
 		self.fields['image'].required = False
+
+class TeamUpdateForm(forms.ModelForm):
+	class Meta:
+		model = Team
+		fields = ['name', 'projects', 'description', 'image', 'private']
+
+		widgets = {
+			'private':ToggleWidget(options={ 'on': 'Verdadero', 'off': 'Falso'})
+			}
+
+		labels = {
+			'name':('Nombre'),
+			'projects':('Proyectos'),
+			'description':('Descripción'),
+			'image':('Fondo'),
+			'private':('Privado')
+			}
+	def __init__ (self, *args, **kwargs):
+		current_user = kwargs.pop('current_user')
+		super(TeamUpdateForm, self).__init__(*args, **kwargs)
+		self.fields["projects"].queryset = Project.objects.filter(author=current_user).distinct()
 
 class TeamMembersForm(forms.ModelForm):
 	class Meta:
