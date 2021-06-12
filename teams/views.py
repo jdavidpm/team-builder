@@ -363,6 +363,13 @@ def teams_join_request(request):
 	else:
 		new_request = JoinRequest(team=team_to_join, user=request.user)
 		new_request.save()
+		new_notification = Notification(
+			user = team_to_join.founder,
+			category = "Solicitud de integrante de equipo",
+			text = f'{request.user} ha solicitado unirse a tu equipo: "{team_to_join}".',
+			join_request = new_request
+		)
+		new_notification.save()
 		context = {
 			'title': 'Tu solicitud de acaba de enviar',
 			'type_alert': 'success',
