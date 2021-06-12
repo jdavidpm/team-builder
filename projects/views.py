@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from users.models import Task, Team, Project, User, ResourceURL
+from users.models import Task, TaskActivity, Team, Project, User, ResourceURL, Notification
 from django.utils import timezone
 from .forms import ProjectUpdateForm, ProjectCreateForm, TaskForm, NewTaskForm, ResourceURLForm
 from django.http import HttpResponseNotFound, HttpResponseRedirect
@@ -127,6 +127,25 @@ def filtered_tasks(request, filter_by="", object_id=""):
     }
     return render(request, 'projects/tasks.html', context)
 
+
+def saveTaskActivity(on_task, by_user, with_description, recipients):
+    print("on savetaskactivity function")
+    new_task_activity = TaskActivity(
+        task = on_task,
+        user = by_user,
+        description = with_description
+    )
+    new_task_activity.save()
+    for recipient in recipients:
+        if recipient != by_user:
+            new_notification = Notification(
+                user = recipient,
+                category = f'Actividad en la tarea "{on_task}" del proyecto "{on_task.project}"',
+                text = with_description,
+                task_activity = new_task_activity
+            )
+            new_notification.save()
+
 @login_required
 def updateTask(request, pk):
     task = get_object_or_404(Task, pk=pk)
@@ -145,10 +164,38 @@ def updateTask(request, pk):
     for team in teams_in_project:
         members |= team.members.all()
     form = TaskForm(instance=task, team_members=members)
+    data = form.data
 
     if request.method=='POST':
-        form = TaskForm(request.POST, instance=task)
+        form = TaskForm(request.POST, instance=task, initial=data)
         if form.is_valid():
+            if form.has_changed():
+                for field in form.changed_data:
+                    if field == 'name':
+                        description = f"{request.user} cambió el nombre de la tarea \"{form.initial['name']}\" a \"{form.cleaned_data['name']}\""
+                    if field == 'description':
+                        description = f"{request.user} actualizó la descripción de la tarea \"{form.cleaned_data['name']}\""
+                    if field == 'status':
+                        if form.cleaned_data['status'] == 'pendiente':
+                            status = 'Pendiente'
+                        elif form.cleaned_data['status'] == 'en desarrollo':
+                            status = "En desarrollo"
+                        if form.cleaned_data['status'] == 'en revision':
+                            status = "Lista para revisión"
+                        if form.cleaned_data['status'] == 'completada':
+                            status = "Completada"
+                        description = f"{request.user} actualizó el estado de la tarea \"{form.cleaned_data['name']}\" a: {status}"
+                    if field == 'due_date':
+                        description = f"{request.user} actualizó la fecha de vencimiento de la tarea \"{form.cleaned_data['name']}\" a: {form.cleaned_data['due_date'].strftime('%x %X')}"
+                    if field == 'assigned_members':
+                        new_assigned_members = [str(member) for member in form.cleaned_data['assigned_members']]
+                        description = f"{request.user} asignó la tarea \"{form.cleaned_data['name']}\" a: {'%s' % ', '.join(new_assigned_members)}"
+                    saveTaskActivity(
+                        task,
+                        request.user,
+                        description,
+                        members.distinct()
+                    )
             form.save()
             messages.success(request, f'¡La tarea fue actualizada con éxito!')
         else:
@@ -184,7 +231,13 @@ def createTask(request, project_id):
         form = NewTaskForm(request.POST, initial={'project': project, 'author': request.user}, team_members=members)
         
         if form.is_valid():
-            form.save()
+            new_task = form.save()
+            saveTaskActivity(
+                new_task,
+                request.user,
+                f'{request.user} creó la tarea "{new_task}" en el proyecto "{new_task.project}"',
+                members.distinct()
+            )
             messages.success(request, f'¡La tarea fue creada con éxito!')
             return HttpResponseRedirect(reverse('projects-tasks'))
         else:

@@ -18,12 +18,7 @@
                 <span class="ml-3">Proyecto: &nbsp</span> <a href="#">{{task_project}}</a>
             </div>
             <div class="form-row mt-3">
-                <div class="col-md-7">
-                    {{task_form.description}}
-                </div>
-                <div class="col-md-5">
-                    <textarea disabled id="activity_log" class="form-control">Actividad</textarea>
-                </div>
+                {{task_form.description}}
             </div>
             <div class="form-row mt-1">
                 <div class="col">{{task_form.assigned_members.label}}:{{task_form.assigned_members}}</div>

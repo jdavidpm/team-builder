@@ -16,7 +16,9 @@
 
 							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Mi perfil"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/profile/'|add:user.username|add:'/' %}active{% endif %}" href="{% url 'users-profile' user.username %}"><i class="px-2 fs-2 fas fa-user-circle"></i></a></li>
 
-							<li class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Manda mensajes a todo un equipo"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/teams/chats/' %}active{% endif %}" href="{% url 'teams-chat-list' %}"><i class="fas fa-comments fs-2"></i></a></li>
+							<li id="messages-item" class="nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Manda mensajes a todo un equipo">
+								<a id="messages-link" class="nav-link py-1 px-0 px-lg-3 rounded" href="{% url 'teams-chat-list' %}"></a>
+							</li>
 							
 							<li class="nav-item dropdown" data-toggle="tooltip" data-placement="left" title="Herramientas">
 								<a class="nav-link dropdown-toggle py-1 px-0 px-lg-3 rounded {% if request.path == '/tools/' %}active{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="px-2 fs-2 fas fa-tools"></i></a>
@@ -67,7 +69,7 @@
 									<a class="dropdown-item {% if request.path == '/tools/' %}active{% endif %}" href="{% url 'layout-tools'%}">Todas</a>
 								</div>
 							</li>
-							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Manda un mensaje a todo un equipo"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/teams/chats/' %}active{% endif %}" href="{% url 'teams-chat-list' %}"><i class="fas fa-comments px-2"></i>Mensajes Grupales</a></li>
+							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Manda un mensaje a todo un equipo"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/teams/chats/' %}active{% endif %}" href="{% url 'teams-chat-list' %}"><i class="fas fa-comments px-2"></i>Mensajes Grupales<span id="messages-sm-span"></span></a></li>
 							<li class="mb-2 nav-item mx-0 mx-lg-1" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><a class="nav-link py-1 px-0 px-lg-3 rounded {% if request.path == '/signout/' %}active{% endif %}" href="{% url 'users-signout'%}"><i class="px-2 fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
 							<div class="mb-2 col-12 align-self-end">
 								{% include 'components/search_bar.html' %}

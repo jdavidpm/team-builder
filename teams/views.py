@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.contrib.auth import login
 from users.widgets import PictureWidget
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect, resolve_url
 from django.urls import reverse
@@ -104,16 +106,16 @@ def teams_chat_inbox(request, team_id=None):
 	received_messages = request.user.received_messages.all().order_by('-date')
 	sent_messages = request.user.sent_messages.all().order_by('-date')
 	team = None
-	if team_id:
-		team = get_object_or_404(Team, pk=team_id)
-		received_messages = [message for message in received_messages if message.from_user in team.members.all()]
-		sent_messages = [message for message in sent_messages if message.to_user in team.members.all()]
+	for message in received_messages:
+		if message.new:
+			message.new = False
+			message.save()
 	context = {
 		'teams': user_teams,
 		'received': received_messages,
 		'sent': sent_messages,
-		'team': team,
 		'timezone_now': timezone.now(),
+		'new_inbox_messages': 0
 	}
 	return render(request, 'teams/team_messages_inbox.html', context)
 
@@ -147,7 +149,26 @@ def teams_chat_service(request, chat_id):
 			'text': message.text,
 			'date': message.date
 		})
+		if request.user in message.unread_by.all():
+			message.unread_by.remove(request.user)
+			# message.save()
 	json_messages = json.dumps(messages_list, cls=DjangoJSONEncoder)
+	return HttpResponse(json_messages)
+
+
+@login_required
+def teams_chat_notif(request):
+	teams = request.user.membership_teams.all()
+	chats = []
+	for team in teams:
+		if hasattr(team, 'chat'):
+			chats.append(team.chat)
+	chat_messages = []
+	for chat in chats:
+		chat_messages.extend(chat.chatmessage_set.all())
+	new_chat_messages = [message for message in chat_messages if request.user in message.new_for.all()]
+	new_messages = [message for message in request.user.received_messages.all() if message.new]
+	json_messages = json.dumps({'new_messages': len(new_chat_messages)+len(new_messages)}, cls=DjangoJSONEncoder)
 	return HttpResponse(json_messages)
 
 
@@ -155,11 +176,24 @@ def teams_chat_service(request, chat_id):
 def teams_chat_list(request):
 	teams = request.user.membership_teams.all()
 	chats = []
+	chat_dicts_list = []
 	for team in teams:
 		if hasattr(team, 'chat'):
 			chats.append(team.chat)
+	for chat in chats:
+		unread_messages = 0
+		for message in chat.chatmessage_set.all():
+			if request.user in message.new_for.all():
+				message.new_for.remove(request.user)
+				# message.save()
+			if request.user in message.unread_by.all():
+				unread_messages += 1
+		chat_dicts_list.append({'chat': chat, 'unread_messages': unread_messages})
+	new_inbox_messages = [message for message in request.user.received_messages.all() if message.new]
+
 	context = {
-		'chats': chats
+		'chats': chat_dicts_list,
+		'new_inbox_messages': len(new_inbox_messages)
 	}
 	return render(request, 'teams/team_chat_list.html', context)
 
@@ -191,14 +225,18 @@ def teams_chat_add(request):
 @login_required
 def teams_chat_conversation(request, chat_id):
 	chat = get_object_or_404(Chat, pk=chat_id)
-
+	new_inbox_messages = [message for message in request.user.received_messages.all() if message.new]
 	if chat.team not in request.user.membership_teams.all():
 		return HttpResponseNotFound()
-	form = NewChatMessageForm(initial={'from_user': request.user.id, 'read': False, 'chat': chat.id})
+	form = NewChatMessageForm(initial={'from_user': request.user.id, 'chat': chat.id})
 	if request.method == 'POST':
-		form = NewChatMessageForm(request.POST, initial={'from_user': request.user.id, 'read': False, 'chat': chat.id})
+		form = NewChatMessageForm(request.POST, initial={'from_user': request.user.id, 'chat': chat.id})
 		if form.is_valid():
-			form.save()
+			new_chat_message = form.save()
+			for member in chat.team.members.all():
+				if (member != request.user):
+					new_chat_message.new_for.add(member)
+					new_chat_message.unread_by.add(member)
 			return HttpResponse(status=200)
 		else:
 			messages.error(request, f'Error al enviar el mensaje')
@@ -206,7 +244,8 @@ def teams_chat_conversation(request, chat_id):
 
 	context = {
 		'form': form,
-		'chat': chat
+		'chat': chat,
+		'new_inbox_messages': len(new_inbox_messages)
 	}
 	return render(request, 'teams/team_chat_conversation.html', context)
 
@@ -223,7 +262,7 @@ def teams_chat_new(request, team_id=0):
 		members = set([member for member in team.members.all() if member != request.user])
 	else:
 		members = all_members
-	form = NewMessageForm(initial={'from_user': request.user.id, 'read': False, 'date': datetime.now()})
+	form = NewMessageForm(initial={'from_user': request.user.id, 'read': False, 'new':True, 'date': datetime.now()})
 	if request.method=='POST':
 		try:
 			to_user = get_object_or_404(User, pk=request.POST['toUser'])
@@ -241,7 +280,7 @@ def teams_chat_new(request, team_id=0):
 				'teams': user_teams,
 				'members': members   
 			})
-		form = NewMessageForm(request.POST, initial={'from_user': request.user.id, 'read': False, 'to_user': to_user.id, 'date': datetime.now()})
+		form = NewMessageForm(request.POST, initial={'from_user': request.user.id, 'read': False, 'new': True, 'to_user': to_user.id, 'date': datetime.now()})
 		if form.is_valid():
 			form.save()
 			messages.success(request, f'¡El mensaje enviado!')
