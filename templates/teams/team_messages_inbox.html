@@ -5,11 +5,7 @@
         {% include "components/messages_inbox_sidebar.html" %}
         <div class="bg-grayish rounded py-2 col-11 col-md-8 mt-5 pt-5" id="tasksContent">
             {% block messages %}{% include "components/messages.html" %}{% endblock %}
-            <span class="text-dark h4">Mensajes Privados
-                {% if request.resolver_match.kwargs.team_id %}
-                > {{ team }}
-                {% endif %}
-            </span>
+            <span class="text-dark h4">Mensajes Privados</span>
             <div class="row mx-1 my-2 d-flex flex-column">
                 {% if teams %}
                 <a id="allTeams" href="{% url 'teams-chat-new' %}" class="btn btn-dark h6 float-right mt-2 text-wrap">

@@ -11,10 +11,10 @@
 						{% for notification in notifications %}
 						<div class="taskdiv">
 						{% if notification.task_activity %}
-						<a class="tasklink" href="#"></a>
+						<a class="tasklink" href="{% url 'projects-update_task' notification.task_activity.task.id %}"></a>
 						{% endif %}
 						{% if notification.join_invitation %}
-						<a class="tasklink" href="{% url 'teams-join-request' %}"></a>
+						<a class="tasklink" href="{% url 'teams-join-list' %}"></a>
 						{% endif %}
 						<li class="d-flex justify-content-between">
 							<div class=" d-flex flex-row align-items-center ">

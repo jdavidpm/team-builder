@@ -12,6 +12,7 @@ urlpatterns = [
     path('teams/messages/new/', views.teams_chat_new, name='teams-chat-new'),
     path('teams/messages/new/<int:team_id>/', views.teams_chat_new, name='teams-chat-new'),
     path('teams/messages/<int:message_id>/', views.teams_chat_item, name='teams-chat-item'),
+    path('teams/chats/notification/service', views.teams_chat_notif, name='teams-chat-notif-service'),
     path('teams/create/', views.team_create, name='teams-create'),
     path('teams/creation/', views.teams_creation, name='teams-creation'),
     path('teams/invitations/', views.teams_invitations_list, name='teams-join-list'),

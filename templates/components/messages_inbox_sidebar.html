@@ -12,6 +12,13 @@
             class="list-group-item list-group-item-action border-dark
             {% if 'message' in request.path %} active {% endif %} h6">
             Mensajes privados
+            {% if new_inbox_messages %}
+            {% if new_inbox_messages == 1 %}
+             (1 nuevo)
+            {% else %}
+             ({{ new_inbox_messages }} nuevos)
+            {% endif %}
+            {% endif %}
             </a>
 
         </div>

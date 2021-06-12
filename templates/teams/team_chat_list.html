@@ -15,9 +15,19 @@
             {% if chats %}
                 {% for chat in chats %}
                 <div class="taskdiv content-section mx-2 border mb-2 mt-5 border-dark rounded taskbox">
-                    <a class="tasklink" href="{% url 'teams-chat-conversation' chat.id %}"></a>
+                    <a class="tasklink" href="{% url 'teams-chat-conversation' chat.chat.id %}"></a>
                     <div>
-                        <p class="h6 mb-0">{{ chat.team }}</p>
+                        <p class="h6 mb-0">
+                            {{ chat.chat.team }}
+                            {% if chat.unread_messages %}
+                            ({{ chat.unread_messages }}
+                            {% if chat.unread_messages == 1 %}
+                            mensaje nuevo
+                            {% else %}
+                            mensajes nuevos
+                            {% endif %})
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
                 {% endfor %}

@@ -84,6 +84,7 @@ class NewMessageForm(forms.ModelForm):
 		self.fields['from_user'].disabled = True
 		self.fields['to_user'].disabled = True
 		self.fields['read'].disabled = True
+		self.fields['new'].disabled = True
 		self.fields['date'].disabled = True
 		
 	class Meta:
@@ -95,7 +96,6 @@ class NewChatMessageForm(forms.ModelForm):
 	def __init__(self,*args,**kwargs):
 		super(NewChatMessageForm,self).__init__(*args,**kwargs)
 		self.fields['from_user'].disabled = True
-		self.fields['read'].disabled = True
 		self.fields['chat'].disabled = True
 		
 	class Meta:

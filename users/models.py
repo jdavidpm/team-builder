@@ -14,6 +14,7 @@ class Message(models.Model):
 	to_user = models.ForeignKey(User, models.CASCADE, related_name='received_messages')
 	text = models.TextField(null=False, blank=False)
 	date = models.DateTimeField(default=datetime.datetime.now())
+	new = models.BooleanField(default=True)
 	read = models.BooleanField(default=False)
 
 	def __str__(self):
@@ -356,8 +357,9 @@ class ChatMessage(models.Model):
 	chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
 	from_user = models.ForeignKey(User, on_delete=models.CASCADE)
 	text = models.TextField()
-	date = models.DateTimeField(auto_now=True)
-	read = models.BooleanField(default=False)
+	date = models.DateTimeField(auto_now_add=True)
+	new_for = models.ManyToManyField(User, related_name='new_chat_messages', null=True, blank=True)
+	unread_by = models.ManyToManyField(User, related_name='unread_chat_messages', null=True, blank=True)
 
 	def __str__(self):
 		return self.text
@@ -511,7 +513,7 @@ class Task(models.Model):
 		User,
 		through = 'TaskActivity',
 		through_fields= ('task', 'user'),
-		blank=True
+		blank=True,
 	)
 	def __str__(self):
 		return f'{self.name}'
@@ -527,7 +529,7 @@ class TaskActivity(models.Model):
 
 class Notification(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
-	category = models.CharField(max_length=30)
+	category = models.CharField(max_length=100)
 	text = models.CharField(max_length=100)
 	date = models.DateTimeField(auto_now_add=True)
 	join_invitation = models.ForeignKey(JoinInvitation, on_delete=models.CASCADE, null=True, blank=True)
