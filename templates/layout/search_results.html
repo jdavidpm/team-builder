@@ -233,7 +233,19 @@
 			{% if obj|get_class == "Project" %}
 				<div class="col-10 col-sm-10 col-md-3 col-lg-3 col-xl-3 my-2 mx-4">
 					<div class="bg-dark rounded py-4">
+						<div class="d-flex justify-content-end pt-0 pb-2 mt-0 mx-2">
+							{% if obj.team_set.all.0 in user.join_requested_teams.all %}
+								<a class="nounderline" href="{% url 'teams-join-request' %}?teamToJoin={{obj.team_set.all.0.id}}" data-toggle="tooltip" title="Elimiar solicitud">
+									<i class="fas fa-user-minus btn btn-outline-light border-0"></i>
+								</a>
+							{% else %}
+								<a class="nounderline" href="{% url 'teams-join-request' %}?teamToJoin={{obj.team_set.all.0.id}}" data-toggle="tooltip" title="Solicitar unirme (Varios equipos pueden trabar en este proyecto, solo se le enviará a uno)">
+									<i class="fas fa-user-plus btn btn-outline-light border-0"></i>
+								</a>
+							{% endif %}
+						</div>
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
+						<h6 class="text-muted mt-n2 pt-0">(Proyecto)</h6>
 						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_project_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_project_{{forloop.counter}}">
 							<i class="fas fa-info-circle mr-2"></i>información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -245,7 +257,7 @@
 						<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-start">
 							<h6><span class="text-muted">Autor: </span>{{ obj.author }}</h6>
 							<h6 class="text-capitalize"><span class="text-muted">Estado: </span>{{ obj.status }}</h6>
-							<h6><span class="text-muted">Campos: </span> {{ obj.fields.all|join:", " }} </h6>
+							<h6><span class="text-muted">Áreas: </span> {{ obj.fields.all|join:", " }} </h6>
 						</div>
 					</div>
 				</div>
@@ -265,6 +277,7 @@
 							{% endif %}
 						</div>
 						<a href="{{ obj.get_absolute_url }}" class="nounderline text-wrap text-white"><h3>{{ obj.name }}</h3></a>
+						<h6 class="text-muted mt-n2 pt-0">(Equipo)</h6>
 						<a class="btn btn-outline-info border-0" data-toggle="collapse" href="#card_team_{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="card_team_{{forloop.counter}}">
 							<i class="fas fa-info-circle mr-2"></i>información
 							<i class="ml-2 fas fa-chevron-down text-collapsed"></i><!--More-->
@@ -275,6 +288,7 @@
 					<div class="collapse" id="card_team_{{forloop.counter}}">
 						<div class="shadow-sm bg-grayish rounded-bottom text-left p-2 d-flex flex-wrap justify-content-around">
 							<h6><span class="text-muted">Creador: </span>{{ obj.founder }}</h6>
+							<h6><span class="text-muted">Proyectos: </span> {{ obj.projects.all|join:", " }} </h6>
 						</div>
 					</div>
 				</div>
