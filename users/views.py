@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.template.loader import render_to_string
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
+from django.contrib.auth.decorators import user_passes_test as passes_test
 import json
 
 def logout_required(function=None, logout_url=settings.LOGOUT_URL):
@@ -75,31 +76,35 @@ def activate(request, uidb64, token):
 @login_required
 def profile(request, username):
 	fields, users = [], []
-	if username == request.user.username:
-		users = User.objects.all().exclude(username=request.user.username)
-		for field in request.user.profile._meta.many_to_many:
-			if bool(getattr(request.user.profile, field.name).all()):
-				fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
-		return render(request, 'users/profile.html', {'title': request.user.first_name, 'fields': fields, 'users': users})
+	if request.user.profile.personality_h:
+		if username == request.user.username:
+			users = User.objects.all().exclude(username=request.user.username)
+			for field in request.user.profile._meta.many_to_many:
+				if bool(getattr(request.user.profile, field.name).all()):
+					fields.append({'name': names[field.name][0], 'values': getattr(request.user.profile, field.name).all(), 'icon': names[field.name][1]})
+			return render(request, 'users/profile.html', {'title': request.user.first_name, 'fields': fields, 'users': users})
+		else:
+			users = User.objects.all().exclude(username=username)
+			foreign_user = User.objects.filter(username=username).first()
+			user_network = request.user.membership_teams.all()
+			is_acquaintance = False
+			for t in user_network:
+				if foreign_user in t.members.all():
+					is_acquaintance = True
+			for field in foreign_user.profile._meta.many_to_many:
+				if bool(getattr(foreign_user.profile, field.name).all()):
+					fields.append({'name': names[field.name][0], 'values': getattr(foreign_user.profile, field.name).all(), 'icon': names[field.name][1]})
+			context = {
+				'is_acquaintance': is_acquaintance,
+				'title': foreign_user.first_name,
+				'foreign_user': foreign_user,
+				'fields': fields,
+				'users': users
+			}
+			return render(request, 'users/foreign_profile.html', context)
 	else:
-		users = User.objects.all().exclude(username=username)
-		foreign_user = User.objects.filter(username=username).first()
-		user_network = request.user.membership_teams.all()
-		is_acquaintance = False
-		for t in user_network:
-			if foreign_user in t.members.all():
-				is_acquaintance = True
-		for field in foreign_user.profile._meta.many_to_many:
-			if bool(getattr(foreign_user.profile, field.name).all()):
-				fields.append({'name': names[field.name][0], 'values': getattr(foreign_user.profile, field.name).all(), 'icon': names[field.name][1]})
-		context = {
-			'is_acquaintance': is_acquaintance,
-			'title': foreign_user.first_name,
-			'foreign_user': foreign_user,
-			'fields': fields,
-			'users': users
-		}
-		return render(request, 'users/foreign_profile.html', context)
+		messages.warning(request, f'Necesitas completar el test para usar la plataforma.')
+		return redirect('layout-hexaco-test')
 
 @login_required
 def update_profile(request, username):

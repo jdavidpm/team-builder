@@ -3,6 +3,9 @@
 
 {% block header %}
 	<div class="masthead text-center mt-n5 mb-0 pb-0 d-flex justify-content-center align-items-baseline flex-wrap">
+		<div class="col-11 col-sm-9 px-5">
+			{% block messages %}{% include "components/messages.html" %}{% endblock %}
+		</div>
 		<div class="col-11 col-sm-8 jumbotron bg-dark shadow-sm">
 			<h1 class="fs-3 text-white"><i class="fas fa-dice-d6 mr-4"></i>Test de Personalidad HEXACO</h1>
 		</div>
@@ -57,7 +60,6 @@
 							</div>
 						</legend>
 						<div class="jumbotron border border-dark shadow-sm mt-2">
-							{% block messages %}{% include "components/messages.html" %}{% endblock %}
 							{% for field in form %}
 								<div class="d-flex flex-column mb-5 border border-top-0 rounded-bottom">
 									{{ form|as_crispy_errors }}

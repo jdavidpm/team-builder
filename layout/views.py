@@ -17,10 +17,16 @@ with request.urlopen("https://jdavidpm.github.io/my-static-files/teamBuilder/jso
 def index(request):
 	tasks_list = Task.objects.all()
 	context = {
-		'tasks': tasks_list
-	}
-	return render(request, 'layout/index.html', context)
-
+    			'tasks': tasks_list
+    		}
+	if not request.user.is_authenticated:
+		return render(request, 'layout/index.html', context)
+	else:
+		if request.user.profile.personality_h:
+			return render(request, 'layout/index.html', context)
+		else:
+			messages.warning(request, f'Necesitas completar el test para usar la plataforma.')
+			return redirect('layout-hexaco-test')
 def faq(request):
 	return render(request, 'layout/faq.html', {'title': 'Preguntas Frecuentes'})
 

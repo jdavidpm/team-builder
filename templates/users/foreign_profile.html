@@ -67,16 +67,18 @@
 {% endblock header %}
 
 {% block content %}
-	<div class="masthead row d-flex justify-content-center mt-0 pt-0 mx-sm-5">
-		<div class="col-11 col-sm-10 mt-0">
-			<div class="jumbotron bg-dark shadow-sm text-white pt-4">
-				<h3>Información Personal</h3></br>
-				<h5>Descripción</br><span class="font-weight-normal">{{foreign_user.profile.description}}</span></h5>
+	{% if foreign_user.profile.description %}
+		<div class="mx-sm-5 row d-flex justify-content-center mt-n5 pt-0 mx-sm-5">
+			<div class="col-11 col-sm-10 mt-0">
+				<div class="jumbotron bg-dark shadow-sm text-white pt-4">
+					<h3>Información Personal</h3></br>
+					<h5>Descripción</br><span class="font-weight-normal">{{foreign_user.profile.description}}</span></h5>
+				</div>
 			</div>
 		</div>
-	</div>
-	{% if foreign_user.profile.school_role %}
-		<div class="masthead row d-flex justify-content-center mt-0 pt-0 mx-sm-5">
+	{% endif %}
+	{% if foreign_user.profile.school_role and foreign_user.student_profile.entry_year or foreign_user.teacher_profile.entry_year %}
+		<div class="mx-sm-5 row d-flex justify-content-center mt-0 pt-0 mx-sm-5">
 			<div class="col-11 col-sm-10 mt-0">
 				<div class="jumbotron bg-dark shadow-sm text-white pt-4">
 					<h3>Información Escolar</h3></br>
