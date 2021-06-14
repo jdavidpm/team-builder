@@ -94,6 +94,7 @@ def hexaco_compare(request, username):
 
 def search_results(request):
 	query = request.GET.get('q')
+	query = query if query else '¬'
 	message_info = None
 	sampleSize, hasProjects, hasTeams = request.GET.get('sampleSize'), request.GET.get('hasProjects'), request.GET.get('hasTeams')
 	sampleSize = sampleSize if sampleSize else '5'
@@ -131,19 +132,16 @@ def search_results(request):
 	
 	if len(field_dict):
 		for i in field_dict:
-			field_query = None
-			if len(Field.objects.filter(name__icontains=i)):
-				field_query = Field.objects.filter(name__icontains=i)
+			field_query = Field.objects.filter(name__icontains=i)
+			if len(field_query):
 				project_query_qs = project_query_qs | Q(fields=field_query[0])
-				project_results = Project.objects.filter(project_query_qs)
-
 
 	profile_results = User.objects.filter(Q(first_name__icontains=query) | Q(profile__in=profile_results)).distinct()
 	team_results = Team.objects.filter(Q(name__icontains=query)&Q(private=False)).distinct()
 	if len(project_query_qs):
-		project_results = Project.objects.filter((Q(name__icontains=query)|project_query_qs)|Q(private=False)).distinct()
+		project_results = Project.objects.filter((Q(name__icontains=query)|project_query_qs)).filter(Q(private=False)).distinct()
 	else:
-		project_results = Project.objects.filter(Q(name__icontains=query)&Q(private=False))
+    		project_results = Project.objects.filter(Q(name__icontains=query)&Q(private=False))
 	total_results = list(chain(profile_results, project_results if hasProjects == 'Sí' else [], team_results if hasTeams == 'Sí' else []))
 
 	paginator = Paginator(total_results, int(sampleSize) if sampleSize else 5)
