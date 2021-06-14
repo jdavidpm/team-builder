@@ -530,7 +530,7 @@ class TaskActivity(models.Model):
 class Notification(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
 	category = models.CharField(max_length=100)
-	text = models.CharField(max_length=100)
+	text = models.CharField(max_length=500)
 	date = models.DateTimeField(auto_now_add=True)
 	join_invitation = models.ForeignKey(JoinInvitation, on_delete=models.CASCADE, null=True, blank=True)
 	join_request = models.ForeignKey(JoinRequest, on_delete=models.CASCADE, null=True, blank=True)
